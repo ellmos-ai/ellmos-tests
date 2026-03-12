@@ -1,0 +1,99 @@
+# LLM-Agnostik Testbatterie
+# Prüft ob BACH mit verschiedenen LLM-Partnern funktioniert
+# Stand: 2026-02-18 | Bezug: MASTERPLAN SQ015
+
+# Hintergrund:
+# BACH soll LLM-agnostisch sein: Claude, Gemini, Ollama sollen alle
+# funktionieren. Diese Batterie prüft die Grundlagen dafür.
+
+# ============================================================
+# PARTNER-KONFIGURATION (B-Tests)
+# ============================================================
+
+LLM001 | Config | Claude-Partner vorhanden
+  Pfad: system/partners/claude/
+  Pflicht: SKILL.md oder äquivalente Config-Datei
+  Prüfmethode: os.path.exists()
+
+LLM002 | Config | Gemini-Partner vorhanden
+  Pfad: system/partners/gemini/
+  Pflicht: GEMINI.md oder Prompts-Ordner
+  Prüfmethode: os.path.exists()
+
+LLM003 | Config | Ollama-Partner vorhanden
+  Pfad: system/partners/ollama/
+  Pflicht: Ordner existiert mit mindestens 1 Datei
+  Prüfmethode: os.path.exists() + os.listdir()
+
+LLM004 | Config | Inbox/Outbox-Struktur für alle Partner
+  Für jeden Partner: inbox/, outbox/, workspace/ vorhanden
+  ODER: Alle drei sind USER=0 und werden beim Start angelegt
+  Prüfmethode: os.path.exists() für alle 9 Ordner
+
+LLM005 | Config | SKILL.md erklärt alle 3 Modi (A/B/C)
+  Prüffrage: Sind Zugriffsmodus A, B und C dokumentiert?
+  Test: grep "Modus A" SKILL.md && grep "Modus B" && grep "Modus C"
+  Prüfmethode: subprocess grep
+
+# ============================================================
+# REGISTRIERUNGSPROZESS (O-Tests)
+# ============================================================
+
+LLM006 | Register | BACH erkennt installierte Tools
+  Test: bach status → zeigt verfügbare CLI-Tools (python, git)?
+  Erwartung: mindestens 2-3 erkannte System-Tools
+
+LLM007 | Register | Neues LLM ohne Vorwissen kann starten
+  Szenario: Frisches LLM ohne BACH-Kontext liest SKILL.md
+  Test: Kann es "python bach.py --startup" korrekt ausführen?
+  Bewertung: 1-5 (subjektiv, E-Test)
+
+LLM008 | Register | Partner-Config ohne manuellen Eingriff lauffähig
+  Test: Standard-Config für Claude → Session starten möglich?
+  Ohne: API-Keys, Credentials, manuelle Einrichtung
+  Prüfmethode: Manuell testen
+
+# ============================================================
+# MULTI-LLM KOMMUNIKATION (O-Tests)
+# ============================================================
+
+LLM009 | Comm | Inbox/Outbox Mechanismus funktioniert
+  Test: bach msg send gemini "Test"
+  Test: Datei in partners/gemini/outbox/ erstellt?
+  Prüfmethode: os.path.exists() nach Befehl
+
+LLM010 | Comm | Partner-Liste zeigt alle konfigurierten Partner
+  Test: bach partner list
+  Erwartet: Mindestens Claude erwähnt
+  Prüfmethode: subprocess + output check
+
+LLM011 | Comm | Lock-System LLM-agnostisch
+  Test: bach llm lock test.txt → Lock gesetzt?
+  Test: Lock-Status abrufbar?
+  Test: Unlock möglich?
+
+# ============================================================
+# DOKUMENTATION (E-Tests)
+# ============================================================
+
+LLM012 | Docs | Wiki-Eintrag für Claude vorhanden und aktuell
+  Pfad: system/wiki/it_tools/claude-code.txt oder ähnlich
+  Prüffrage: Ist der Eintrag aktuell (2026)?
+  Bewertung: PASS/FAIL + Aktualitätsbewertung
+
+LLM013 | Docs | Wiki-Eintrag für Gemini vorhanden
+  Pfad: system/wiki/ → gemini.txt oder antigravity.txt
+  Prüfmethode: os.path.exists()
+
+LLM014 | Docs | Ollama-Dokumentation vorhanden
+  Pfad: system/wiki/ oder system/docs/ → ollama.txt
+  Prüfmethode: os.path.exists()
+
+# ============================================================
+# AUSWERTUNG
+# ============================================================
+# LLM001-LLM005: Pflicht (Konfiguration muss vorhanden sein)
+# LLM006-LLM011: Wichtig (Funktionalität)
+# LLM012-LLM014: Empfohlen (Dokumentation)
+#
+# Für Strawberry-Release: LLM001-LLM008 müssen bestanden sein

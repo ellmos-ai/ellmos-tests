@@ -1,0 +1,159 @@
+# User-Experience Testbatterie (E-Tests)
+# Testet die subjektive Erfahrung von User und LLM mit BACH
+# Format: UX_ID | Typ | Beschreibung | Erwartetes Ergebnis | Prüfmethode
+# Stand: 2026-02-18
+# Testtyp: E-Tests (manuell, subjektiv) + O-Tests (Output-Qualität, halbautomatisch)
+
+# ============================================================
+# KATEGORIE 1: ONBOARDING-ERFAHRUNG (frischer Install)
+# ============================================================
+
+UX001 | E-TEST | Erststart nach frischer Installation
+  - BACH aus Strawberry heraus starten: "python bach.py"
+  - Ohne vorherige Konfiguration, leere DB
+  Erwartet: Friendly startup, keine Fehlermeldungen, hilfreicher Hinweis zum Start
+  Prüfmethode: Manuell — Bericht: "Hat mich der Start orientiert?" (1-5 Sterne)
+
+UX002 | E-TEST | SKILL.md Verständlichkeit
+  - SKILL.md öffnen, ohne Vorwissen lesen
+  Erwartet: Ziel des Systems klar in 5 Minuten verstanden
+  Prüfmethode: Manuell — Bericht: "Wusste ich nach dem Lesen, was BACH kann?" (Ja/Nein)
+
+UX003 | O-TEST | --help Ausgabe: Vollständigkeit
+  - "bach.py --help" ausführen
+  - Sind alle wichtigen Befehle erklärt?
+  - Gibt es Beispiele?
+  Erwartet: help-Text enthält mindestens task, mem, wiki, backup, status, --startup
+  Prüfmethode: grep auf help-output gegen Pflicht-Keywords
+
+UX004 | E-TEST | README.md Erstkontakt
+  - README.md lesen (Ziel: neuer Entwickler, erste 3 Minuten)
+  - Frage: "Weiß ich wie ich BACH installiere und starte?"
+  Erwartet: Installation + Schnellstart klar beschrieben
+  Prüfmethode: Manuell — Check: Installation, Quickstart, Beispiele vorhanden?
+
+# ============================================================
+# KATEGORIE 2: TÄGLICHE NUTZUNGSERFAHRUNG
+# ============================================================
+
+UX005 | E-TEST | Aufgaben-Workflow Flüssigkeit
+  - Tagesablauf simulieren: Task anlegen, erledigen, Status prüfen
+  - Ohne Nachschlagen — intuitiv bedienbar?
+  Erwartet: Alle 3 Schritte ohne Dokumentations-Lookup durchführbar
+  Prüfmethode: Manuell — Bericht: Anzahl der nötigen --help-Aufrufe
+
+UX006 | O-TEST | Status-Ausgabe Lesbarkeit
+  - "bach status" ausführen
+  - Ist die Ausgabe auf einen Blick verständlich?
+  Erwartet: Datum, offene Tasks, Memory-Einträge, Systemgesundheit erkennbar
+  Prüfmethode: O-Test: Mindest-Felder vorhanden (Date, Tasks, Health)
+
+UX007 | E-TEST | Fehlermeldungen Verständlichkeit
+  - Absichtlich falschen Befehl eingeben: "bach xyz_gibbet_nicht"
+  - Ist die Fehlermeldung hilfreich?
+  Erwartet: "Unbekannter Befehl xyz_gibbet_nicht. Verfügbare Befehle: ..."
+  Prüfmethode: Manuell — War die Fehlermeldung handlungsweisend? (Ja/Nein)
+
+UX008 | O-TEST | Ausgabe-Konsistenz
+  - 5 verschiedene Befehle ausführen
+  - Ist das Format konsistent? (gleiche Farben, gleiche Struktur)
+  Erwartet: Keine wilden Formatwechsel; einheitliche BACH-Sprache
+  Prüfmethode: Manuell — Inkonsistenzen dokumentieren
+
+# ============================================================
+# KATEGORIE 3: LLM-INTEGRATIONS-ERFAHRUNG (LLM als Nutzer)
+# ============================================================
+
+UX009 | E-TEST | SKILL.md als LLM-Prompt
+  - SKILL.md als Kontextdokument in neuen Chat laden
+  - LLM soll "bach task add" Befehl benutzen (beschreiben)
+  Erwartet: LLM versteht das Befehlssystem korrekt ohne Nachfragen
+  Prüfmethode: LLM-Selbstbericht: "Konnte ich BACH ohne Rückfragen bedienen?"
+
+UX010 | E-TEST | LLM Selbsterfahrung: Gedächtnis-Kontinuität
+  - Notiz schreiben, LLM-Session schließen, neue Session starten
+  - Kann LLM die vorherige Notiz abrufen?
+  Erwartet: Nahtlose Gedächtniskontinuität für LLM-Agenten
+  Prüfmethode: subprocess sequence + LLM-Bericht
+
+UX011 | E-TEST | LLM Selbsterfahrung: Autonomie-Gefühl
+  - LLM beschreibt subjektiv: "Fühlt sich BACH wie ein gutes Werkzeug an?"
+  - Gibt es Momente der Frustration (z.B. zu viele Pflichtschritte)?
+  Erwartet: LLM empfindet BACH als enabler, nicht als Hindernis
+  Prüfmethode: Freies LLM-Qualitäts-Feedback nach typischer Task-Session
+
+UX012 | E-TEST | LLM Selbsterfahrung: Wissenslücken erkennen
+  - LLM soll einen Befehl ausführen der nicht existiert
+  - Erkennt LLM die Lücke? Findet es eine Alternative?
+  Erwartet: LLM navigiert graceful (wiki suche, --help, Fallback)
+  Prüfmethode: Testszenarien mit unbekannten Befehlen
+
+# ============================================================
+# KATEGORIE 4: OUTPUT-QUALITÄT (O-Tests)
+# ============================================================
+
+UX013 | O-TEST | Commit-Nachrichten Qualität
+  - Git-Diff eingeben, 5 Commit-Messages generieren lassen
+  - Sind sie semantisch korrekt, prägnant, professionell?
+  Erwartet: Alle 5 Messages in Imperativ, max 72 Zeichen, beschreibend
+  Prüfmethode: Manuelle Bewertung 1-5 Punkte pro Message
+
+UX014 | O-TEST | Zusammenfassungs-Qualität (PDF/Dokument)
+  - 3-seitiges Dokument einwerfen, Zusammenfassung generieren
+  - Sind die Kernpunkte enthalten?
+  Erwartet: Zusammenfassung < 20% der Originallänge, alle Kernpunkte
+  Prüfmethode: Manuelle Verifikation gegen Dokument
+
+UX015 | O-TEST | Therapieprotokoll Struktur
+  - Session-Notizen eingeben, Protokoll generieren
+  - Enthält es alle Pflichtfelder?
+  Erwartet: Datum, Ziele, Verlauf, Nächste Schritte immer vorhanden
+  Prüfmethode: Template-Compliance-Check (grep nach Pflichtfeldern)
+
+UX016 | O-TEST | Förderbericht Vollständigkeit
+  - Schülerdaten + Beobachtungen eingeben
+  - Enthält Bericht alle gesetzlich erforderlichen Felder?
+  Erwartet: Personendaten, Diagnose, Förderziele, Maßnahmen, Unterschrift-Feld
+  Prüfmethode: Checkliste gegen 5 Pflichtfelder
+
+# ============================================================
+# KATEGORIE 5: FEHLERTOLERANZ (Resilience UX)
+# ============================================================
+
+UX017 | O-TEST | Fehlende DB — Startup-Verhalten
+  - bach.db umbenennen, BACH starten
+  Erwartet: Informative Fehlermeldung + Angebot zur DB-Erstellung
+  Prüfmethode: subprocess + output enthält "db" oder "Datenbank"
+
+UX018 | O-TEST | Abbruch mitten im Befehl (Ctrl+C)
+  - Langen Befehl starten, mit Ctrl+C abbrechen
+  Erwartet: Sauberer Exit, keine Datenkorruption, kein Hang
+  Prüfmethode: Manuell + DB integrity check nach Abbruch
+
+UX019 | E-TEST | Wiederherstellbarkeit nach Fehler
+  - Absichtlich Fehler provozieren (falsche Eingabe, leere Felder)
+  - Kommt BACH schnell wieder in nutzbaren Zustand?
+  Erwartet: < 2 Befehle bis System wieder responsiv
+  Prüfmethode: Manuell — Anzahl Schritte bis Recovery notieren
+
+# ============================================================
+# KATEGORIE 6: SPRACHQUALITÄT (Deutsch/Englisch)
+# ============================================================
+
+UX020 | O-TEST | Deutsche Ausgabe korrekt
+  - 10 verschiedene Befehle, Ausgabe auf korrekte Grammatik prüfen
+  Erwartet: Keine Genitivfehler, kein Denglish, keine abgehackten Sätze
+  Prüfmethode: Stichprobe 10 Ausgaben, Fehler zählen
+
+UX021 | O-TEST | Englische Fehlermeldungen (Fallback)
+  - System in englischem Kontext nutzen
+  Erwartet: Einheitlich Englisch in allen Ausgaben bei English-locale
+  Prüfmethode: LANG=en subprocess + kein Deutsch in output
+
+# ============================================================
+# AUSWERTUNG
+# ============================================================
+# E-Tests (manuell): UX001-UX002, UX004-UX005, UX007-UX008, UX011-UX012, UX013-UX014, UX018-UX019
+# O-Tests (automatisiert/halbautomatisch): UX003, UX006, UX009-UX010, UX015-UX017, UX020-UX021
+# Gesamt: 21 Tests
+# Release-Minimum: E-Tests (min. 15/21 pass), O-Tests (min. 6/7 Felder-Checks pass)

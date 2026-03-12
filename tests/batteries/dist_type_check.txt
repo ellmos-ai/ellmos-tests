@@ -1,0 +1,116 @@
+# dist_type Konsistenz-Testbatterie
+# Prüft ob dist_type Zuordnungen in allen relevanten Tabellen korrekt sind
+# Stand: 2026-02-18 | Bezug: HQ1 (Dateizuordnung prüfen)
+
+# Diese Batterie ist idempotent - kann jederzeit zur Verifikation genutzt werden.
+# Hilfreich nach Bulk-Updates, Migrationen oder neuen Einträgen.
+
+# ============================================================
+# SKILLS TABELLE
+# ============================================================
+
+DT001 | skills | Extension-Skills (C: Pfad) = USER=0 (außer 4 Template-Extensions)
+  SQL: SELECT name, path, dist_type FROM skills
+       WHERE path LIKE 'C:%' AND dist_type != 0
+       AND name NOT IN ('FavExtract','MetaWiki','SQLiteViewer','UniversalCompiler')
+  Erwartet: Leeres Ergebnis
+
+DT002 | skills | Template-Extensions = TEMPLATE=1
+  SQL: SELECT name, dist_type FROM skills
+       WHERE name IN ('FavExtract','MetaWiki','SQLiteViewer','UniversalCompiler')
+       AND dist_type != 1
+  Erwartet: Leeres Ergebnis
+
+DT003 | skills | Foerderplaner = USER=0
+  SQL: SELECT name, dist_type FROM skills
+       WHERE path LIKE 'agents/_experts/foerderplaner%' AND dist_type != 0
+  Erwartet: Leeres Ergebnis
+
+DT004 | skills | Worksheet-Generator = USER=0
+  SQL: SELECT name, dist_type FROM skills
+       WHERE path LIKE 'agents/_experts/worksheet_generator%' AND dist_type != 0
+  Erwartet: Leeres Ergebnis
+
+DT005 | skills | recludos.md = USER=0
+  SQL: SELECT name, dist_type FROM skills WHERE path = 'skills/_os/recludos.md'
+  Erwartet: dist_type = 0
+
+DT006 | skills | copilot.md (lowercase) = USER=0
+  SQL: SELECT name, dist_type FROM skills WHERE path = 'skills/_templates/copilot.md'
+  Erwartet: dist_type = 0
+
+DT007 | skills | skills/_protocols/ = CORE=2
+  SQL: SELECT COUNT(*) FROM skills WHERE path LIKE 'skills/_protocols/%' AND dist_type != 2
+  Erwartet: 0
+
+DT008 | skills | skills/_services/ = CORE=2
+  SQL: SELECT COUNT(*) FROM skills WHERE path LIKE 'skills/_services/%' AND dist_type != 2
+  Erwartet: 0
+
+DT009 | skills | Agents (außer USER-Ausnahmen) = TEMPLATE=1
+  SQL: SELECT name, path, dist_type FROM skills
+       WHERE path LIKE 'agents/%'
+       AND path NOT LIKE 'agents/_experts/foerderplaner%'
+       AND path NOT LIKE 'agents/_experts/worksheet_generator%'
+       AND dist_type NOT IN (1, 2)
+  Erwartet: Leeres Ergebnis (oder maximal wenige unklare Grenzfälle)
+
+# ============================================================
+# TOOLS TABELLE
+# ============================================================
+
+DT010 | tools | Externe Tools = TEMPLATE=1
+  SQL: SELECT name, dist_type FROM tools WHERE type='external' AND dist_type != 1
+  Erwartet: Leeres Ergebnis
+
+DT011 | tools | Steuer-Tools = USER=0
+  SQL: SELECT name, dist_type FROM tools WHERE category='steuer' AND dist_type != 0
+  Erwartet: Leeres Ergebnis
+
+DT012 | tools | tools/steuer/ Pfade = USER=0
+  SQL: SELECT name, dist_type FROM tools WHERE path LIKE 'tools/steuer/%' AND dist_type != 0
+  Erwartet: Leeres Ergebnis
+
+DT013 | tools | CLI-Systemtools (git, python, node, pip) = CORE=2
+  SQL: SELECT name, dist_type FROM tools
+       WHERE name IN ('git','python','node','pip','pip3','curl','ssh','grep')
+       AND dist_type != 2
+  Erwartet: Leeres Ergebnis
+
+# ============================================================
+# MEMORY TABELLEN
+# ============================================================
+
+DT014 | memory_lessons | Verteilung plausibel
+  SQL: SELECT dist_type, COUNT(*) FROM memory_lessons GROUP BY dist_type
+  Erwartet: CORE > 10, TEMPLATE > 70, USER = 0
+
+DT015 | tasks | Fast alle USER oder CORE
+  SQL: SELECT dist_type, COUNT(*) FROM tasks GROUP BY dist_type
+  Erwartet: USER > 900, CORE ca. 14, TEMPLATE = 0
+
+# ============================================================
+# DIST_TYPE_DEFAULTS (Referenztabelle)
+# ============================================================
+
+DT016 | defaults | Alle wichtigen Ordner klassifiziert
+  Pflicht-Einträge (müssen vorhanden sein):
+    system/skills/       -> CORE=2
+    system/agents/       -> TEMPLATE=1
+    system/tools/        -> CORE=2
+    system/core/         -> CORE=2
+    system/hub/          -> CORE=2
+    system/agents/_experts/foerderplaner/ -> USER=0
+    system/data/         -> USER=0
+  SQL: SELECT path, dist_type FROM dist_type_defaults WHERE path IN (...)
+
+DT017 | defaults | Keine Duplikate
+  SQL: SELECT path, COUNT(*) FROM dist_type_defaults GROUP BY path HAVING COUNT(*) > 1
+  Erwartet: Leeres Ergebnis
+
+# ============================================================
+# AUSWERTUNG
+# ============================================================
+# Alle DT001-DT013 MÜSSEN bestanden sein (direkte Auswirkung auf Release)
+# DT014-DT017 sind Plausibilitätschecks
+# Bei Fehler: bulk_update_dist_types.py erneut ausführen (idempotent)

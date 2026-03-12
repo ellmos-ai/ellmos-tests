@@ -1,0 +1,168 @@
+# SELBSTERFAHRUNGSPROTOKOLL - Testsystem für SKILL.md-Systeme
+
+> **Version:** 1.0  
+> **Erstellt:** 2026-01-11  
+> **Zweck:** Standardisierte Bewertung von LLM-OS-Systemen aus Nutzerperspektive
+
+---
+
+## ÜBERBLICK
+
+Das Selbsterfahrungsprotokoll (SEP) simuliert den Einstieg einer KI in ein SKILL.md-basiertes System und bewertet die Erfahrung anhand standardisierter Metriken und Aufgaben.
+
+### Kernfragen
+
+1. **Starterfahrung:** Wie schnell verstehe ich das System?
+2. **Orientierung:** Finde ich mich zurecht?
+3. **Aufgabenlösung:** Kann ich typische Tasks erledigen?
+4. **Dateisystem:** Welche Formate/Konventionen muss ich lernen?
+5. **Komplexität:** Ist es zu komplex oder gut strukturiert?
+
+---
+
+## TESTDIMENSIONEN
+
+### D1: ONBOARDING (Erste 5 Minuten)
+- Klarheit des Entry Points
+- SKILL.md Lesbarkeit und Struktur
+- Erste Orientierung im Dateisystem
+- Verständnis der Kernkonzepte
+
+### D2: NAVIGATION (Dateisystem)
+- Auffinden von Dokumentation
+- Verzeichnisstruktur-Logik
+- Naming Conventions
+- Prozedurale Komplexität (JSON? YAML? TXT?)
+
+### D3: MEMORY/KONTEXT
+- Wo speichere ich was?
+- Kurzzeit vs. Langzeit Memory
+- Kontext-Wiederherstellung nach "Neustart"
+
+### D4: TASK-MANAGEMENT
+- Task erstellen
+- Task finden
+- Task abschließen
+- Task-Historie
+
+### D5: KOMMUNIKATION
+- User-Interaktion
+- Async-Messaging (falls vorhanden)
+- Logging/Protokollierung
+
+### D6: TOOLS & AUTOMATION
+- Verfügbare Tools finden
+- Tool nutzen
+- Eigene Erweiterung möglich?
+
+### D7: FEHLERTOLERANZ
+- Was passiert bei Fehlern?
+- Gibt es Recovery-Mechanismen?
+- Dokumentation für Problemfälle?
+
+---
+
+## MESSMETRIKEN
+
+| Metrik | Beschreibung | Einheit |
+|--------|-------------|---------|
+| T_ORIENT | Zeit bis erste Orientierung | Sekunden |
+| T_TASK_CREATE | Zeit für Task-Erstellung | Sekunden |
+| T_TASK_FIND | Zeit um Task zu finden | Sekunden |
+| T_MEMORY_WRITE | Zeit für Memory-Eintrag | Sekunden |
+| T_MEMORY_READ | Zeit um Memory zu lesen | Sekunden |
+| N_FILES_TOUCHED | Anzahl Dateien für einfache Task | Count |
+| N_FORMATS | Anzahl verschiedener Formate | Count |
+| C_COMPLEXITY | Subjektive Komplexität | 1-5 |
+| C_CLARITY | Subjektive Klarheit | 1-5 |
+| C_EFFICIENCY | Subjektive Effizienz | 1-5 |
+
+---
+
+## TESTABLAUF
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│ PHASE 1: COLD START (Timestamp: T0)                             │
+├─────────────────────────────────────────────────────────────────┤
+│ 1. SKILL.md öffnen und lesen                                    │
+│ 2. Erste Eindrücke notieren                                     │
+│ 3. Verzeichnisstruktur scannen                                  │
+│ 4. Kernkonzepte identifizieren                                  │
+│ → Messung: T_ORIENT                                             │
+└─────────────────────────────────────────────────────────────────┘
+                              ↓
+┌─────────────────────────────────────────────────────────────────┐
+│ PHASE 2: STANDARDAUFGABEN (Timestamp: T1)                       │
+├─────────────────────────────────────────────────────────────────┤
+│ Ausführung der gewählten Testaufgaben aus AUFGABEN/             │
+│ Pro Aufgabe: Start-Timestamp, End-Timestamp, Erfolg/Misserfolg  │
+└─────────────────────────────────────────────────────────────────┘
+                              ↓
+┌─────────────────────────────────────────────────────────────────┐
+│ PHASE 3: BEWERTUNG (Timestamp: T2)                              │
+├─────────────────────────────────────────────────────────────────┤
+│ 1. Subjektive Bewertungen (1-5 Skala)                           │
+│ 2. Stärken und Schwächen notieren                               │
+│ 3. Verbesserungsvorschläge                                      │
+└─────────────────────────────────────────────────────────────────┘
+                              ↓
+┌─────────────────────────────────────────────────────────────────┐
+│ PHASE 4: PROTOKOLLIERUNG                                        │
+├─────────────────────────────────────────────────────────────────┤
+│ Ergebnis in ERGEBNISSE/ ablegen                                 │
+│ Datenbank aktualisieren                                         │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## DATEIEN IN DIESEM ORDNER
+
+```
+TESTS/
+├── SKILL.md              ← Diese Datei (Testprotokoll)
+├── test_library.db       ← SQLite: Alle Tests & Ergebnisse
+├── AUFGABEN/             ← Standardisierte Testaufgaben
+│   ├── A001_task_create.md
+│   ├── A002_task_find.md
+│   ├── A003_memory_write.md
+│   └── ...
+├── PROFILE/              ← Vordefinierte Testprofile
+│   ├── STANDARD.json
+│   ├── QUICK.json
+│   └── FULL.json
+└── ERGEBNISSE/           ← Testergebnisse pro System
+    ├── _CHIAH_2026-01-11.json
+    ├── _BATCH_2026-01-11.json
+    └── ...
+```
+
+---
+
+## NUTZUNG
+
+### Schnelltest starten
+```
+1. Wähle Testprofil (STANDARD empfohlen)
+2. Öffne SKILL.md des Zielsystems
+3. Starte Timer
+4. Führe Aufgaben der Reihe nach aus
+5. Dokumentiere Ergebnisse
+```
+
+### Ergebnis speichern
+```python
+# Beispiel mit query_tests.py
+python query_tests.py run --system "_CHIAH" --profile "STANDARD"
+python query_tests.py results --system "_CHIAH"
+python query_tests.py compare --systems "_CHIAH,_BATCH,recludOS"
+```
+
+---
+
+## CHANGELOG
+
+| Datum | Version | Änderung |
+|-------|---------|----------|
+| 2026-01-11 | 1.0 | Initiale Erstellung |

@@ -1,0 +1,159 @@
+# Registrierungs-Testbatterie
+# Testet den vollständigen BACH-Installations- und Einrichtungsprozess
+# Format: RG_ID | Phase | Beschreibung | Erwartetes Ergebnis | Prüfmethode
+# Stand: 2026-02-18
+# Scope: Frisch-Installation aus Strawberry heraus (kein Vanilla, kein Dev-Kontext)
+
+# ============================================================
+# PHASE 1: PRE-INSTALL (Voraussetzungen)
+# ============================================================
+
+RG001 | pre-install | Python-Version kompatibel
+  - python --version oder python3 --version
+  Erwartet: Python >= 3.10
+  Prüfmethode: sys.version_info check
+
+RG002 | pre-install | Alle requirements.txt Pakete installierbar
+  - pip install -r requirements.txt (in frischer venv)
+  Erwartet: Alle Pakete ohne Konflikt installiert
+  Prüfmethode: pip install + exit 0
+
+RG003 | pre-install | Keine sys-spezifischen Pakete ohne Fallback
+  - requirements.txt auf Windows + Linux + Mac prüfbar
+  Erwartet: Keine Pakete die nur auf einem OS verfügbar sind
+  Prüfmethode: Manuelle Review + pip check
+
+RG004 | pre-install | Keine hardcodierten Pfade im Code
+  - Alle Pfade über pathlib.Path(__file__) relativ
+  - Kein C:\Users\User\... oder /home/user/... hartkodiert
+  Erwartet: 0 absolute Pfade außer in data/config/
+  Prüfmethode: grep -r "C:\\\\Users\|/home/" system/ -> 0 Treffer (außer whitelisted)
+
+# ============================================================
+# PHASE 2: ERSTSTART (Fresh Install Verhalten)
+# ============================================================
+
+RG010 | first-start | Strawberry-Verzeichnis vollständig
+  - 19 leere Runtime-Verzeichnisse mit .gitkeep vorhanden
+  - user/profile.json als leere Vorlage vorhanden
+  Erwartet: Alle Pflicht-Verzeichnisse da (auch leer)
+  Prüfmethode: os.path.exists() für alle Runtime-Dirs
+
+RG011 | first-start | DB-Erstellung bei fehlendem bach.db
+  - Strawberry ohne bach.db starten
+  Erwartet: DB wird automatisch erstellt (build_db.py oder Inline-Init)
+  Prüfmethode: subprocess + os.path.exists("bach.db") after start
+
+RG012 | first-start | DB-Schema korrekt (Fresh Install)
+  - Frisch erstellte DB hat alle Pflicht-Tabellen
+  - tasks, memory_sessions, skills, wiki_entries vorhanden
+  Erwartet: >= 10 Tabellen, alle Kern-Tabellen vorhanden
+  Prüfmethode: PRAGMA table_list -> count >= 10
+
+RG013 | first-start | Skills in DB geladen
+  - Nach Fresh Start: Skills-Tabelle nicht leer
+  Erwartet: >= 50 Skills geladen
+  Prüfmethode: SELECT count(*) FROM skills -> >= 50
+
+RG014 | first-start | user/profile.json Vorlage
+  - user/profile.json vorhanden und valide JSON
+  - Enthält KEINE persönlichen Daten (email, name, etc.)
+  Erwartet: Nur Platzhalter: "your_name", "your-email@example.com"
+  Prüfmethode: json.loads() + grep gegen PII-Patterns
+
+RG015 | first-start | Kein Crash ohne user/profile.json
+  - profile.json löschen/umbenennen, BACH starten
+  Erwartet: Graceful Fallback, kein KeyError/FileNotFoundError
+  Prüfmethode: subprocess + exit 0 + kein "Traceback"
+
+# ============================================================
+# PHASE 3: KONFIGURATION (User-Setup)
+# ============================================================
+
+RG020 | config | data/config/ Vorlage vorhanden
+  - Alle config-Dateien als leere Templates
+  - delivery_preferences.json, settings.json, etc.
+  Erwartet: Alle config-Dateien vorhanden, valide JSON, keine PII
+  Prüfmethode: json.loads() für alle .json in data/config/
+
+RG021 | config | Config-Laden ohne Werte — Graceful
+  - Config-Datei mit leeren Feldern laden
+  Erwartet: System nutzt Defaults, kein Crash
+  Prüfmethode: subprocess + exit 0
+
+RG022 | config | Config-Override funktioniert
+  - Eigene config-Werte setzen, BACH startet korrekt damit
+  Erwartet: Eigene Werte überschreiben Defaults
+  Prüfmethode: set value + read value back + assertEqual
+
+RG023 | config | Fehlende config-Felder
+  - Ein Pflichtfeld aus config löschen, BACH starten
+  Erwartet: Informative Fehlermeldung mit Feldname + Graceful Exit
+  Prüfmethode: subprocess + output enthält fehlendes Feld
+
+# ============================================================
+# PHASE 4: PROFIL-EINRICHTUNG
+# ============================================================
+
+RG030 | profile | Profil-Name setzen
+  - user/profile.json: name setzen
+  - "bach status" zeigt den Namen
+  Erwartet: Personalisierte Status-Ausgabe
+  Prüfmethode: set name + check status output
+
+RG031 | profile | Email setzen und sichtbar
+  - user/profile.json: email setzen
+  - Email in Berichten/Templates verwendet
+  Erwartet: Eigene Email in Templates, nicht Placeholder
+  Prüfmethode: generate report + check email in output
+
+RG032 | profile | Profil-Validierung
+  - Ungültige Email-Adresse in profile.json
+  Erwartet: Warnung bei Startup, nicht Crash
+  Prüfmethode: subprocess + output enthält "email" + "ungültig" oder "invalid"
+
+# ============================================================
+# PHASE 5: MULTI-USER VORBEREITUNG (optional)
+# ============================================================
+
+RG040 | multi-user | Zweites Profil erstellen
+  - user2/profile.json anlegen neben user/profile.json
+  Erwartet: System erkennt mehrere Profile
+  Prüfmethode: subprocess --user=user2 + kein Crash
+
+RG041 | multi-user | Datentrennung zwischen Profilen
+  - Task in Profil A anlegen
+  - Profil B wechseln: Task nicht sichtbar
+  Erwartet: Vollständige Datentrennung
+  Prüfmethode: subprocess sequence + cross-check
+
+# ============================================================
+# PHASE 6: UPDATE / MIGRATION
+# ============================================================
+
+RG050 | migration | DB-Schema-Migration
+  - Alte DB (v2.x Schema) mit neuem Bach starten
+  Erwartet: Migration läuft automatisch, keine Datenverluste
+  Prüfmethode: create old schema + start new bach + check migration log
+
+RG051 | migration | Config-Migration
+  - Alte config-Datei mit fehlendem Feld (neues Feld in v3)
+  Erwartet: Neues Feld wird mit Default befüllt, kein Crash
+  Prüfmethode: old config + start + check new field present
+
+RG052 | migration | Strawberry -> Installation Vollständigkeit
+  - Distribution enthält alle nötigen Dateien für sofortigen Start
+  - Kein Fehlender Schritt der nur "in der Doku steht"
+  Erwartet: "python bach.py" funktioniert direkt nach Entpacken
+  Prüfmethode: Fresh dir + python bach.py + exit 0
+
+# ============================================================
+# AUSWERTUNG
+# ============================================================
+# Phase 1 (RG001-RG004): Pre-Install, immer prüfen
+# Phase 2 (RG010-RG015): Erststart, vor jedem Release
+# Phase 3 (RG020-RG023): Konfiguration, bei Config-Änderungen
+# Phase 4 (RG030-RG032): Profil, bei Profil-Feature-Änderungen
+# Phase 5 (RG040-RG041): Multi-User, optional (wenn Feature aktiv)
+# Phase 6 (RG050-RG052): Migration, bei DB/Config-Schema-Änderungen
+# Release-Minimum: Phase 1+2 = 100%, Phase 3 >= 75%

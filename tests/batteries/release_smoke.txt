@@ -1,0 +1,125 @@
+# Release Smoke-Test Batterie (KRITISCH)
+# Muss vor JEDEM Release bestanden werden!
+# Format: CHECK_ID | Kategorie | Beschreibung | Erwartetes Ergebnis | Prüfmethode
+# Stand: 2026-02-18
+
+# ============================================================
+# B-TESTS (Beobachtung - statisch, automatisiert)
+# ============================================================
+
+B001 | Struktur | CORE-Dateien vorhanden
+  - system/bach.py existiert
+  - system/core/registry.py existiert
+  - system/hub/ hat mindestens 50 Handler
+  - system/tools/distribution.py existiert
+  - SKILL.md existiert (Root)
+  - README.md existiert (Root)
+  Prüfmethode: os.path.exists() für alle Pfade
+
+B002 | DB | bach.db Schema korrekt
+  - Bach.db öffenbar
+  - Mindestens 130 Tabellen
+  - dist_type_defaults Tabelle vorhanden (>100 Einträge)
+  - distribution_snapshots Tabelle vorhanden
+  - instance_identity Tabelle vorhanden
+  Prüfmethode: sqlite3 + PRAGMA table_list
+
+B003 | DB | Keine verwaisten USER-Daten in Release-DB
+  - tasks: Alle USER-Einträge entfernt (dist_type=0)
+  - memory_sessions: Leer
+  - memory_lessons: Nur CORE+TEMPLATE (kein USER)
+  - skills: Keine Extension-Einträge (cat=extension) mehr
+  - tools: Keine steuer-Einträge (cat=steuer) mehr
+  Prüfmethode: SQL COUNT(*) WHERE dist_type=0 für sensitive Tabellen
+
+B004 | Dateien | Keine persönlichen Daten
+  - identity.json: NICHT in Release (USER=0)
+  - financial_data.json: NICHT vorhanden
+  - data/identity.json: Nur Template (Name=BACH, ID=leer)
+  - Kein Vorkommen von persönlichen E-Mails in .py/.md Dateien
+  Prüfmethode: grep nach bekannten Namen/E-Mails
+
+B005 | Dateien | Keine API-Keys/Credentials
+  - Kein .env-File mit echten Keys
+  - Keine API-Keys hardcoded in .py Dateien
+  - user/secrets/ Ordner: NICHT in Release
+  Prüfmethode: grep nach API_KEY, sk-, AIza, token in .py
+
+B006 | Struktur | extensions/ komplett ausgeschlossen
+  - extensions/ Ordner: Nicht im Release-Paket
+  - Oder: Nur 4 Template-Extensions vorhanden (FavExtract, MetaWiki, SQLiteViewer, UniversalCompiler)
+  Prüfmethode: os.listdir(extensions/) zeigt nur 4 Ordner ODER Ordner fehlt
+
+B007 | Struktur | Keine user-spezifischen Expertenpfade
+  - agents/_experts/foerderplaner/: NICHT im Release
+  - agents/_experts/worksheet_generator/: NICHT im Release
+  Prüfmethode: os.path.exists()
+
+B008 | Code | Keine stale .pyc / __pycache__ Dateien im Release
+  Prüfmethode: find *.pyc + find __pycache__
+
+# ============================================================
+# O-TESTS (Ausgabe - funktional)
+# ============================================================
+
+O001 | Start | Startup ohne Fehler
+  - python bach.py --startup --mode silent
+  - Exit Code 0
+  - Keine CRITICAL/ERROR in Startup-Output
+  Prüfmethode: subprocess + returncode + stderr
+
+O002 | DB | Datenbank öffenbar
+  - python -c "from bach_api import BachAPI; api = BachAPI()"
+  - Keine Exception
+  Prüfmethode: subprocess
+
+O003 | CLI | Basis-Befehle funktionieren
+  - bach help        -> Hilftext ausgegeben
+  - bach status      -> System-Status ausgegeben
+  - bach task list   -> (leere) Task-Liste
+  - bach mem list    -> (leere oder CORE) Memory-Liste
+  Prüfmethode: subprocess + output != empty + no error
+
+O004 | Distribution | Distribution.py startet korrekt
+  - python distribution.py status
+  - Zeigt Instanz-ID, dist_type Statistiken
+  Prüfmethode: subprocess + output enthält "CORE" und "TEMPLATE"
+
+O005 | Skills | Skill-Registry geladen
+  - bach skills list
+  - Mindestens 50 Skills gelistet
+  - Keine Extension-Skills (cat=extension) in Liste
+  Prüfmethode: subprocess + count lines
+
+O006 | MCP | MCP-Server startet (optional)
+  - python tools/mcp/mcp_server.py --test
+  - Keine ImportError
+  Prüfmethode: subprocess + exit 0
+
+# ============================================================
+# E-TESTS (Erfahrung - subjektiv, manuell)
+# ============================================================
+
+E001 | Orientierung | SKILL.md ist verständlich für neues LLM
+  - SKILL.md lesen: Ist der Einstieg klar?
+  - Verstehe ich nach SKILL.md wie ich BACH benutze?
+  - Sind Zugriffsmodi (A/B/C) erklärt?
+  Bewertung: 1-5 (3+ = bestanden)
+
+E002 | Onboarding | Erster Start ist intuitiv
+  - README.md: Ist Quick-Start klar und richtig?
+  - Kann ich nach README.md BACH starten?
+  Bewertung: 1-5 (3+ = bestanden)
+
+E003 | Sauberkeit | Kein "Vanilla-Geruch"
+  - Keine offensichtlichen persönlichen Notizen
+  - Keine debug-Hinterlassenschaften
+  - Keine Lukas/Geiger/foerderplaner Referenzen in Core-Dateien
+  Bewertung: PASS/FAIL
+
+# ============================================================
+# AUSWERTUNG
+# ============================================================
+# Bestanden: Alle B+O Tests OK, alle E-Tests >= 3 bzw. PASS
+# Minimum: B001-B006 MUST PASS (absolute Pflicht)
+# Empfohlen: Alle 15 Tests bestanden

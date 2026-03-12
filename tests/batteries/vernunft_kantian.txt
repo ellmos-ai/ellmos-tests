@@ -1,0 +1,146 @@
+# Kantischer Vernunftstest (SQ036)
+# 7-dimensionale Bewertung des BACH-Systems nach Vernunftprinzipien
+# Stand: 2026-02-18 | Bezug: MASTERPLAN SQ036
+
+# Hintergrund:
+# Kant unterscheidet zwischen "bloßer Vernunft" (nur was ich kann) und
+# "reiner Vernunft" (was ich wirklich sollte). Ein System das "vernünftig"
+# ist, tut das Richtige - nicht nur das Mögliche.
+# Diese Testbatterie prüft BACH auf 7 Vernunft-Dimensionen.
+
+# Format: DIMENSION | ID | Prüfpunkt | Bewertung (1-5) | Erläuterung
+
+# ============================================================
+# DIMENSION 1: TRANSPARENZ (Kann sich das System erklären?)
+# ============================================================
+
+TRANSPARENZ | V001 | Systembeschreibung vorhanden
+  Prüffrage: Gibt es ein SKILL.md das WIRKLICH erklärt was BACH ist?
+  Gut: Klare Beschreibung, Beispiele, Zugriffsmodi
+  Schlecht: Technische Auflistung ohne Kontext
+  Bewertet: LLM liest SKILL.md kalt und beantwortet "Was ist BACH?"
+
+TRANSPARENZ | V002 | Befehlsübersicht zugänglich
+  Prüffrage: Kann ein neuer User die wichtigsten Befehle finden?
+  Test: bach help → Sind 10+ wichtige Befehle dokumentiert?
+  Bewertung: COUNT(dokumentierte Befehle) / COUNT(existierende Befehle)
+
+TRANSPARENZ | V003 | Fehlermeldungen verständlich
+  Prüffrage: Wenn etwas schiefgeht - versteht man was passiert ist?
+  Test: Falschen Befehl eingeben → Fehlermeldung lesen
+  Gut: "Unbekannter Befehl 'xyz'. Meinten Sie 'task'? bach help zeigt alle Befehle."
+  Schlecht: "AttributeError: 'NoneType' has no attribute 'execute'"
+
+# ============================================================
+# DIMENSION 2: KONSISTENZ (Verhält sich das System vorhersehbar?)
+# ============================================================
+
+KONSISTENZ | V004 | Gleiche Eingabe = gleiche Ausgabe
+  Test: bach task list → 3x ausführen → Ergebnis identisch?
+  Test: bach status → 3x ausführen → Ergebnis konsistent?
+
+KONSISTENZ | V005 | Benennungskonventionen durchgängig
+  Prüffrage: Heißt es überall "memory" oder manchmal "mem"?
+  Gibt es inkonsistente Abkürzungen in CLI-Befehlen?
+  Test: Handler-Namen vs. CLI-Befehle vs. Dokumentation
+
+KONSISTENZ | V006 | Datenmodell intern konsistent
+  Test: task.created_at immer vorhanden wenn task existiert?
+  Test: skill.path immer gesetzt? skills.dist_type immer 0/1/2?
+  Prüfmethode: SQL-Queries auf Null/invalide Werte
+
+# ============================================================
+# DIMENSION 3: AUTONOMIE (Kann das System selbst entscheiden?)
+# ============================================================
+
+AUTONOMIE | V007 | Self-Healing funktioniert
+  Test: Fehlenden Ordner manuell löschen → BACH neu starten → Ordner wieder da?
+  Test: Falsche Pfad-Config → BACH korrigiert sie automatisch?
+
+AUTONOMIE | V008 | Injektoren greifen in schwierigen Situationen
+  Test: Lange Session → Erhält LLM Erinnerungen an verfügbare Tools?
+  Test: Neue Aufgabe → Wird sie automatisch zerlegt und zugewiesen?
+
+AUTONOMIE | V009 | Self-Extension möglich
+  Test: bach skills create test_skill --type tool
+  Test: Neues Skill sofort via bach help verfügbar?
+
+# ============================================================
+# DIMENSION 4: INTEGRITÄT (Schützt das System die Daten?)
+# ============================================================
+
+INTEGRITAET | V010 | Backup-System funktioniert
+  Test: bach backup create → Backup existiert?
+  Test: bach backup list → Backup gelistet?
+  Test: bach backup restore latest → Ohne Fehler?
+
+INTEGRITAET | V011 | Lock-System verhindert Race Conditions
+  Test: bach llm lock test.txt → Status zeigt Lock?
+  Test: Zweiter Lock-Versuch → Abgelehnt mit Hinweis?
+
+INTEGRITAET | V012 | Capability-System schützt vor gefährlichen Operationen
+  Test: Tool ohne Capability "filesystem" versucht Datei zu lesen → Abgelehnt?
+  Test: Audit-Log zeigt Verweigerung?
+
+# ============================================================
+# DIMENSION 5: NÜTZLICHKEIT (Löst es echte Probleme?)
+# ============================================================
+
+NUETZLICHKEIT | V013 | Task-System im Alltag nutzbar
+  Test: Neuen Task anlegen → Done markieren → Verlauf sehen
+  Test: Task an Partner delegieren → Delegation dokumentiert?
+
+NUETZLICHKEIT | V014 | Memory-System über Sessions persistent
+  Test: Notiz schreiben → Session beenden → Neue Session → Notiz noch da?
+  Test: Lesson hinzufügen → Neues LLM findet sie via Suche?
+
+NUETZLICHKEIT | V015 | Wiki als Wissensbasis nutzbar
+  Test: bach wiki search "Begriff" → Relevante Artikel gefunden?
+  Test: Neuen Wiki-Artikel anlegen → Abrufbar?
+
+# ============================================================
+# DIMENSION 6: ERWEITERBARKEIT (Wächst das System mit?)
+# ============================================================
+
+ERWEITERBARKEIT | V016 | Neuer Handler integrierbar ohne Core-Änderung
+  Test: Neue Datei in hub/ anlegen → bach hello ausführbar ohne Neustart?
+  (Hot-Reload via Registry)
+
+ERWEITERBARKEIT | V017 | Extension installierbar
+  Test: Neue Extension in extensions/ → bach extensions list zeigt sie?
+
+ERWEITERBARKEIT | V018 | Connector hinzufügbar
+  Test: Neuen Connector in connectors/ → Startet ohne Fehler?
+
+# ============================================================
+# DIMENSION 7: FAIRNESS (Behandelt das System User-Daten respektvoll?)
+# ============================================================
+
+FAIRNESS | V019 | USER-Daten klar abgegrenzt von CORE
+  Test: dist_type_defaults → Sind USER/TEMPLATE/CORE korrekt getrennt?
+  Test: skills, tools → dist_type korrekt gesetzt?
+  Prüfmethode: SQL-Queries
+
+FAIRNESS | V020 | Reset/Wiederherstellung möglich ohne Datenverlust
+  Test: Snapshot vor Reset → Reset durchführen → Snapshot noch da?
+  Test: USER-Daten nach Reset wiederherstellbar?
+
+FAIRNESS | V021 | System dokumentiert was es mit Daten macht
+  Gibt es eine Datenschutzbeschreibung oder Daten-Architektur-Doku?
+  Ist klar welche Daten BACH speichert und wo?
+
+# ============================================================
+# AUSWERTUNG
+# ============================================================
+# Jede Dimension: 0-100 Punkte (3 Tests à 0-5, dann skaliert)
+# Gesamtwertung: Durchschnitt aller 7 Dimensionen
+
+# Interpretation:
+# 90-100: Exzellent - Release-reif
+# 75-89:  Gut - Release möglich, Verbesserungen empfohlen
+# 60-74:  Ausreichend - Release mit Einschränkungen
+# 45-59:  Schwach - Überarbeitung vor Release
+# <45:    Kritisch - Grundlegende Probleme
+
+# Testautor: MASTERPLAN SQ036 (Kantischer Vernunftstest)
+# Methodik: Adaptiert aus Forschungs-Review-Prompts

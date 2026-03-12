@@ -1,0 +1,3 @@
+# ellmos-tests dependencies
+# Currently uses Python standard library only.
+# No external packages required.

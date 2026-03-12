@@ -1,0 +1,119 @@
+SYSTEMKLASSEN-KONZEPT
+=====================
+Version: 1.0 | Stand: 2026-01-11
+
+PROBLEM:
+--------
+Aktuell vergleichen wir "Äpfel mit Birnen":
+- _CHIAH, _BATCH, recludOS haben unterschiedliche Komplexität
+- Ein SKILL.md ist nicht dasselbe wie ein volles OS
+- Tests müssen klassenspezifisch sein
+
+DREI GEWICHTSKLASSEN:
+---------------------
+
+┌─────────────────────────────────────────────────────────────────────┐
+│  KLASSE 1: SKILL                                                    │
+│  ─────────────────                                                  │
+│  Definition: Einzelne Fähigkeit, eine SKILL.md Datei               │
+│  Komplexität: Niedrig                                               │
+│  Beispiele:                                                         │
+│    - Ein einzelner Anthropic-Skill (docx, pdf, xlsx)               │
+│    - Eine Prompt-Vorlage mit Anweisungen                           │
+│    - Ein spezialisierter Workflow                                   │
+│                                                                     │
+│  Anforderungen:                                                     │
+│    - Klar definierter Zweck                                        │
+│    - Selbsterklaerend in einer Datei                               │
+│    - Keine externen Abhängigkeiten nötig                           │
+│                                                                     │
+│  Test-Fokus:                                                        │
+│    - Lesbarkeit                                                     │
+│    - Vollständigkeit der Anleitung                                 │
+│    - Sofortige Anwendbarkeit                                       │
+└─────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────┐
+│  KLASSE 2: AGENT / HUB / BIBLIOTHEK                                │
+│  ──────────────────────────────────                                 │
+│  Definition: Sammlung von Skills mit gemeinsamer Steuerung         │
+│  Komplexität: Mittel                                                │
+│  Synonyme: Agent, Hub, Skill-Sammlung, Bibliothek                  │
+│  Beispiele:                                                         │
+│    - _CHIAH (CLI-Hub mit mehreren Handlern)                        │
+│    - Eine Tool-Sammlung mit Registry                               │
+│    - Ein spezialisierter Agent für einen Bereich                   │
+│                                                                     │
+│  Anforderungen:                                                     │
+│    - Zentrale Steuerung (CLI, API, oder Entry Point)              │
+│    - Modulare Struktur                                              │
+│    - Eigenes Help-System                                            │
+│    - Task-Management (optional)                                     │
+│                                                                     │
+│  Test-Fokus:                                                        │
+│    - Navigation zwischen Modulen                                    │
+│    - Tool-Auffindbarkeit                                           │
+│    - Konsistenz der Schnittstellen                                 │
+│    - Help-System Qualität                                          │
+└─────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────┐
+│  KLASSE 3: TEXT-OS                                                  │
+│  ────────────────                                                   │
+│  Definition: Vollständiges Betriebssystem für Claude-Sessions      │
+│  Komplexität: Hoch                                                  │
+│  Synonyme: Agenten-Sammlung mit hohem Integrationslevel            │
+│  Beispiele:                                                         │
+│    - _BATCH (Pipeline mit Daemon, GUI, Scanner)                    │
+│    - recludOS (Vollständiges OS-Konzept)                           │
+│    - Systeme mit Session-Management, Memory, Multi-Agent           │
+│                                                                     │
+│  Anforderungen:                                                     │
+│    - Session-Lifecycle (Start, Run, Shutdown)                      │
+│    - Persistentes Memory-System                                     │
+│    - Task-Queue mit Priorisierung                                  │
+│    - Crash-Recovery                                                 │
+│    - Automatisierung (Daemon, Scanner, etc.)                       │
+│    - Dokumentations-Hierarchie                                      │
+│    - Tool-Integration                                               │
+│                                                                     │
+│  Test-Fokus:                                                        │
+│    - Vollständiger Session-Workflow                                │
+│    - Memory-Persistenz über Sessions                               │
+│    - Automatisierungsgrad                                          │
+│    - Fehlertoleranz und Recovery                                   │
+│    - Skalierbarkeit                                                │
+└─────────────────────────────────────────────────────────────────────┘
+
+KLASSIFIZIERUNG DER AKTUELLEN SYSTEME:
+--------------------------------------
+
+| System    | Klasse      | Begründung                              |
+|-----------|-------------|----------------------------------------|
+| _CHIAH    | AGENT/HUB   | CLI-Hub, modulare Handler, Help-System |
+| _BATCH    | TEXT-OS     | Pipeline, Daemon, GUI, volle Automation|
+| recludOS  | TEXT-OS     | OS-Konzept, MCP-Server, System-Struktur|
+
+KONSEQUENZEN FUER TESTS:
+------------------------
+
+1. KLASSENSPEZIFISCHE TESTPROFILE:
+   - SKILL-Tests: Fokus auf Lesbarkeit, Anwendbarkeit
+   - AGENT-Tests: Fokus auf Navigation, Tools, Help
+   - OS-Tests: Fokus auf Lifecycle, Memory, Automation
+
+2. UNTERSCHIEDLICHE ANFORDERUNGEN:
+   - SKILL muss NICHT Task-Management haben
+   - AGENT muss NICHT Daemon haben
+   - OS MUSS Session-Lifecycle haben
+
+3. FAIRE VERGLEICHE:
+   - Nur innerhalb derselben Klasse vergleichen
+   - Oder: Klassenspezifische Gewichtung bei Gesamt-Score
+
+NAECHSTE SCHRITTE:
+------------------
+[ ] Testprofile pro Klasse definieren
+[ ] Bewertungskriterien pro Klasse anpassen
+[ ] Klassifizierungs-Checkliste erstellen
+[ ] In TESTKONZEPT.txt integrieren

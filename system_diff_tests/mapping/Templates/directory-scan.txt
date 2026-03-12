@@ -1,0 +1,114 @@
+═══════════════════════════════════════════════════════════════════════════════
+Templates - DIRECTORY SCAN
+═══════════════════════════════════════════════════════════════════════════════
+Scan-Datum: 2026-01-11 19:56
+System: Templates - Systemarchitektur-Vorlagen
+Pfad: C:\Users\User\OneDrive\.AI\Templates
+═══════════════════════════════════════════════════════════════════════════════
+
+📁 Templates/
+│
+├── 📄 Dossier.md ................ Dossier-Vorlage
+├── 📄 empirical_dossier.md ...... Empirisches Dossier
+├── 📄 Future.md ................. Zukunfts-Konzepte
+├── 📄 skill_architecture_generator_v1_batchstyle.py
+│
+├── 📁 OS/ ....................... ⭐ Universal LLM OS Konzepte
+│   │
+│   ├── 📄 Artikel Gedächtnis bei LLM.docx
+│   ├── 📄 der_geist_in_der_flasche.md
+│   ├── 📄 give_them_the_power_to_act.md
+│   ├── 📄 ich_du_wir_kommunikation.md
+│   ├── 📄 integration_to_universal_llm_os_structure.md
+│   ├── 📄 lernen_in_und_mit_recludOS.md
+│   ├── 📄 the_evolution_of_an_universal_llm_os_structure...md
+│   ├── 📄 what_can_we_learn_from_grown_skill-os.md
+│   ├── 📄 verteilungswege_fuer_templates.md
+│   │
+│   ├── 📄 universal_LLM_OS_structure_generator_v1.py
+│   ├── 📄 universal_LLM_OS_structure_generator_v2.py
+│   ├── 📄 universal_LLM_OS_structure_generator_v2 rext.txt
+│   │
+│   ├── 📁 universal-llm-os/ ..... Template v1
+│   │   ├── 📄 SKILL.md
+│   │   ├── 📄 README.md
+│   │   ├── 📄 CHANGELOG.md
+│   │   ├── 📄 identity.json
+│   │   ├── 📁 act/
+│   │   ├── 📁 connections/
+│   │   ├── 📁 exports/
+│   │   ├── 📁 gui/
+│   │   ├── 📁 reports/
+│   │   ├── 📁 tools/
+│   │   ├── 📁 _boot/
+│   │   ├── 📁 _config/
+│   │   ├── 📁 _memory/
+│   │   └── 📁 _registry/
+│   │
+│   ├── 📁 universal-llm-os-v2/ .. Template v2 (erweitert)
+│   │   ├── 📄 SKILL.md
+│   │   ├── 📄 README.md
+│   │   ├── 📄 CHANGELOG.md
+│   │   ├── 📄 identity.json
+│   │   ├── 📁 actors/
+│   │   ├── 📁 connections/
+│   │   ├── 📁 exports/
+│   │   ├── 📁 gui/
+│   │   ├── 📁 reports/
+│   │   ├── 📁 skills/
+│   │   ├── 📁 tools/
+│   │   ├── 📁 _boot/
+│   │   ├── 📁 _communication/
+│   │   ├── 📁 _config/
+│   │   ├── 📁 _memory/
+│   │   └── 📁 _registry/
+│   │
+│   └── 📁 universal-llm-os-distribution/
+│       ├── 📄 README.md
+│       ├── 📄 CHANGELOG.md
+│       ├── 📄 LICENSE
+│       ├── 📄 generator.py
+│       ├── 📁 docs/
+│       └── 📁 examples/
+│
+└── 📁 _root/ .................... ⭐ BATCH-Style Template
+    ├── 📄 SKILL.md
+    ├── 📄 README.md
+    ├── 📄 CHANGELOG.md
+    ├── 📁 _concepts/
+    │   ├── 📁 approved/
+    │   ├── 📁 future/
+    │   └── 📁 inbox/
+    ├── 📁 _config/
+    │   ├── 📄 config.json
+    │   ├── 📄 cleanup_config.json
+    │   └── 📄 daemon_config.json
+    ├── 📁 _data/
+    │   ├── 📄 chat.json
+    │   ├── 📄 gui_queue.json
+    │   ├── 📄 tasks.json
+    │   └── 📄 tasks_done.json
+    ├── 📁 _docs/
+    │   ├── 📄 ARCHITECTURE.md
+    │   ├── 📄 DIRECTORY_STRUCTURE.md
+    │   ├── 📄 DOCUMENTATION_RULES.md
+    │   └── 📄 NAMING_CONVENTIONS.md
+    ├── 📁 _reports/
+    │   ├── 📁 analysis/
+    │   ├── 📁 sessions/
+    │   └── 📁 _archive/
+    ├── 📁 _scripts/
+    │   ├── 📁 core/
+    │   ├── 📁 daemon/
+    │   └── 📁 maintenance/
+    └── 📁 _temp/
+
+═══════════════════════════════════════════════════════════════════════════════
+STATISTIK
+═══════════════════════════════════════════════════════════════════════════════
+Root-Dateien:          4
+Haupt-Ordner:          2 (OS/, _root/)
+OS-Templates:          3 (v1, v2, distribution)
+Konzept-Dokumente:     8 (.md in OS/)
+Generator-Scripts:     3 (Python)
+═══════════════════════════════════════════════════════════════════════════════

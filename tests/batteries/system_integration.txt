@@ -1,0 +1,127 @@
+# System-Integrationstests Batterie
+# Testet das Zusammenspiel mehrerer BACH-Komponenten
+# Format: SI_ID | Komponenten | Beschreibung | Erwartetes Ergebnis | Prüfmethode
+# Stand: 2026-02-18
+
+# ============================================================
+# TIER 1: KERN-INTEGRATIONEN (Muss vor Release bestehen)
+# ============================================================
+
+SI001 | bach.py + DB | Startup liest DB korrekt
+  - "bach --startup" ausführen
+  - DB-Verbindung wird hergestellt
+  - Tabellen tasks, memory_sessions, skills werden gelesen
+  Erwartet: Startup zeigt korrekte Datenlage (0 Tasks, 0 Sessions)
+  Prüfmethode: subprocess + output-Analyse
+
+SI002 | bach.py + hub/ | Handler-Dispatch funktioniert
+  - Befehl "bach task list" dispatcht an TaskHandler
+  - Rückgabe kommt zurück an bach.py
+  Erwartet: Kein "Handler nicht gefunden"-Fehler
+  Prüfmethode: subprocess + exit 0 + no exception
+
+SI003 | DB + hub/task.py | Task-Roundtrip (add -> list -> done)
+  - Task hinzufügen: "bach task add 'Integrationstest'"
+  - Task listen: "bach task list" -> erscheint
+  - Task erledigen: "bach task done [id]"
+  - Task listen: nicht mehr in offenen Tasks
+  Erwartet: Vollständiger Roundtrip ohne Fehler
+  Prüfmethode: subprocess sequence + DB-Check
+
+SI004 | DB + hub/memory.py | Memory-Roundtrip (write -> read)
+  - Memory schreiben: "bach mem write 'Testnotiz 12345'"
+  - Memory lesen: "bach mem read" -> '12345' erscheint
+  Erwartet: Persistenz der Notiz
+  Prüfmethode: subprocess sequence + output grep
+
+SI005 | DB + hub/skills.py | Skills aus DB geladen
+  - "bach skills list" -> Mindestens 50 Skills
+  - Jeder Skill hat Name, Kategorie, dist_type
+  Erwartet: Skills-Liste nicht leer, DB-Konsistenz
+  Prüfmethode: subprocess + count + DB query
+
+SI006 | tools/ + hub/ | MCP-Server + Tool-Registrierung
+  - MCP-Server starten
+  - Tool-Registry abfragen
+  Erwartet: Tools sind für MCP-Clients sichtbar
+  Prüfmethode: subprocess + MCP-Protokoll-Response
+
+# ============================================================
+# TIER 2: PIPELINE-INTEGRATIONEN
+# ============================================================
+
+SI007 | hub/session.py + DB | Session-Lifecycle
+  - Session starten: mode A (CLI-only)
+  - Session-ID wird in DB gespeichert
+  - Session beenden: "--shutdown"
+  - Session erscheint in memory_sessions (abgeschlossen)
+  Erwartet: Vollständiger Session-Lifecycle
+  Prüfmethode: subprocess + DB-Check
+
+SI008 | hub/backup.py + DB + Dateisystem | Backup-Integration
+  - Backup erstellen: "bach backup create"
+  - Backup-Eintrag in DB (backup_records)
+  - Backup-Datei im Dateisystem
+  - Backup wiederherstellen
+  Erwartet: Backup-Roundtrip ohne Datenverlust
+  Prüfmethode: subprocess + DB + os.path
+
+SI009 | hub/wiki.py + DB | Wiki-Suche
+  - "bach wiki search [Begriff]"
+  - SQL-Volltextsuche über wiki_entries
+  Erwartet: Treffer bei vorhandenen Begriffen, leer bei unbekannten
+  Prüfmethode: subprocess + output-Analyse
+
+SI010 | core/registry.py + hub/ | Registry-Konsistenz
+  - Alle Hub-Handler sind in der Registry registriert
+  - Kein Handler fehlt in der Dispatch-Tabelle
+  Erwartet: 100% Handler-Coverage
+  Prüfmethode: registry.get_handlers() vs os.listdir(hub/)
+
+# ============================================================
+# TIER 3: EXTERNES SYSTEM (optional, falls Connector vorhanden)
+# ============================================================
+
+SI011 | hub/connector.py + connectors/ | Connector-Lade-Test
+  - Connector-Klasse laden ohne Import-Fehler
+  - Template-Connector instanziierbar
+  Erwartet: Kein ImportError, Klasse läuft
+  Prüfmethode: python -c "import connectors.base"
+
+SI012 | hub/_services/ + hub/ | Service-Dispatcher
+  - Delivery-Engine: Zustellservice initialisierbar
+  - Document-Collector: Instanziierbar ohne Credentials
+  Erwartet: Services starten, warten auf Konfiguration
+  Prüfmethode: subprocess + no exception (graceful fail)
+
+SI013 | data/config/ + hub/ | Config-Laden
+  - Hub-Module lesen aus data/config/
+  - Fehlende Config -> Graceful Fallback (kein Crash)
+  Erwartet: System läuft auch mit leerer Konfiguration
+  Prüfmethode: frische Strawberry starten, kein crash
+
+# ============================================================
+# TIER 4: CROSS-MODUL-DATENFLUSS
+# ============================================================
+
+SI014 | agents/ + hub/ + DB | Agent-Dispatch-Kette
+  - Task an Agenten delegieren
+  - Agent läuft, schreibt Ergebnis in DB
+  - Ergebnis abrufbar über hub
+  Erwartet: Vollständige Delegation ohne manuelle Eingriffe
+  Prüfmethode: subprocess sequence
+
+SI015 | hub/hooks.py + hub/ | Hook-Ausführung
+  - Hook "on_startup" ist registriert
+  - Hook wird beim Startup ausgelöst
+  Erwartet: Hook-Output sichtbar im Startup-Log
+  Prüfmethode: subprocess + log-Check
+
+# ============================================================
+# AUSWERTUNG
+# ============================================================
+# Tier 1 (SI001-SI006): PFLICHT vor Release
+# Tier 2 (SI007-SI010): Empfohlen vor Release
+# Tier 3 (SI011-SI013): Optional (wenn Connectors aktiv)
+# Tier 4 (SI014-SI015): Nice-to-have
+# Release-Minimum: Tier 1 = 100%, Tier 2 >= 75%

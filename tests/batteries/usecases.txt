@@ -1,0 +1,344 @@
+# Usecase-Testbatterie (SQ014)
+# Alle 49+ BACH-Usecases systematisch zum Testen
+# Format: UC_ID | Modul | Beschreibung | Erwartetes Ergebnis | Status
+# Stand: 2026-02-18
+# Dach-Framework: SQ027 (Testpipeline)
+
+# ============================================================
+# MODUL: SOFTWARE (9 Usecases)
+# ============================================================
+
+UC001 | SOFTWARE | ATI-Pipeline: Neues Projekt anlegen
+  - Bach starten, ATI-Pipeline aufrufen
+  - Neues Softwareprojekt "Testprojekt-XY" anlegen
+  Erwartet: Projektordner wird erstellt, task.db angelegt
+  Status: pass (getestet)
+
+UC002 | SOFTWARE | ATI-Pipeline: Aufgabe zum Projekt hinzufügen
+  - Zu bestehendem Projekt eine neue Aufgabe hinzufügen
+  Erwartet: Aufgabe erscheint in task list
+  Status: pass
+
+UC003 | SOFTWARE | ATI-Pipeline: Code-Analyse durchführen
+  - Bach analysiert Quellcode-Ordner
+  Erwartet: Analyse-Report generiert
+  Status: pass
+
+UC004 | SOFTWARE | ATI-Pipeline: Commit-Nachricht generieren
+  - Git-Diff eingeben, Bach generiert passende Commit-Message
+  Erwartet: Semantisch korrekte Commit-Message
+  Status: pass
+
+UC005 | SOFTWARE | ATI-Pipeline: README automatisch generieren
+  - Aus vorhandenem Projekt README.md generieren
+  Erwartet: README mit Projektbeschreibung, Installation, Usage
+  Status: pass
+
+UC006 | SOFTWARE | ATI-Pipeline: Bug-Report erstellen
+  - Fehlermeldung eingeben, Bach erstellt strukturierten Bug-Report
+  Erwartet: Report mit Titel, Beschreibung, Reproduktion, Erwartetes/Tatsächliches
+  Status: pass
+
+UC007 | SOFTWARE | MCP-Server: Tool registrieren
+  - Neues Tool über MCP-Server registrieren
+  Erwartet: Tool taucht in tools list auf
+  Status: ungetestet
+
+UC008 | SOFTWARE | Self-Extension: Neuen Skill erstellen
+  - "bach skills create mein_skill"
+  - Skill-Template generieren, bearbeiten, aktivieren
+  Erwartet: Skill einsatzbereit, in skills list sichtbar
+  Status: ungetestet
+
+UC009 | SOFTWARE | Plugin-API: Externes Plugin aktivieren
+  - Plugin in extensions/ ablegen, BACH erkennt und lädt es
+  Erwartet: Plugin-Funktionen verfügbar
+  Status: ungetestet
+
+# ============================================================
+# MODUL: DOKUMENTENANALYSE (7 Usecases)
+# ============================================================
+
+UC010 | docs-analyse | PDF analysieren und zusammenfassen
+  - PDF einwerfen, BACH extrahiert Inhalt und erstellt Zusammenfassung
+  Erwartet: Zusammenfassung mit Kernpunkten
+  Status: pass
+
+UC011 | docs-analyse | Mehrere Dokumente vergleichen
+  - Zwei PDFs/Docs vergleichen
+  Erwartet: Vergleichsmatrix oder Differenz-Übersicht
+  Status: pass
+
+UC012 | docs-analyse | Dokument-Datenbank aufbauen
+  - Ordner mit Dokumenten indexieren
+  Erwartet: Dokumente in BACH-Datenbank, suchbar
+  Status: pass (teilweise)
+
+UC013 | docs-analyse | Volltext-Suche in Dokumenten
+  - Begriff in indexierten Dokumenten suchen
+  Erwartet: Treffer mit Fundstelle
+  Status: partial
+
+UC014 | docs-analyse | Dokument-Klassifizierung
+  - Dokument nach Typ/Kategorie klassifizieren
+  Erwartet: Korrekte Zuordnung
+  Status: ungetestet
+
+UC015 | docs-analyse | Rechnung automatisch verarbeiten
+  - Rechnung (PDF) einwerfen, BACH extrahiert Beträge/Datum/Empfänger
+  Erwartet: Strukturierte Daten extrahiert
+  Status: ungetestet
+
+UC016 | docs-analyse | Export-Bericht generieren
+  - Aus mehreren Dokumenten einen zusammenfassenden Report
+  Erwartet: Formatierter Bericht (PDF/DOCX)
+  Status: ungetestet
+
+# ============================================================
+# MODUL: ASSISTENT (6 Usecases)
+# ============================================================
+
+UC017 | ASSISTENT | Notiz speichern und abrufen
+  - "bach mem write 'Wichtige Notiz'"
+  - "bach mem read" -> Notiz erscheint
+  Erwartet: Persistenz über Session hinaus
+  Status: ungetestet
+
+UC018 | ASSISTENT | Erinnerung setzen
+  - Termin/Erinnerung speichern
+  - Beim nächsten Start erscheint Erinnerung
+  Erwartet: Reminder in Status-Ausgabe
+  Status: ungetestet
+
+UC019 | ASSISTENT | Tages-Routine ausführen
+  - Morgendliche Routine (Status, offene Tasks, Erinnerungen)
+  - "bach --startup" zeigt alles relevante
+  Erwartet: Vollständiger Morning-Briefing
+  Status: ungetestet
+
+UC020 | ASSISTENT | Gesprächskontext aufrechterhalten
+  - Mehrstufige Konversation mit Rückbezug auf frühere Aussagen
+  Erwartet: BACH erinnert sich an Kontext
+  Status: ungetestet
+
+UC021 | ASSISTENT | Task-Delegation an Sub-Agent
+  - Task erstellen, an spezifischen Agenten delegieren
+  Erwartet: Agent nimmt Task an und bearbeitet ihn
+  Status: ungetestet
+
+UC022 | ASSISTENT | Lessons gelernt anwenden
+  - BACH hat lesson "verwende immer UTF-8" - wendet es an
+  Erwartet: Lessons beeinflussen Verhalten nachweisbar
+  Status: ungetestet
+
+# ============================================================
+# MODUL: DATENMODUL (5 Usecases)
+# ============================================================
+
+UC023 | DATENMODUL | Tabellendaten importieren (CSV)
+  - CSV-Datei importieren, in BACH-DB speichern
+  Erwartet: Daten abrufbar via SQL/bach query
+  Status: ungetestet
+
+UC024 | DATENMODUL | Datenanalyse durchführen
+  - Datensatz analysieren: Mittelwert, Verteilung, Ausreißer
+  Erwartet: Statistischer Report
+  Status: ungetestet
+
+UC025 | DATENMODUL | Visualisierung erstellen
+  - Datensatz als Diagramm ausgeben
+  Erwartet: Diagramm (PNG/HTML) generiert
+  Status: ungetestet
+
+UC026 | DATENMODUL | Daten exportieren
+  - BACH-interne Daten nach CSV/JSON exportieren
+  Erwartet: Datei exportiert, korrektes Format
+  Status: ungetestet
+
+UC027 | DATENMODUL | Datenbankabfrage (SQL)
+  - Direktabfrage an bach.db
+  Erwartet: Korrektes Ergebnis
+  Status: ungetestet
+
+# ============================================================
+# MODUL: SYSTEM-SYNOPSE (4 Usecases)
+# ============================================================
+
+UC028 | system-synopse | System-Status abfragen
+  - "bach status" zeigt vollständige Übersicht
+  Erwartet: Memory, Tasks, Health, Datum/Zeit
+  Status: pass
+
+UC029 | system-synopse | Wiki-Eintrag abrufen
+  - "bach wiki search [Begriff]"
+  Erwartet: Relevante Wiki-Artikel gelistet
+  Status: pass
+
+UC030 | system-synopse | Handlerübersicht anzeigen
+  - "bach --handlers" oder "bach hub list"
+  Erwartet: Liste aller verfügbaren Handler
+  Status: pass
+
+UC031 | system-synopse | Tool-Registry einsehen
+  - "bach tools list" oder äquivalent
+  Erwartet: Alle registrierten Tools mit Status
+  Status: partial
+
+# ============================================================
+# MODUL: SYSTEM-TESTVERFAHREN (3 Usecases)
+# ============================================================
+
+UC032 | system-testverfahren | Selbsttest auslösen
+  - "bach test run release_smoke"
+  Erwartet: Alle B-Tests durchlaufen
+  Status: pass
+
+UC033 | system-testverfahren | DB-Integrität prüfen
+  - run_db_tests.py ausführen
+  Erwartet: 24/24 Tests PASS
+  Status: pass
+
+UC034 | system-testverfahren | Backup erstellen & wiederherstellen
+  - "bach backup create" + "bach backup restore [id]"
+  Erwartet: Backup erstellt, Wiederherstellung funktioniert
+  Status: pass
+
+# ============================================================
+# MODUL: CARE-MODUL (3 Usecases)
+# ============================================================
+
+UC035 | CARE-MODUL | Therapieprotokoll erstellen
+  - Session-Notizen eingeben, strukturiertes Protokoll generieren
+  Erwartet: Formatiertes Therapieprotokoll
+  Status: ungetestet
+
+UC036 | CARE-MODUL | Förderbericht generieren
+  - Schülerdaten + Beobachtungen eingeben
+  - Förderbericht nach offiziellen Vorgaben generieren
+  Erwartet: Vollständiger Förderbericht (DOCX/PDF)
+  Status: ungetestet
+
+UC037 | CARE-MODUL | ICF-Klassifikation anwenden
+  - Symptome/Beobachtungen nach ICF klassifizieren
+  Erwartet: ICF-Codes mit Begründung
+  Status: ungetestet
+
+# ============================================================
+# MODUL: THERAPIE (2 Usecases)
+# ============================================================
+
+UC038 | THERAPIE | Therapieplan erstellen
+  - Diagnose + Ziele eingeben, Therapieplan generieren
+  Erwartet: Strukturierter Therapieplan
+  Status: ungetestet
+
+UC039 | THERAPIE | Fortschritt dokumentieren
+  - Stundendokumentation über Zeit verfolgen
+  Erwartet: Trendanalyse und Fortschrittsbericht
+  Status: ungetestet
+
+# ============================================================
+# MODUL: SELBSTMANAGEMENT (2 Usecases)
+# ============================================================
+
+UC040 | SELBSTMANAGEMENT | Wochenplan organisieren
+  - Termine und Aufgaben eingeben, BACH erstellt strukturierten Plan
+  Erwartet: Priorisierter Wochenplan
+  Status: pass
+
+UC041 | SELBSTMANAGEMENT | Gewohnheit tracken
+  - Tägliche Gewohnheit eintragen, Streak verfolgen
+  Erwartet: Streak-Anzeige, Visualisierung
+  Status: ungetestet
+
+# ============================================================
+# MODUL: HAUSHALT (1 Usecase)
+# ============================================================
+
+UC042 | HAUSHALT | Einkaufsliste verwalten
+  - Artikel hinzufügen, Liste ausgeben, Artikel abhaken
+  Erwartet: Persistente Liste, korrekte Status-Updates
+  Status: pass
+
+# ============================================================
+# MODUL: KARRIERE (2 Usecases)
+# ============================================================
+
+UC043 | KARRIERE | Bewerbung erstellen
+  - Stelle + CV eingeben, BACH erstellt Anschreiben
+  Erwartet: Personalisiertes Bewerbungsschreiben
+  Status: ungetestet
+
+UC044 | KARRIERE | CV optimieren
+  - CV-Analyse, Verbesserungsvorschläge für Zielstelle
+  Erwartet: Optimierter CV mit Begründungen
+  Status: ungetestet
+
+# ============================================================
+# MODUL: WISSEN (1 Usecase)
+# ============================================================
+
+UC045 | WISSEN | Wissensartikel erstellen und verlinken
+  - Neuen Wiki-Eintrag erstellen, mit bestehendem verlinken
+  Erwartet: Eintrag in wiki/, korrekte Verlinkung
+  Status: ungetestet
+
+# ============================================================
+# MODUL: GESUNDHEIT (1 Usecase)
+# ============================================================
+
+UC046 | GESUNDHEIT | Gesundheitsdaten erfassen
+  - Vitaldaten (Gewicht, Schlaf, etc.) eintragen
+  - Trendanalyse abrufen
+  Erwartet: Datenpunkt gespeichert, Trend berechenbar
+  Status: ungetestet
+
+# ============================================================
+# MODUL: FINANZEN (1 Usecase)
+# ============================================================
+
+UC047 | FINANZEN | Ausgaben kategorisieren
+  - Ausgabe eingeben, BACH schlägt Kategorie vor
+  - Monatliche Ausgabenübersicht generieren
+  Erwartet: Korrekte Kategorisierung, Übersicht
+  Status: ungetestet
+
+# ============================================================
+# MODUL: DOKUMENTENMODUL (1 Usecase)
+# ============================================================
+
+UC048 | DOKUMENTENMODUL | Dokument formatiert ausgeben
+  - Rohen Text in formatiertes Dokument (DOCX/PDF) umwandeln
+  Erwartet: Professionell formatiertes Dokument
+  Status: ungetestet
+
+# ============================================================
+# MODUL: ORDNER-FLATTENING (1 Usecase)
+# ============================================================
+
+UC049 | ordner-flattening | Verschachtelte Ordnerstruktur flachen
+  - Tiefen Ordnerbaum auf flache Struktur umstrukturieren
+  Erwartet: Flache Struktur ohne Verlust
+  Status: ungetestet
+
+# ============================================================
+# NEUE BEREICHE (noch keine Usecases, zu ergänzen)
+# ============================================================
+
+# Noch zu formulieren:
+# - Bridge/Connectors (Telegram, Discord, HomeAssistant)
+# - Memory-System (Consolidation, Fakten)
+# - Backup-System
+# - Multi-LLM / Partner-Delegation
+# - Hook-Framework
+# - Wiki-System (Erstellen, Suchen, Navigieren)
+# - Email-System
+# - GUI/Dashboard
+
+# ============================================================
+# AUSWERTUNG
+# ============================================================
+# Getestet (pass):    16 (33%)
+# Teilweise (partial): 4 ( 8%)
+# Ungetestet:         29 (59%)
+# Release-Minimum: 80% aller UC pass oder partial

@@ -1,0 +1,173 @@
+# Connector-Testbatterie
+# Testet alle BACH Bridge- und Connector-Module
+# Format: CN_ID | Connector | Beschreibung | Erwartetes Ergebnis | Prüfmethode
+# Stand: 2026-02-18
+# Hinweis: CN-Tests sind optional — nur relevant wenn Connector aktiv konfiguriert ist
+
+# ============================================================
+# TIER 0: BASIS-INFRASTRUKTUR (Unabhängig von konkretem Connector)
+# ============================================================
+
+CN001 | base | Basis-Connector importierbar
+  - "python -c 'from connectors.base import BaseConnector'"
+  Erwartet: ImportError = FAIL, kein Fehler = PASS
+  Prüfmethode: subprocess exit code 0
+
+CN002 | base | BaseConnector instanziierbar
+  - BaseConnector() ohne Credentials instanziieren
+  Erwartet: Kein Crash, Objekt erstellt (auch wenn nicht verbunden)
+  Prüfmethode: python -c "from connectors.base import BaseConnector; c = BaseConnector()"
+
+CN003 | base | Connector-Registry läuft
+  - "bach connectors list" oder äquivalent
+  Erwartet: Liste vorhandener Connector-Module, kein Crash
+  Prüfmethode: subprocess + exit 0
+
+CN004 | base | Fehlende Credentials — Graceful Fail
+  - Connector starten ohne Credentials-Datei
+  Erwartet: Informative Fehlermeldung, kein Stack-Trace, kein Crash
+  Prüfmethode: subprocess + check output enthält "credential" oder "config"
+
+CN005 | base | Connector Status-Abfrage
+  - "bach connectors status" oder äquivalent
+  Erwartet: Zeigt welche Connectors verbunden/nicht verbunden sind
+  Prüfmethode: subprocess + output enthält Status-Felder
+
+# ============================================================
+# TIER 1: BRIDGE / CLAUDE-BRIDGE
+# ============================================================
+
+CN010 | claude_bridge | Bridge-Daemon importierbar
+  - "python -c 'from hub._services.claude_bridge.bridge_daemon import BridgeDaemon'"
+  Erwartet: Kein ImportError
+  Prüfmethode: subprocess exit code 0
+
+CN011 | claude_bridge | Bridge-Config laden
+  - bridge_daemon.py liest aus data/config/bridge_config.json (oder Fallback)
+  Erwartet: Kein KeyError, graceful Fallback auf Defaults
+  Prüfmethode: python -c "...BridgeDaemon(); no exception"
+
+CN012 | claude_bridge | Bridge State persistenz
+  - Bridge state.json schreiben + lesen
+  Erwartet: State wird korrekt serialisiert und deserialisiert
+  Prüfmethode: write state + read state + assertEqual
+
+CN013 | claude_bridge | Bridge Startup ohne aktive Verbindung
+  - BridgeDaemon starten ohne laufende Claude-Instanz
+  Erwartet: Daemon startet, wartet, kein Crash
+  Prüfmethode: subprocess + exit 0 nach graceful timeout
+
+CN014 | claude_bridge | Bridge Message Queue
+  - Nachricht in Queue einreihen (ohne gesendeten Kanal)
+  Erwartet: Nachricht wird in state.json oder Warteschlange gespeichert
+  Prüfmethode: Queue size check nach enqueue
+
+# ============================================================
+# TIER 2: EMAIL-CONNECTOR
+# ============================================================
+
+CN020 | email | Email-Hub importierbar
+  - "python -c 'from hub.email import EmailHub'"
+  Erwartet: Kein ImportError
+  Prüfmethode: subprocess exit code 0
+
+CN021 | email | Email-Sender importierbar
+  - "python -c 'from hub._services.mail.email_sender import EmailSender'"
+  Erwartet: Kein ImportError
+  Prüfmethode: subprocess exit code 0
+
+CN022 | email | Kein PII in Default-Config
+  - DEFAULT_SENDER darf nicht "lukasgeiger@googlemail.com" enthalten
+  - Sollte "your-email@example.com" oder leer sein
+  Erwartet: Kein persönlicher Email-Default
+  Prüfmethode: grep "lukasgeiger" hub/_services/mail/email_sender.py -> 0 Treffer
+
+CN023 | email | Email ohne SMTP-Config — Graceful Fail
+  - EmailSender ohne SMTP-Konfiguration aufrufen
+  Erwartet: Informative Fehlermeldung, kein unkontrollierter Absturz
+  Prüfmethode: subprocess + output enthält "smtp" oder "config"
+
+CN024 | email | Email-Template Platzhalter
+  - email_sender.py hat Platzhalter-Variablen statt hardcodierter Werte
+  Erwartet: {recipient}, {sender}, {subject} — keine festen Werte
+  Prüfmethode: Statische Code-Analyse: grep nach "@" in Strings
+
+# ============================================================
+# TIER 3: DELIVERY-ENGINE
+# ============================================================
+
+CN030 | delivery | Delivery-Engine importierbar
+  - "python -c 'from hub._services.delivery.delivery_engine import DeliveryEngine'"
+  Erwartet: Kein ImportError
+  Prüfmethode: subprocess exit code 0
+
+CN031 | delivery | Delivery-Engine Instantiierung
+  - DeliveryEngine() ohne Konfiguration erstellen
+  Erwartet: Objekt erstellt, kein Crash (wartet auf Config)
+  Prüfmethode: python -c "...DeliveryEngine(); no exception"
+
+CN032 | delivery | Delivery-Preferences Config-Format
+  - data/config/delivery_preferences.json valide JSON?
+  - self_address kein persönlicher Wert?
+  Erwartet: Valide JSON, self_address = "your-email@example.com"
+  Prüfmethode: json.loads() + grep gegen PII
+
+CN033 | delivery | Delivery ohne Ziel — Graceful Fail
+  - Delivery triggern ohne konfigurierten Empfänger
+  Erwartet: Fehlermeldung, kein Send-Versuch, kein Crash
+  Prüfmethode: subprocess + output check
+
+# ============================================================
+# TIER 4: DOCUMENT-COLLECTOR
+# ============================================================
+
+CN040 | document | Document-Collector importierbar
+  - "python -c 'from hub._services.document.document_collector import DocumentCollector'"
+  Erwartet: Kein ImportError
+  Prüfmethode: subprocess exit code 0
+
+CN041 | document | Anonymisierungs-Whitelist leer in Strawberry
+  - DocumentCollector default whitelist = []
+  - Keine persönlichen Namen in Default-Whitelist
+  Erwartet: whitelist=[] (User-spezifisch, nicht im Code)
+  Prüfmethode: grep "Geiger\|Lukas\|proAutismus\|Caritas" document_collector.py -> 0
+
+CN042 | document | Report-Workflow Therapeuten-Default leer
+  - report_workflow_service.py default therapeut_name = "" oder Platzhalter
+  Erwartet: Kein hardcodierter Name
+  Prüfmethode: grep "Lukas\|Geiger" report_workflow_service.py -> 0
+
+CN043 | document | Document-Collector ohne Dokumente
+  - DocumentCollector auf leeren Ordner ansetzen
+  Erwartet: Leeres Ergebnis, kein Crash
+  Prüfmethode: subprocess + exit 0 + output enthält "0" oder "leer"
+
+# ============================================================
+# TIER 5: TELEGRAM/DISCORD/EXTERNAL (optional, wenn vorhanden)
+# ============================================================
+
+CN050 | telegram | Telegram-Connector Template vorhanden
+  - connectors/telegram/ existiert oder connectors/base.py hat Telegram-Support
+  Erwartet: Template-Datei vorhanden (auch ohne Token)
+  Prüfmethode: os.path.exists() check
+
+CN051 | telegram | Telegram ohne Token — Graceful Fail
+  - Telegram-Connector ohne BOT_TOKEN starten
+  Erwartet: "Token nicht konfiguriert" — kein Stack-Trace
+  Prüfmethode: subprocess + exit graceful
+
+CN052 | homeassistant | HomeAssistant Connector Template
+  - connectors/homeassistant/ oder äquivalent
+  Erwartet: Template vorhanden, importierbar ohne HA-Instanz
+  Prüfmethode: os.path.exists() + import check
+
+# ============================================================
+# AUSWERTUNG
+# ============================================================
+# Tier 0 (CN001-CN005): BASIS - immer testen
+# Tier 1 (CN010-CN014): Claude-Bridge - bei Bridge-Aktivierung
+# Tier 2 (CN020-CN024): Email - bei Email-Konfiguration
+# Tier 3 (CN030-CN033): Delivery - bei Delivery-Aktivierung
+# Tier 4 (CN040-CN043): Documents - bei Document-Service-Aktivierung
+# Tier 5 (CN050-CN052): Externe Connectors - optional
+# Release-Minimum: Tier 0 = 100%, Tier 1-4 = jeweils pass "importierbar"-Tests

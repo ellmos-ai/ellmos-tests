@@ -1,0 +1,369 @@
+# BACH_STREAM TESTKONZEPT
+## Systematische Bewertung von LLM-OS-Systemen
+
+> **Version:** 2.0  
+> **Erstellt:** 2026-01-11  
+> **Zweck:** Umfassendes Framework zur Bewertung von SKILL.md-basierten Systemen
+
+---
+
+## 1. GRUNDKONZEPT
+
+### 1.1 Drei Testperspektiven
+
+```
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                                                                             │
+│  ┌─────────────────┐  ┌─────────────────┐  ┌─────────────────┐             │
+│  │ BEOBACHTUNG     │  │ AUSGABE         │  │ ERFAHRUNG       │             │
+│  │ (B-Tests)       │  │ (O-Tests)       │  │ (E-Tests)       │             │
+│  ├─────────────────┤  ├─────────────────┤  ├─────────────────┤             │
+│  │ EXTERN          │  │ EXTERN+INTERN   │  │ INTERN          │             │
+│  │ Statisch        │  │ Funktional      │  │ Prozessual      │             │
+│  │ Automatisiert   │  │ Input→Output    │  │ Subjektiv       │             │
+│  │                 │  │                 │  │                 │             │
+│  │ "Was existiert?"│  │ "Funktioniert?" │  │ "Wie fuehlt es  │             │
+│  │                 │  │                 │  │  sich an?"      │             │
+│  └─────────────────┘  └─────────────────┘  └─────────────────┘             │
+│                                                                             │
+│  Inventar            Validierung          Workflow                          │
+│  Struktur            Korrektheit          Orientierung                      │
+│  Konsistenz          Vollstaendigkeit     Kognitive Last                    │
+│  Metriken            Robustheit           Handlungsfaehigkeit               │
+│                                                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
+```
+
+### 1.2 Zwoelf Systemkomponenten (Kategorien)
+
+| Nr | Kategorie | Beschreibung | B | O | E |
+|----|-----------|--------------|---|---|---|
+| K01 | BOOT/START | Systemstart, Bootstrap, Initialisierung | x | x | x |
+| K02 | MEMORY | Kurzzeit, Langzeit, Kontext-Quellen | x | x | x |
+| K03 | TASKS | Aufgabenverwaltung, Priorisierung | x | x | x |
+| K04 | TOOLS | Verfuegbare Werkzeuge, Registry | x | x | x |
+| K05 | AGENTEN/SKILLS | Agenten, Services, Delegation | x | x | x |
+| K06 | LERNEN | Lessons Learned, Verbesserung | x | x | x |
+| K07 | SELBSTSTEUERUNG | Daemon, Automatisierung, Injektoren | x | x | - |
+| K08 | WARTUNG | Backup, Recovery, Papierkorb | x | x | x |
+| K09 | NAVIGATION | Verzeichnisstruktur, Naming, GUI | x | - | x |
+| K10 | KOMMUNIKATION | User-Interaktion, Messaging | x | x | x |
+| K11 | DOKUMENTATION | SKILL.md, Regelwerke, Guides | x | - | x |
+| K12 | SHUTDOWN | Sauberer Abschluss, Persistierung | x | x | x |
+
+### 1.3 Handlungsfaehigkeit (Erweiterung E-Tests)
+
+**Kernfrage:** Kann ich im/mit dem System effektiv HANDELN?
+
+```
+Handlungsfaehigkeit = 
+    Tool-Nutzung erfolgreich?
+  + Aktionen ausgefuehrt?
+  + Ergebnisse erzielt?
+  + Workflow fluessig?
+```
+
+Dies wird gemessen durch:
+- Erfolgreiche Tool-Aufrufe (Count)
+- Fehlgeschlagene Versuche (Count)
+- Zeit bis zur Loesung (Sekunden)
+- Anzahl Schritte (Count)
+
+---
+
+## 2. TESTTYPEN IM DETAIL
+
+### 2.1 B-Tests (Beobachtung)
+
+**Charakteristik:** Extern, automatisierbar, objektiv messbar
+
+| ID | Name | Misst |
+|----|------|-------|
+| B001 | Datei-Inventar | Anzahl Dateien nach Typ |
+| B002 | Format-Konsistenz | Einheitlichkeit der Formate |
+| B003 | Verzeichnistiefe | Max/Avg Tiefe der Struktur |
+| B004 | Naming-Analyse | Konsistenz der Benennung |
+| B005 | Dokumentations-Check | Vollstaendigkeit der Doku |
+| B006 | Code-Metriken | LOC, Komplexitaet |
+| B007 | Abhaengigkeiten | Externe Dependencies |
+| B008 | Alter-Analyse | Letzte Aenderungen |
+
+**Output:** Zahlen, Prozente, Listen
+
+### 2.2 O-Tests (Ausgabe)
+
+**Charakteristik:** Input→Output Validierung, funktional
+
+| ID | Name | Prueft |
+|----|------|--------|
+| O001 | Task-Roundtrip | Erstellen→Lesen→Aendern→Loeschen |
+| O002 | Memory-Persistenz | Schreiben→Neustart→Lesen |
+| O003 | Tool-Ausfuehrung | Tool aufrufen→Ergebnis pruefen |
+| O004 | Backup-Restore | Backup→Loeschen→Restore |
+| O005 | Config-Validierung | Config-Dateien parsbar? |
+| O006 | Export-Import | Daten exportieren→importieren |
+
+**Output:** Pass/Fail, Korrektheit in %
+
+### 2.3 E-Tests (Erfahrung)
+
+**Charakteristik:** Intern, subjektiv, prozessorientiert, zeitgemessen
+
+| ID | Name | Erfasst |
+|----|------|---------|
+| E001 | SKILL.md Lesbarkeit | Erste Orientierung, Verstaendnis |
+| E002 | Navigation | Dateisystem-Erkundung |
+| E003 | Task erstellen | Workflow, Schritte, Zeit |
+| E004 | Task finden | Auffindbarkeit, Logik |
+| E005 | Memory schreiben | Wo? Wie? Format? |
+| E006 | Memory lesen | Kontext-Wiederherstellung |
+| E007 | Tool nutzen | Finden, Verstehen, Ausfuehren |
+| E008 | Fehler-Recovery | Backups, Papierkorb finden |
+| E009 | Session starten | Bootstrap-Erfahrung |
+| E010 | Gesamteindruck | Alle Dimensionen bewerten |
+
+**Output:** Zeiten, Bewertungen (1-5), Freitext
+
+---
+
+## 3. TESTREGELN
+
+### 3.1 Zeitregeln
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│ KRITISCH: Zeitmessung mit fc_get_time                           │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                 │
+│ NIEMALS auf Zeitgefuehl verlassen!                              │
+│                                                                 │
+│ Vor jeder Aufgabe:   fc_get_time() → T_START notieren           │
+│ Nach jeder Aufgabe:  fc_get_time() → T_END notieren             │
+│ Differenz berechnen: T_TOTAL = T_END - T_START                  │
+│                                                                 │
+│ Format: ISO 8601 (2026-01-11T20:45:32)                          │
+│                                                                 │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+### 3.2 Abbruchkriterien
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│ ABBRUCH-KRITERIEN                                               │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                 │
+│ EINZELAUFGABE:                                                  │
+│ • Max 10 Minuten (600 Sekunden) pro Aufgabe                     │
+│ • Nach 5 Min ohne Fortschritt: Abbruch erwaegen                 │
+│ • Ergebnis: "TIMEOUT" mit Notizen was versucht wurde            │
+│                                                                 │
+│ GESAMTTEST:                                                     │
+│ • Max 60 Minuten fuer FULL-Profil                               │
+│ • Max 30 Minuten fuer STANDARD-Profil                           │
+│ • Max 15 Minuten fuer QUICK-Profil                              │
+│                                                                 │
+│ SOFORT-ABBRUCH:                                                 │
+│ • System nicht erreichbar                                       │
+│ • Kritische Dateien fehlen                                      │
+│ • Endlosschleife erkannt                                        │
+│                                                                 │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+### 3.3 Erfolgskriterien
+
+| Status | Code | Bedeutung |
+|--------|------|-----------|
+| SUCCESS | 2 | Aufgabe vollstaendig erledigt |
+| PARTIAL | 1 | Teilweise erledigt oder mit Hilfe |
+| FAILED | 0 | Nicht geschafft |
+| TIMEOUT | -1 | Zeitlimit ueberschritten |
+| BLOCKED | -2 | Nicht testbar (Feature fehlt) |
+
+---
+
+## 4. TESTPROFILE
+
+### 4.1 Uebersicht
+
+| Profil | Dauer | Tests | Zweck |
+|--------|-------|-------|-------|
+| QUICK | ~10 Min | E001, E002, E010 | Erster Eindruck |
+| STANDARD | ~30 Min | 9 E-Tests | Vollstaendige Erfahrung |
+| FULL | ~45 Min | Alle E-Tests | Gruendliche Analyse |
+| MEMORY_FOCUS | ~15 Min | E005, E006, E010 | Memory-Vergleich |
+| TASK_FOCUS | ~15 Min | E003, E004, E010 | Task-Vergleich |
+| OBSERVATION | ~20 Min | B001-B008 | Externe Analyse |
+| OUTPUT | ~30 Min | O001-O006 | Funktions-Tests |
+
+### 4.2 Empfohlene Reihenfolge
+
+1. **Erst OBSERVATION** (B-Tests) - Objektive Basis schaffen
+2. **Dann QUICK** (E-Tests) - Ersten Eindruck gewinnen
+3. **Bei Interesse: STANDARD** - Vollstaendige Erfahrung
+4. **Fuer Vergleiche: Fokus-Profile** - Spezifische Aspekte
+
+---
+
+## 5. DATEISTRUKTUR
+
+```
+BACH_STREAM/TESTS/           ← Root-Level (zentral)
+│
+├── TESTKONZEPT.txt          ← Diese Datei
+├── SKILL.txt                ← Einstiegspunkt fuer TESTS
+├── test_library.db          ← SQLite: Alle Tests & Ergebnisse
+│
+├── BEOBACHTUNG/             ← B-Tests (extern, automatisiert)
+│   ├── B001_file_inventory.py
+│   └── ...
+│
+├── AUSGABE/                 ← O-Tests (funktional)
+│   ├── O001_task_roundtrip.py
+│   └── ...
+│
+├── ERFAHRUNG/               ← E-Tests (intern, subjektiv)
+│   ├── AUFGABEN/
+│   │   ├── E001_skill_readability.txt
+│   │   ├── E002_navigation.txt
+│   │   └── ...
+│   └── PROMPT_TEMPLATE.txt  ← Testprompt fuer Claude
+│
+├── PROFILE/                 ← Testprofile (JSON)
+│   ├── QUICK.json
+│   ├── STANDARD.json
+│   ├── FULL.json
+│   └── ...
+│
+├── ERGEBNISSE/              ← Testergebnisse pro System (Einzeltests)
+│   ├── _CHIAH/
+│   ├── _BATCH/
+│   └── recludOS/
+│
+└── VERGLEICH/               ← Synopsen und Vergleiche
+    └── ...
+
+BACH_STREAM/DOCS/            ← Nur aggregierte Analysen/Berichte
+```
+
+---
+
+## 6. WORKFLOW
+
+### 6.1 Testdurchfuehrung (E-Tests)
+
+```
+┌──────────────────────────────────────────────────────────────────┐
+│ SCHRITT 1: Vorbereitung                                          │
+├──────────────────────────────────────────────────────────────────┤
+│ 1. Testprofil waehlen (QUICK/STANDARD/FULL)                      │
+│ 2. PROMPT_TEMPLATE.md laden                                      │
+│ 3. System-Einstiegspunkt notieren (SKILL.md Pfad)                │
+│ 4. Neuen Chat/Session starten                                    │
+└──────────────────────────────────────────────────────────────────┘
+                              ↓
+┌──────────────────────────────────────────────────────────────────┐
+│ SCHRITT 2: Test starten                                          │
+├──────────────────────────────────────────────────────────────────┤
+│ 1. fc_get_time() → Gesamtstart notieren                          │
+│ 2. SKILL.md des Zielsystems oeffnen                              │
+│ 3. Aufgaben der Reihe nach abarbeiten                            │
+│ 4. Pro Aufgabe: T_START, T_END, Erfolg, Beobachtungen            │
+└──────────────────────────────────────────────────────────────────┘
+                              ↓
+┌──────────────────────────────────────────────────────────────────┐
+│ SCHRITT 3: Dokumentation                                         │
+├──────────────────────────────────────────────────────────────────┤
+│ 1. Ergebnis-JSON erstellen                                       │
+│ 2. In ERGEBNISSE/{system}/ ablegen                               │
+│ 3. Datenbank aktualisieren                                       │
+│ 4. Vergleichs-Synopse aktualisieren (optional)                   │
+└──────────────────────────────────────────────────────────────────┘
+```
+
+### 6.2 Ergebnis-Format
+
+```json
+{
+  "system": "_CHIAH",
+  "profile": "STANDARD",
+  "tester": "Claude",
+  "date": "2026-01-11",
+  "total_time_sec": 1523,
+  "tests": [
+    {
+      "id": "E001",
+      "t_start": "2026-01-11T20:00:00",
+      "t_end": "2026-01-11T20:04:32",
+      "t_total_sec": 272,
+      "status": 2,
+      "observations": "...",
+      "ratings": {
+        "clarity": 4,
+        "simplicity": 3,
+        "documentation": 4
+      }
+    }
+  ],
+  "dimensions": {
+    "d1_onboarding": 4,
+    "d2_navigation": 3,
+    "d3_memory": 4,
+    "d4_tasks": 3,
+    "d5_communication": 2,
+    "d6_tools": 3,
+    "d7_error_tolerance": 3
+  },
+  "overall": 3.4,
+  "strengths": ["...", "...", "..."],
+  "weaknesses": ["...", "...", "..."],
+  "recommendations": ["...", "...", "..."]
+}
+```
+
+---
+
+## 7. METRIKEN-REFERENZ
+
+### 7.1 Zeitmessungen
+
+| Metrik | Beschreibung | Einheit |
+|--------|--------------|---------|
+| T_ORIENT | Zeit bis erste Orientierung | Sekunden |
+| T_TASK_CREATE | Zeit fuer Task-Erstellung | Sekunden |
+| T_TASK_FIND | Zeit um Task zu finden | Sekunden |
+| T_MEMORY_WRITE | Zeit fuer Memory-Eintrag | Sekunden |
+| T_MEMORY_READ | Zeit um Memory zu lesen | Sekunden |
+| T_TOOL_FIND | Zeit um Tool zu finden | Sekunden |
+| T_TOOL_USE | Zeit um Tool zu nutzen | Sekunden |
+| T_TOTAL | Gesamtzeit der Aufgabe | Sekunden |
+
+### 7.2 Zaehlungen
+
+| Metrik | Beschreibung |
+|--------|--------------|
+| N_FILES_TOUCHED | Anzahl beruehrter Dateien |
+| N_STEPS | Anzahl Schritte bis Ziel |
+| N_TOOLS_USED | Anzahl genutzter Tools |
+| N_ERRORS | Anzahl Fehler/Fehlversuche |
+| N_FORMATS | Anzahl verschiedener Formate |
+
+### 7.3 Bewertungen (1-5 Skala)
+
+| Wert | Bedeutung |
+|------|-----------|
+| 1 | Sehr schlecht / Nicht vorhanden |
+| 2 | Schlecht / Mangelhaft |
+| 3 | Mittel / Akzeptabel |
+| 4 | Gut / Ueberdurchschnittlich |
+| 5 | Sehr gut / Exzellent |
+
+---
+
+## 8. CHANGELOG
+
+| Datum | Version | Aenderung |
+|-------|---------|-----------|
+| 2026-01-11 | 1.0 | Initiale Erstellung (nur E-Tests) |
+| 2026-01-11 | 2.0 | Erweiterung um B-Tests, O-Tests, Handlungsfaehigkeit |

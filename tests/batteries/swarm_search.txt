@@ -1,0 +1,173 @@
+# Swarm-Search Testbatterie
+# Testet das Multi-Agenten-Suchsystem und parallele Delegations-Ketten
+# Format: SW_ID | Komponente | Beschreibung | Erwartetes Ergebnis | Prüfmethode
+# Stand: 2026-02-18
+# Hinweis: SW-Tests setzen agents/ und hub/session.py voraus
+
+# ============================================================
+# TIER 0: BASIS-VORAUSSETZUNGEN
+# ============================================================
+
+SW001 | agents/ | Agents-Verzeichnis vorhanden + nicht leer
+  - system/agents/ existiert
+  - Mindestens 1 Agenten-Datei vorhanden
+  Erwartet: os.path.exists() + len(listdir) > 0
+  Prüfmethode: os.path.exists + os.listdir
+
+SW002 | agents/ | Basis-Agent importierbar
+  - Import des Basis-Agenten (je nach Implementierung)
+  Erwartet: Kein ImportError
+  Prüfmethode: python -c "import agents" oder "from agents.base import Agent"
+
+SW003 | agents/ | Agent-Dispatch via hub
+  - Hub kann Task an agents/ delegieren
+  Erwartet: Dispatch läuft, kein RoutingError
+  Prüfmethode: hub.dispatch("agent_task", ...) + exit 0
+
+SW004 | hub/session.py | Session-Manager importierbar
+  - "from hub.session import SessionManager" oder äquivalent
+  Erwartet: Kein ImportError
+  Prüfmethode: subprocess exit code 0
+
+# ============================================================
+# TIER 1: EINZEL-AGENT DELEGATION
+# ============================================================
+
+SW010 | single-agent | Agent nimmt Task an
+  - Task via "bach agent run [task_beschreibung]" starten
+  Erwartet: Agent acknowledged task, gibt Status zurück
+  Prüfmethode: subprocess + output enthält "gestartet" oder "accepted"
+
+SW011 | single-agent | Agent schreibt Ergebnis in DB
+  - Agent-Task ausführen lassen
+  - Ergebnis in DB prüfen (agent_results Tabelle oder äquivalent)
+  Erwartet: Ergebnis-Zeile in DB nach Agent-Ausführung
+  Prüfmethode: subprocess + SELECT from DB
+
+SW012 | single-agent | Agent-Ergebnis abrufbar
+  - "bach agent result [id]" -> Ergebnis sichtbar
+  Erwartet: Vollständiges Ergebnis-Objekt mit Status, Output, Timestamp
+  Prüfmethode: subprocess + output nicht leer
+
+SW013 | single-agent | Agent-Timeout Handling
+  - Agent-Task mit sehr langem Timeout starten (simuliert hängendes Task)
+  Erwartet: Timeout wird sauber gehandelt, kein Hang
+  Prüfmethode: subprocess mit timeout + graceful exit
+
+SW014 | single-agent | Agent-Fehler Handling
+  - Fehlerhaften Task an Agent delegieren
+  Erwartet: Fehlermeldung in DB/output, kein Crash von bach.py
+  Prüfmethode: subprocess + output enthält "Fehler" oder "error"
+
+# ============================================================
+# TIER 2: PARALLEL-DELEGATION (Schwarm-Basis)
+# ============================================================
+
+SW020 | swarm | Mehrere Tasks gleichzeitig delegieren
+  - 3 Tasks gleichzeitig an 3 Agenten delegieren (falls unterstützt)
+  Erwartet: Alle 3 Tasks werden bearbeitet (nicht sequenziell)
+  Prüfmethode: Timestamp-Vergleich: start_time ähnlich für alle 3
+
+SW021 | swarm | Schwarm-Koordination: Ergebnis-Aggregation
+  - Schwarm läuft, sammelt Teilergebnisse
+  - Koordinator aggregiert zu Gesamtergebnis
+  Erwartet: Gesamtergebnis enthält Beiträge aller Agenten
+  Prüfmethode: subprocess sequence + check aggregated output
+
+SW022 | swarm | Schwarm-Status abfragen
+  - "bach swarm status" oder äquivalent
+  Erwartet: Liste aktiver Agenten, deren Tasks, Status
+  Prüfmethode: subprocess + output enthält Status-Felder
+
+SW023 | swarm | Teilausfall eines Agenten
+  - Ein Agent in Schwarm schlägt fehl
+  Erwartet: Andere Agenten laufen weiter, Teilausfall dokumentiert
+  Prüfmethode: subprocess + partial result + error log für fehlenden Agent
+
+SW024 | swarm | Schwarm-Abbruch
+  - Laufenden Schwarm abbrechen: "bach swarm stop [id]"
+  Erwartet: Alle Agenten stoppen, keine Zombie-Prozesse
+  Prüfmethode: subprocess + process list clean after stop
+
+# ============================================================
+# TIER 3: WISSENS-SUCHE (Swarm über Knowledge Base)
+# ============================================================
+
+SW030 | knowledge-search | Wiki-Suche via Schwarm
+  - Suchbegriff über mehrere Wiki-Sektionen gleichzeitig suchen
+  Erwartet: Treffer aus allen relevanten Sektionen aggregiert
+  Prüfmethode: subprocess + result count >= expected hits
+
+SW031 | knowledge-search | Dokument-Suche via Schwarm
+  - Begriff in mehreren indexierten Dokumenten suchen
+  Erwartet: Alle Dokumente mit Treffer gelistet, nicht nur erstes
+  Prüfmethode: subprocess + multiple document hits
+
+SW032 | knowledge-search | Suche ohne Treffer
+  - Seltenen Begriff suchen der nirgends vorkommt
+  Erwartet: Leeres Ergebnis + Hinweis "Keine Treffer"
+  Prüfmethode: subprocess + output enthält "keine" oder "0 Treffer"
+
+SW033 | knowledge-search | Suche-Ranking
+  - Begriff suchen der in mehreren Quellen vorkommt
+  - Ergebnisse nach Relevanz sortiert?
+  Erwartet: Relevantester Treffer zuerst (Frequenz oder Kontext-Score)
+  Prüfmethode: Manuell: Top-3 Treffer manuell auf Relevanz prüfen
+
+# ============================================================
+# TIER 4: PARTNER-DELEGATION (Multi-LLM)
+# ============================================================
+
+SW040 | multi-llm | Partner-LLM Konfiguration
+  - Config für Partner-LLM (API-Key, Model-Name) setzbar
+  Erwartet: Config-Datei nimmt Partner-LLM-Parameter an
+  Prüfmethode: config write + config read + assertEqual
+
+SW041 | multi-llm | Delegation an Partner-LLM
+  - Task explizit an Partner-LLM delegieren
+  Erwartet: Delegation erfolgt, Antwort kommt zurück ins BACH-System
+  Prüfmethode: subprocess + result in DB
+
+SW042 | multi-llm | Fallback bei Partner-LLM Fehler
+  - Partner-LLM nicht erreichbar (API-Fehler simulieren)
+  Erwartet: BACH fällt auf eigene Verarbeitung zurück, kein Crash
+  Prüfmethode: mock API error + subprocess + exit 0
+
+SW043 | multi-llm | Kein PII in Partner-Delegation
+  - Delegierter Task enthält keine persönlichen Daten aus internen Quellen
+  - Sanitierung vor Weitergabe
+  Erwartet: PII-Check vor Partner-Delegation aktiv
+  Prüfmethode: test task mit PII + check delegated content (kein PII)
+
+# ============================================================
+# TIER 5: SESSION-SYNCHRONISATION
+# ============================================================
+
+SW050 | session-sync | Agenten-Session in DB registriert
+  - Agent startet -> Session-Eintrag in memory_sessions
+  - Agent endet -> Session als abgeschlossen markiert
+  Erwartet: Vollständiger Session-Lifecycle in DB
+  Prüfmethode: DB-Check vor/nach Agent-Run
+
+SW051 | session-sync | Gleichzeitige Sessions isoliert
+  - 2 Sessions gleichzeitig laufen
+  - Kein Datenaustausch zwischen Sessions (außer explizit)
+  Erwartet: Session A sieht keine Session-B-Daten
+  Prüfmethode: parallel subprocess + cross-check
+
+SW052 | session-sync | Session-Wiederherstellung nach Absturz
+  - BACH während Agent-Run beenden (kill -9 simulieren)
+  - BACH neu starten: Session als "unterbrochen" markiert?
+  Erwartet: unterbrochene Sessions sichtbar, kein Datenverlust
+  Prüfmethode: force kill + restart + DB check
+
+# ============================================================
+# AUSWERTUNG
+# ============================================================
+# Tier 0 (SW001-SW004): Voraussetzungen — immer prüfen
+# Tier 1 (SW010-SW014): Einzel-Agent — vor jedem Release mit agents/
+# Tier 2 (SW020-SW024): Schwarm — wenn Swarm-Feature aktiviert
+# Tier 3 (SW030-SW033): Wissens-Suche — wenn Wiki + Docs vorhanden
+# Tier 4 (SW040-SW043): Multi-LLM — wenn Partner-LLM konfiguriert
+# Tier 5 (SW050-SW052): Session-Sync — bei Session-Feature-Änderungen
+# Release-Minimum: Tier 0+1 = 100%, Tier 2 >= 60% (falls aktiviert)

@@ -1,0 +1,65 @@
+TEST_MEMORY.txt - Persistenz fuer mehrteilige Tests
+==================================================
+
+ALLE TESTS ABGESCHLOSSEN (inkl. BACH v1.1)
+------------------------------------------
+
+ERGEBNISSE (aktualisiert 2026-01-14 19:50):
+-------------------------------------------
+| System     | Klasse    | B-Test  | O-Test  | E-Test  | Gesamt  |
+|------------|-----------|---------|---------|---------|---------|
+| _BATCH     | TEXT-OS   | ~3.8    | ~4.4    | 4.6     | 4.6/5.0 |
+| _CHIAH     | AGENT/HUB | ~3.5    | ~4.2    | 4.1     | 4.1/5.0 |
+| recludOS   | TEXT-OS   | ~3.2    | ~3.8    | 4.0     | 4.0/5.0 |
+| BACH v1.1  | TEXT-OS   | 2.18    | 4.62    | (pend.) | ~3.4/5.0|
+
+RANKING:
+--------
+1. _BATCH    (4.6) - Pragmatisch, automatisiert, produktionsreif
+2. _CHIAH    (4.1) - CLI-effizient, CONNI-Integration
+3. recludOS  (4.0) - Umfassend dokumentiert, 6 Akteure
+4. BACH v1.1 (3.4) - Synthese, funktional, strukturell ausbaufähig
+
+BACH v1.1 DETAILS:
+------------------
+Stärken:
+  + Funktionale Tests sehr gut (4.62/5.0)
+  + Task-Roundtrip ✓
+  + Memory-Persistenz ✓ (FIXED 2026-01-14)
+  + Tool-Registry ✓
+  + Config-Validierung ✓
+  + Export-Import ✓
+  + Aktiv gepflegt (54% letzte Woche)
+  
+Schwächen (verbleibend):
+  - Naming inkonsistent (37%)
+  - Header-Stil uneinheitlich (40%)
+  - 15 hardcoded Paths
+  - Comment-Ratio niedrig (5.6%)
+
+FIXES APPLIED:
+--------------
+[x] 2026-01-14: Memory-Struktur erstellt
+    - memory/session_20260114_1945.md
+    - memory/longterm_memory.md
+    - memory/memory_state.json
+    → O002 Memory-Persistenz: FAIL (2.0) → PASS (5.0)
+    → O-Test Durchschnitt: 4.12 → 4.62
+
+TODO für BACH v1.1:
+-------------------
+[x] B-Tests durchgeführt (2026-01-14)
+[x] O-Tests durchgeführt (2026-01-14)
+[x] O-Tests wiederholt nach Fix (2026-01-14)
+[x] Synopse aktualisiert
+[x] Memory-Bug gefixt (O002)
+[ ] E-Test durchführen (manuelle Evaluation)
+[ ] Naming-Konvention durchsetzen (→ 80%+ snake_case)
+[ ] Hardcoded Paths migrieren
+[ ] Comment-Ratio erhöhen (→ 10%+)
+[ ] README pro Ordner erstellen
+
+NÄCHSTE SCHRITTE:
+-----------------
+[ ] E-Test für BACH v1.1
+[ ] Strukturelle Verbesserungen für v1.2

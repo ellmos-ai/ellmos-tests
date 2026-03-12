@@ -1,0 +1,145 @@
+═══════════════════════════════════════════════════════════════════════════════
+Templates - FEATURE ANALYSE
+═══════════════════════════════════════════════════════════════════════════════
+Erstellt: 2026-01-11 19:57 | Claude Opus 4.5
+Quelle: Directory-Scan
+═══════════════════════════════════════════════════════════════════════════════
+
+SYSTEM-PROFIL
+─────────────────────────────────────────────────────────────────────────────────
+Name:           Templates - Systemarchitektur-Vorlagen
+Typ:            Template-Sammlung für LLM-OS-Systeme
+Entry Point:    Keiner (Vorlagen-Sammlung)
+Sprache:        Markdown, Python, JSON
+Fokus:          Optimale Systemarchitekturen für neue Systeme
+
+═══════════════════════════════════════════════════════════════════════════════
+FEATURE-ÜBERSICHT
+═══════════════════════════════════════════════════════════════════════════════
+
+1. UNIVERSAL LLM OS TEMPLATES (OS/)
+─────────────────────────────────────────────────────────────────────────────────
+
+   A) universal-llm-os/ (v1)
+   ─────────────────────────────────────────────────────────────────────────────
+   Basis-Template mit:
+   ├── 📄 SKILL.md        - Entry Point
+   ├── 📄 identity.json   - System-Identität
+   ├── 📁 act/            - Aktionen
+   ├── 📁 connections/    - Verbindungen
+   ├── 📁 exports/        - Export-System
+   ├── 📁 gui/            - GUI-Komponenten
+   ├── 📁 reports/        - Report-System
+   ├── 📁 tools/          - Tool-System
+   ├── 📁 _boot/          - Boot-System
+   ├── 📁 _config/        - Konfiguration
+   ├── 📁 _memory/        - Memory-System
+   └── 📁 _registry/      - Registry-System
+
+   B) universal-llm-os-v2/ (v2 - erweitert)
+   ─────────────────────────────────────────────────────────────────────────────
+   Erweitertes Template mit zusätzlich:
+   ├── 📁 actors/         - ⭐ NEU: Akteur-System
+   ├── 📁 skills/         - ⭐ NEU: Skill-System
+   └── 📁 _communication/ - ⭐ NEU: Kommunikation
+
+   C) universal-llm-os-distribution/
+   ─────────────────────────────────────────────────────────────────────────────
+   Distribution-System:
+   ├── 📄 generator.py    - Template-Generator
+   ├── 📁 docs/           - Dokumentation
+   └── 📁 examples/       - Beispiele
+
+2. BATCH-STYLE TEMPLATE (_root/)
+─────────────────────────────────────────────────────────────────────────────────
+   Inspiriert von _BATCH:
+   ├── 📄 SKILL.md
+   ├── 📁 _concepts/      - Konzept-Management
+   │   ├── 📁 approved/   - Genehmigte Konzepte
+   │   ├── 📁 future/     - Zukünftige
+   │   └── 📁 inbox/      - Eingang
+   ├── 📁 _config/        - Konfigurationen
+   │   ├── 📄 config.json
+   │   ├── 📄 cleanup_config.json
+   │   └── 📄 daemon_config.json
+   ├── 📁 _data/          - Daten
+   │   ├── 📄 chat.json
+   │   ├── 📄 gui_queue.json
+   │   ├── 📄 tasks.json
+   │   └── 📄 tasks_done.json
+   ├── 📁 _docs/          - ⭐ Regelwerke
+   │   ├── 📄 ARCHITECTURE.md
+   │   ├── 📄 DIRECTORY_STRUCTURE.md
+   │   ├── 📄 DOCUMENTATION_RULES.md
+   │   └── 📄 NAMING_CONVENTIONS.md
+   ├── 📁 _reports/       - Reports
+   ├── 📁 _scripts/       - Scripts
+   │   ├── 📁 core/
+   │   ├── 📁 daemon/
+   │   └── 📁 maintenance/
+   └── 📁 _temp/          - Temporär
+
+3. KONZEPT-DOKUMENTE (OS/)
+─────────────────────────────────────────────────────────────────────────────────
+   ✅ der_geist_in_der_flasche.md      - AI-Philosophie
+   ✅ give_them_the_power_to_act.md    - Handlungsfähigkeit
+   ✅ ich_du_wir_kommunikation.md      - Kommunikationsmodell
+   ✅ integration_to_universal_llm_os_structure.md
+   ✅ lernen_in_und_mit_recludOS.md    - Lern-Konzepte
+   ✅ the_evolution_of_an_universal_llm_os_structure...md
+   ✅ what_can_we_learn_from_grown_skill-os.md
+   ✅ verteilungswege_fuer_templates.md
+
+4. GENERATOR-SCRIPTS
+─────────────────────────────────────────────────────────────────────────────────
+   ✅ universal_LLM_OS_structure_generator_v1.py
+   ✅ universal_LLM_OS_structure_generator_v2.py
+   ✅ skill_architecture_generator_v1_batchstyle.py
+
+═══════════════════════════════════════════════════════════════════════════════
+TEMPLATE-VERGLEICH
+═══════════════════════════════════════════════════════════════════════════════
+
+| Feature | v1 | v2 | _root (BATCH) |
+|---------|----|----|---------------|
+| SKILL.md | ✅ | ✅ | ✅ |
+| identity.json | ✅ | ✅ | ❌ |
+| act/ | ✅ | ✅ | ❌ |
+| actors/ | ❌ | ✅ | ❌ |
+| skills/ | ❌ | ✅ | ❌ |
+| _communication/ | ❌ | ✅ | ❌ |
+| _concepts/ | ❌ | ❌ | ✅ |
+| _docs/ (Regelwerke) | ❌ | ❌ | ✅ |
+| daemon_config | ❌ | ❌ | ✅ |
+| tasks.json | ❌ | ❌ | ✅ |
+
+═══════════════════════════════════════════════════════════════════════════════
+STÄRKEN
+═══════════════════════════════════════════════════════════════════════════════
+   ★ Mehrere Template-Varianten (v1, v2, BATCH-Style)
+   ★ Generator-Scripts für automatische Erstellung
+   ★ Umfangreiche Konzept-Dokumentation
+   ★ Distribution-System vorbereitet
+   ★ Theoretische Grundlagen dokumentiert
+
+═══════════════════════════════════════════════════════════════════════════════
+SCHWÄCHEN / OFFENE PUNKTE
+═══════════════════════════════════════════════════════════════════════════════
+   ○ Templates noch nicht vollständig ausgefüllt
+   ○ Kein einheitliches "Best-of" Template
+   ○ Distribution noch nicht aktiv genutzt
+
+═══════════════════════════════════════════════════════════════════════════════
+RELEVANZ FÜR BACH_STREAM
+═══════════════════════════════════════════════════════════════════════════════
+   → Templates sind GRUNDLAGE für BEST_OF "Bach"
+   → v2 Template hat actors/ - passt zu recludOS Akteure-Modell
+   → _root Template hat Regelwerke - passt zu _BATCH
+   → Generator-Scripts können für "Bach" angepasst werden
+   → Konzept-Dokumente liefern theoretischen Unterbau
+
+═══════════════════════════════════════════════════════════════════════════════
+ÄNDERUNGSLOG DIESER DATEI
+═══════════════════════════════════════════════════════════════════════════════
+2026-01-11 19:57 | Initiale Erstellung | Claude Opus 4.5
+─────────────────────────────────────────────────────────────────────────────────

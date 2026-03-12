@@ -1,0 +1,109 @@
+# DB-Integritäts-Testbatterie
+# Prüft Datenbank-Konsistenz vor und nach Releases
+# Stand: 2026-02-18
+
+# Format: ID | Bereich | SQL-Prüfung | Erwartetes Ergebnis
+
+# ============================================================
+# SCHEMA-VALIDIERUNG
+# ============================================================
+
+DB001 | Schema | Tabellenzahl korrekt
+  SQL: SELECT COUNT(*) FROM sqlite_master WHERE type='table'
+  Erwartet: >= 130
+
+DB002 | Schema | Pflicht-Tabellen vorhanden
+  Tabellen: skills, tools, tasks, memory_sessions, memory_lessons,
+            dist_type_defaults, distribution_manifest, distribution_snapshots,
+            distribution_releases, instance_identity, system_config
+  SQL: PRAGMA table_list → alle oben genannten vorhanden
+
+DB003 | Schema | dist_type Spalten vorhanden
+  Tabellen die dist_type haben müssen: skills, tools, tasks,
+  memory_lessons, system_config, files_truth, automation_triggers
+  SQL: PRAGMA table_info(<table>) → dist_type Spalte vorhanden
+
+# ============================================================
+# DIST_TYPE KONSISTENZ
+# ============================================================
+
+DB004 | dist_type | Nur gültige Werte (0, 1, 2)
+  SQL: SELECT COUNT(*) FROM skills WHERE dist_type NOT IN (0,1,2)
+  Erwartet: 0
+  (Gleich für tools, tasks, memory_lessons)
+
+DB005 | dist_type | skills - Verteilung plausibel
+  SQL: SELECT dist_type, COUNT(*) FROM skills GROUP BY dist_type
+  Erwartet: CORE > 700, TEMPLATE > 50, USER > 30
+
+DB006 | dist_type | tools - Verteilung plausibel
+  SQL: SELECT dist_type, COUNT(*) FROM tools GROUP BY dist_type
+  Erwartet: CORE > 200, TEMPLATE > 20, USER > 30
+
+DB007 | dist_type | tasks - Fast alle USER
+  SQL: SELECT dist_type, COUNT(*) FROM tasks GROUP BY dist_type
+  Erwartet: USER >> 900, CORE ca. 14
+
+DB008 | dist_type | Foerderplaner-Skills sind USER
+  SQL: SELECT COUNT(*) FROM skills WHERE path LIKE 'agents/_experts/foerderplaner%'
+       AND dist_type != 0
+  Erwartet: 0 (alle müssen USER=0 sein)
+
+DB009 | dist_type | Extension-Skills sind nicht CORE
+  SQL: SELECT COUNT(*) FROM skills WHERE category='extension' AND dist_type=2
+  Erwartet: 0
+
+DB010 | dist_type | Steuer-Tools sind USER
+  SQL: SELECT COUNT(*) FROM tools WHERE category='steuer' AND dist_type != 0
+  Erwartet: 0
+
+# ============================================================
+# DATEN-KONSISTENZ
+# ============================================================
+
+DB011 | Daten | Keine NULL-Pflichtfelder in skills
+  SQL: SELECT COUNT(*) FROM skills WHERE name IS NULL OR path IS NULL
+  Erwartet: 0
+
+DB012 | Daten | Keine NULL-Pflichtfelder in tools (name)
+  SQL: SELECT COUNT(*) FROM tools WHERE name IS NULL
+  Erwartet: 0
+
+DB013 | Daten | dist_type_defaults abgedeckt
+  SQL: SELECT COUNT(*) FROM dist_type_defaults
+  Erwartet: >= 160
+
+DB014 | Daten | distribution_manifest konsistent
+  SQL: SELECT dist_type, COUNT(*) FROM distribution_manifest GROUP BY dist_type
+  Erwartet: CORE > 400, TEMPLATE > 30
+
+# ============================================================
+# FREMDSCHLÜSSEL-KONSISTENZ (falls FKs aktiviert)
+# ============================================================
+
+DB015 | FK | PRAGMA foreign_keys_check
+  SQL: PRAGMA foreign_key_check
+  Erwartet: Leeres Ergebnis (keine FK-Verletzungen)
+
+# ============================================================
+# RELEASE-SPEZIFISCH (nur für Strawberry-Prüfung)
+# ============================================================
+
+DB_R01 | Release | memory_sessions leer
+  SQL: SELECT COUNT(*) FROM memory_sessions
+  Erwartet: 0 (im Release keine alten Sessions)
+
+DB_R02 | Release | USER-Tasks entfernt
+  SQL: SELECT COUNT(*) FROM tasks WHERE dist_type=0
+  Erwartet: 0 (im Release nur CORE-Tasks)
+
+DB_R03 | Release | instance_identity zurückgesetzt
+  SQL: SELECT instance_name FROM instance_identity
+  Erwartet: NULL oder 'BACH-Template' oder ähnlich generisch
+
+# ============================================================
+# AUSWERTUNG
+# ============================================================
+# DB001-DB015: Pflicht für alle Umgebungen
+# DB_R01-R03: Nur bei Strawberry/Release prüfen
+# Alle Tests müssen PASS für Release-Freigabe
