@@ -77,10 +77,10 @@ CN021 | email | Email-Sender importierbar
   Prüfmethode: subprocess exit code 0
 
 CN022 | email | Kein PII in Default-Config
-  - DEFAULT_SENDER darf nicht "lukasgeiger@googlemail.com" enthalten
+  - DEFAULT_SENDER darf nicht "user@example.com" enthalten
   - Sollte "your-email@example.com" oder leer sein
   Erwartet: Kein persönlicher Email-Default
-  Prüfmethode: grep "lukasgeiger" hub/_services/mail/email_sender.py -> 0 Treffer
+  Prüfmethode: grep "user@example.com" hub/_services/mail/email_sender.py -> 0 Treffer
 
 CN023 | email | Email ohne SMTP-Config — Graceful Fail
   - EmailSender ohne SMTP-Konfiguration aufrufen
@@ -130,7 +130,7 @@ CN041 | document | Anonymisierungs-Whitelist leer in Strawberry
   - DocumentCollector default whitelist = []
   - Keine persönlichen Namen in Default-Whitelist
   Erwartet: whitelist=[] (User-spezifisch, nicht im Code)
-  Prüfmethode: grep "Geiger\|Lukas\|proAutismus\|Caritas" document_collector.py -> 0
+  Prüfmethode: grep "Geiger\|Lukas\|ExampleOrg\|SampleEmployer" document_collector.py -> 0
 
 CN042 | document | Report-Workflow Therapeuten-Default leer
   - report_workflow_service.py default therapeut_name = "" oder Platzhalter

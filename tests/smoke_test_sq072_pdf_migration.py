@@ -14,9 +14,13 @@ Runde 12, 2026-02-20
 
 import sys
 import os
+from pathlib import Path
 
-# BACH_v2_vanilla zum Python-Path hinzufügen
-BACH_PATH = r"C:\Users\User\OneDrive\.AI\BACH_v2_vanilla\system"
+# BACH_v2_vanilla zum Python-Path hinzufuegen (ueber env-var oder OneDrive-relativ)
+_default_onedrive = str(Path.home() / "OneDrive")
+_onedrive = os.environ.get("ELLMOS_ONEDRIVE", _default_onedrive)
+BACH_PATH = os.environ.get("BACH_SYSTEM_PATH",
+    str(Path(_onedrive) / ".AI" / "BACH_v2_vanilla" / "system"))
 if BACH_PATH not in sys.path:
     sys.path.insert(0, BACH_PATH)
 

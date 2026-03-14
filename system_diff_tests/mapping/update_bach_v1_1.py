@@ -8,9 +8,15 @@ Usage:
     python update_bach_v1_1.py
 """
 import sqlite3
+import os
 from pathlib import Path
 
 DB_PATH = str(Path(__file__).parent / "feature_mapping.db")
+
+# System-Basispfad ueber env-var oder OneDrive-relativ
+_default_onedrive = str(Path.home() / "OneDrive")
+_onedrive = os.environ.get("ELLMOS_ONEDRIVE", _default_onedrive)
+BACH_V1_1_PATH = str(Path(_onedrive) / ".AI" / "BACH_v1.1")
 
 conn = sqlite3.connect(DB_PATH)
 cursor = conn.cursor()
@@ -22,7 +28,7 @@ cursor.execute("""
     INSERT OR IGNORE INTO systems (name, type, version, entry_point, base_path)
     VALUES (?, ?, ?, ?, ?)
 """, ("BACH_v1.1", "system", "1.1.66", "SKILL.md",
-      r"C:\Users\User\OneDrive\.AI\BACH_v1.1"))
+      BACH_V1_1_PATH))
 
 # System-ID holen
 cursor.execute("SELECT id FROM systems WHERE name = 'BACH_v1.1'")

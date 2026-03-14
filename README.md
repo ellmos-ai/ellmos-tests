@@ -52,7 +52,7 @@
 
 ```bash
 # Clone the repository
-git clone https://github.com/lukisch/ellmos-tests.git
+git clone https://github.com/ellmos-ai/ellmos-tests.git
 cd ellmos-tests
 
 # Run B-Tests against a system

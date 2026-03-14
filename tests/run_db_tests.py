@@ -7,6 +7,7 @@ Ausführung: python tests/run_db_tests.py [--battery db_integrity|dist_type|all]
 
 import sqlite3
 import json
+import os
 from datetime import datetime
 import argparse
 import sys
@@ -16,7 +17,11 @@ from pathlib import Path
 # Windows-Encoding fix
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8', errors='replace')
 
-DB_PATH = r'C:\Users\User\OneDrive\.AI\BACH_v2_vanilla\system\data\bach.db'
+# DB-Pfad ueber Umgebungsvariable oder relativ zum OneDrive
+_default_onedrive = str(Path.home() / "OneDrive")
+_onedrive = os.environ.get("ELLMOS_ONEDRIVE", _default_onedrive)
+DB_PATH = os.environ.get("BACH_DB_PATH",
+    str(Path(_onedrive) / ".AI" / "BACH_v2_vanilla" / "system" / "data" / "bach.db"))
 RESULTS_DIR = Path(__file__).parent / 'results'
 
 # ============================================================

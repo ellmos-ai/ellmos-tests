@@ -11,7 +11,10 @@ from pathlib import Path
 import sys
 
 # BACH-API laden (aus Strawberry)
-STRAWBERRY_PATH = Path(r"C:\Users\lukas\OneDrive\.AI\BACH_strawberry\system")
+# Pfad wird ueber BACH_SYSTEM_PATH env-var oder relativ zum OneDrive aufgeloest
+import os
+_default_bach = str(Path(os.environ.get("ELLMOS_ONEDRIVE", Path.home() / "OneDrive")) / ".AI" / "BACH_strawberry" / "system")
+STRAWBERRY_PATH = Path(os.environ.get("BACH_SYSTEM_PATH", _default_bach))
 if str(STRAWBERRY_PATH) not in sys.path:
     sys.path.insert(0, str(STRAWBERRY_PATH))
 
