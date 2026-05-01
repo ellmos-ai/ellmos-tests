@@ -9,11 +9,16 @@ Erstellt: 2026-02-21, Runde 27
 import time
 from pathlib import Path
 import sys
+import os
 
 # BACH-API laden (aus Strawberry)
-# Pfad wird ueber BACH_SYSTEM_PATH env-var oder relativ zum OneDrive aufgeloest
-import os
-_default_bach = str(Path(os.environ.get("ELLMOS_ONEDRIVE", Path.home() / "OneDrive")) / ".AI" / "BACH_strawberry" / "system")
+# Pfad wird ueber BACH_SYSTEM_PATH env-var oder zentrale Config aufgeloest
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
+from system_diff_tests.config import get_bach_system_path
+
+_default_bach = str(get_bach_system_path("BACH_strawberry"))
 STRAWBERRY_PATH = Path(os.environ.get("BACH_SYSTEM_PATH", _default_bach))
 if str(STRAWBERRY_PATH) not in sys.path:
     sys.path.insert(0, str(STRAWBERRY_PATH))

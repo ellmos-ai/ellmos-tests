@@ -16,11 +16,14 @@ import sys
 import os
 from pathlib import Path
 
-# BACH_v2_vanilla zum Python-Path hinzufuegen (ueber env-var oder OneDrive-relativ)
-_default_onedrive = str(Path.home() / "OneDrive")
-_onedrive = os.environ.get("ELLMOS_ONEDRIVE", _default_onedrive)
+# BACH zum Python-Path hinzufuegen (ueber env-var oder zentrale Config)
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
+from system_diff_tests.config import get_bach_system_path
+
 BACH_PATH = os.environ.get("BACH_SYSTEM_PATH",
-    str(Path(_onedrive) / ".AI" / "BACH_v2_vanilla" / "system"))
+    str(get_bach_system_path("BACH_v2_vanilla")))
 if BACH_PATH not in sys.path:
     sys.path.insert(0, BACH_PATH)
 

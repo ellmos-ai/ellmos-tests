@@ -9,14 +9,18 @@ Usage:
 """
 import sqlite3
 import os
+import sys
 from pathlib import Path
 
 DB_PATH = str(Path(__file__).parent / "feature_mapping.db")
 
-# System-Basispfad ueber env-var oder OneDrive-relativ
-_default_onedrive = str(Path.home() / "OneDrive")
-_onedrive = os.environ.get("ELLMOS_ONEDRIVE", _default_onedrive)
-BACH_V1_1_PATH = str(Path(_onedrive) / ".AI" / "BACH_v1.1")
+# System-Basispfad ueber zentrale Config
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
+from system_diff_tests.config import get_system_path
+
+BACH_V1_1_PATH = str(get_system_path("BACH_v1.1"))
 
 conn = sqlite3.connect(DB_PATH)
 cursor = conn.cursor()

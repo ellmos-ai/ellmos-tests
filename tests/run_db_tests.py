@@ -17,11 +17,13 @@ from pathlib import Path
 # Windows-Encoding fix
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8', errors='replace')
 
-# DB-Pfad ueber Umgebungsvariable oder relativ zum OneDrive
-_default_onedrive = str(Path.home() / "OneDrive")
-_onedrive = os.environ.get("ELLMOS_ONEDRIVE", _default_onedrive)
-DB_PATH = os.environ.get("BACH_DB_PATH",
-    str(Path(_onedrive) / ".AI" / "BACH_v2_vanilla" / "system" / "data" / "bach.db"))
+# DB-Pfad ueber Umgebungsvariable oder zentrale Config
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
+from system_diff_tests.config import get_bach_db_path
+
+DB_PATH = os.environ.get("BACH_DB_PATH", str(get_bach_db_path("BACH_v2_vanilla")))
 RESULTS_DIR = Path(__file__).parent / 'results'
 
 # ============================================================

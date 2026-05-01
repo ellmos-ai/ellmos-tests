@@ -92,11 +92,12 @@ Profil-Definitionen als JSON unter: `tests/PROFILE/*.json`
 cd tests/BEOBACHTUNG
 python run_b_tests.py "C:\Pfad\zum\System"
 
-# Alle Systeme testen (Beispiel)
-python run_b_tests.py "C:\Users\User\OneDrive\.AI\BACH_v1.1"
-python run_b_tests.py "C:\Users\User\OneDrive\.SOFTWARE\_BATCH"
-python run_b_tests.py "C:\Users\User\OneDrive\.SOFTWARE\_CHIAH"
-python run_b_tests.py "C:\Users\User\OneDrive\.AI\recludOS"
+# Alle Systeme testen (Beispiel, Pfade via config.py / ELLMOS_ONEDRIVE)
+cd ..\..
+python run_all.py --system BACH_v1.1 --only b
+python run_all.py --system _BATCH --only b
+python run_all.py --system _CHIAH --only b
+python run_all.py --system recludOS --only b
 ```
 
 **Bekannte Einschraenkungen:**

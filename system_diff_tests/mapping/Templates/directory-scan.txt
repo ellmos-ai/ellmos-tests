@@ -3,7 +3,7 @@ Templates - DIRECTORY SCAN
 ═══════════════════════════════════════════════════════════════════════════════
 Scan-Datum: 2026-01-11 19:56
 System: Templates - Systemarchitektur-Vorlagen
-Pfad: C:\Users\User\OneDrive\.AI\Templates
+Pfad: <ELLMOS_ONEDRIVE>\.TOPICS\.AI\_templates
 ═══════════════════════════════════════════════════════════════════════════════
 
 📁 Templates/
