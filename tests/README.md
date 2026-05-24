@@ -1,95 +1,101 @@
-# BACH Testinfrastruktur (SQ027)
+# Test Batteries
 
-**Stand:** 2026-03-12 | **Bezug:** MASTERPLAN SQ027
+**Status:** 2026-05-24 | **Scope:** battery runner and predefined battery files
 
----
+This directory contains reusable test batteries for LLM operating systems and
+SKILL.md-based agent systems. The batteries are text definitions; the runner
+parses them, executes checks that can be automated, and marks subjective
+experience tasks as manual.
 
-## Struktur
+## Structure
 
-```
+```text
 tests/
-├── batteries/              # Testbatterien (Listen von Test-IDs)
-│   ├── release_smoke.txt           # Smoke Test vor jedem Release (KRITISCH)
-│   ├── vernunft_kantian.txt        # 7-dimensionaler Vernunftstest (SQ036)
-│   ├── usecases.txt                # 49+ Use Cases (SQ014)
-│   ├── db_integrity.txt            # Datenbankintegritaet
-│   ├── dist_type_check.txt         # Distribution-Klassifizierung
-│   ├── llm_agnostic.txt            # LLM-Agnostik Tests
-│   ├── connector_tests.txt         # Connector/Bridge Tests
-│   ├── registration.txt            # Registrierungstests
-│   ├── swarm_search.txt            # Schwarm-Suche Tests
-│   ├── system_integration.txt      # System-Integration
-│   └── user_experience.txt         # UX-Tests
-├── results/                # Testergebnisse (YYYY-MM-DD_batterie.json)
-├── interpretations/        # Auswertungen als Markdown
-├── run_batteries.py        # Automatischer Test-Runner (NEU)
-├── run_db_tests.py         # DB-spezifische Tests
-└── README.md               # Diese Datei
+|-- batteries/              # Test battery definitions
+|   |-- release_smoke.txt           # Critical smoke checks before release
+|   |-- vernunft_kantian.txt        # Seven-dimensional reasonability test
+|   |-- usecases.txt                # Use-case coverage checks
+|   |-- db_integrity.txt            # Database integrity checks
+|   |-- dist_type_check.txt         # Distribution classification checks
+|   |-- llm_agnostic.txt            # LLM-agnostic behavior checks
+|   |-- connector_tests.txt         # Connector and bridge checks
+|   |-- registration.txt            # Registration checks
+|   |-- swarm_search.txt            # Swarm-search checks
+|   |-- system_integration.txt      # System integration checks
+|   `-- user_experience.txt         # UX and workflow checks
+|-- results/                # Runner output, usually YYYY-MM-DD_battery.json
+|-- interpretations/        # Human-readable Markdown analysis
+|-- run_batteries.py        # Battery runner
+|-- run_db_tests.py         # Database-specific tests
+`-- README.md
 ```
 
-## Perspektiven (aus BACH_STREAM Testkonzept)
+## Test Perspectives
 
-- **B-Tests (Beobachtung):** Statisch, automatisiert. Was IST im System?
-- **O-Tests (Ausgabe):** Funktional, Input->Output. Was TUT das System?
-- **E-Tests (Erfahrung):** Prozessual, subjektiv. Wie FUEHLT sich das System an?
+- **B-Tests (Observation):** Static, automated checks. What exists in the system?
+- **O-Tests (Output):** Functional input-to-output checks. What does the system do?
+- **E-Tests (Experience):** Subjective workflow checks. How does the system feel in use?
 
-## Battery Runner (run_batteries.py)
+## Battery Runner
 
-Der automatische Test-Runner liest Battery-Dateien und fuehrt automatisierbare Tests aus.
+`run_batteries.py` reads `tests/batteries/*.txt`, parses test definitions, and
+executes automatable checks such as file existence, subprocess commands, SQL
+queries, and simple pattern searches.
 
-### Verfuegbare Kommandos
+### Commands
 
 ```bash
-# Alle Batterien auflisten
+# List all batteries
 python tests/run_batteries.py --list
 
-# Eine bestimmte Batterie ausfuehren
-python tests/run_batteries.py --battery release_smoke --system-path "C:\pfad\zum\system"
+# Run one battery
+python tests/run_batteries.py --battery release_smoke --system-path "/path/to/system"
 
-# Alle Batterien ausfuehren
-python tests/run_batteries.py --all --system-path "C:\pfad\zum\system"
+# Run all batteries
+python tests/run_batteries.py --all --system-path "/path/to/system"
 
-# Ausfuehrliche Ausgabe
-python tests/run_batteries.py --battery db_integrity --system-path "C:\pfad\zum\system" -v
+# Verbose output
+python tests/run_batteries.py --battery db_integrity --system-path "/path/to/system" -v
 ```
 
-### Was wird automatisch getestet?
+### Automated Coverage
 
-| Pruefmethode      | Automatisiert? | Beschreibung                     |
-|:------------------|:--------------:|:---------------------------------|
-| os.path.exists()  | Ja             | Dateien/Ordner Existenz-Checks   |
-| subprocess        | Ja             | Python-Befehle ausfuehren        |
-| SQL               | Ja             | SQLite-Queries gegen bach.db     |
-| grep              | Teilweise      | Pattern-Suche in Dateien         |
-| Manuell (E-Tests) | Nein           | Subjektive Bewertung erforderlich|
+| Check method      | Automated? | Description |
+|:------------------|:----------:|:------------|
+| `os.path.exists()` | Yes | File and directory existence checks |
+| `subprocess` | Yes | Python or CLI command execution |
+| SQL | Yes | SQLite queries against configured databases |
+| grep / pattern search | Partial | Pattern checks in files |
+| Manual E-Tests | No | Subjective assessment required |
 
-### Ausgabe
+### Output
 
-- Farbige Ausgabe im Terminal (gruen=PASS, rot=FAIL, gelb=SKIP)
-- Zusammenfassung pro Batterie und Gesamtergebnis
-- `NO_COLOR` Umgebungsvariable deaktiviert Farben
+- Colorized terminal output when supported
+- Per-battery summary and overall result
+- `NO_COLOR` disables color output
+- `FORCE_COLOR` forces color output
 
 ## Workflow
 
-```
-1. Batterie auswaehlen:        python run_batteries.py --list
-2. Tests ausfuehren:           python run_batteries.py --battery NAME --system-path PFAD
-3. Ergebnis in results/ ablegen (YYYY-MM-DD_batterie.json)
-4. Interpretation in interpretations/ schreiben
-5. Aufgaben ableiten -> MASTERPLAN Sidequests
-```
+1. Pick a battery: `python tests/run_batteries.py --list`
+2. Run it: `python tests/run_batteries.py --battery NAME --system-path PATH`
+3. Store machine-readable results in `tests/results/`
+4. Write human-readable findings in `tests/interpretations/`
+5. Convert findings into tracked project tasks
 
-## Release-Pflicht
+## Release Requirement
 
-**release_smoke.txt** MUSS vor jedem Release bestanden sein.
-Kein Release ohne gruenen Smoke-Test.
+`release_smoke.txt` is the minimum release gate for this module. Do not publish
+or tag a release until the release smoke battery has passed or a documented
+exception exists in the release notes.
 
-## Konfiguration
+## Configuration
 
-System-Pfade werden ueber `system_diff_tests/config.py` zentral verwaltet.
-Umgebungsvariablen:
+System paths are centralized in `system_diff_tests/config.py`.
 
-- `ELLMOS_BASE_PATH` - Root des ellmos-tests Projekts
-- `ELLMOS_ONEDRIVE` - OneDrive-Basispfad (Default: ~/OneDrive)
-- `NO_COLOR` - Farbausgabe deaktivieren
-- `FORCE_COLOR` - Farbausgabe erzwingen
+Environment variables:
+
+- `ELLMOS_BASE_PATH` - root of the `ellmos-tests` project
+- `ELLMOS_ONEDRIVE` - OneDrive base path, defaulting to `~/OneDrive`
+- `NO_COLOR` - disable color output
+- `FORCE_COLOR` - force color output

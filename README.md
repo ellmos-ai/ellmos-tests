@@ -192,7 +192,7 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 
 ### Was ist das?
 
-**ellmos-tests** evaluiert und vergleicht SKILL.md-basierte Systeme (LLM-Betriebssysteme) anhand von drei komplementaeren Testperspektiven. Es bietet eine strukturierte Methodik, um die Leistungsfaehigkeit eines LLM-OS in den Bereichen Onboarding, Navigation, Gedaechtnis, Aufgabenverwaltung, Werkzeuge, Kommunikation und Fehlertoleranz zu bewerten.
+**ellmos-tests** evaluiert und vergleicht SKILL.md-basierte Systeme (LLM-Betriebssysteme) anhand von drei komplementären Testperspektiven. Es bietet eine strukturierte Methodik, um die Leistungsfähigkeit eines LLM-OS in den Bereichen Onboarding, Navigation, Gedächtnis, Aufgabenverwaltung, Werkzeuge, Kommunikation und Fehlertoleranz zu bewerten.
 
 ### Testphilosophie: B / O / E
 
@@ -200,7 +200,7 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 |-------------|-----|---------------|-------|
 | **B-Tests** (Beobachtung) | Automatisiert, extern | *"Was existiert?"* | 8 Tests (B001–B008) |
 | **O-Tests** (Ausgabe) | Funktional, Input→Output | *"Funktioniert es?"* | 6 Tests (O001–O006) |
-| **E-Tests** (Erfahrung) | Subjektiv, prozessorientiert | *"Wie fuehlt es sich an?"* | 10 Aufgaben (E001–E010) |
+| **E-Tests** (Erfahrung) | Subjektiv, prozessorientiert | *"Wie fühlt es sich an?"* | 10 Aufgaben (E001–E010) |
 
 ### Schnellstart
 
@@ -209,16 +209,16 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 git clone https://github.com/ellmos-ai/ellmos-tests.git
 cd ellmos-tests
 
-# B-Tests gegen ein System ausfuehren
+# B-Tests gegen ein System ausführen
 python system_diff_tests/run_all.py "/pfad/zum/llm-os" --only b
 
-# Alle automatisierten Tests ausfuehren
+# Alle automatisierten Tests ausführen
 python system_diff_tests/run_all.py "/pfad/zum/llm-os"
 
 # Bekanntes System verwenden (konfiguriert in config.py)
 python system_diff_tests/run_all.py --system recludOS
 
-# Verfuegbare Testbatterien anzeigen
+# Verfügbare Testbatterien anzeigen
 python tests/run_batteries.py --list
 ```
 
@@ -228,7 +228,7 @@ python tests/run_batteries.py --list
 |-----------|---------------|
 | **D1 Onboarding** | Wie schnell kann man starten? |
 | **D2 Navigation** | Wie gut findet man sich zurecht? |
-| **D3 Gedaechtnis** | Wie gut funktioniert Persistenz? |
+| **D3 Gedächtnis** | Wie gut funktioniert Persistenz? |
 | **D4 Aufgaben** | Wie gut ist die Aufgabenverwaltung? |
 | **D5 Kommunikation** | Wie gut ist die Nutzerinteraktion? |
 | **D6 Werkzeuge** | Wie nutzbar sind die Tools? |
@@ -238,11 +238,11 @@ python tests/run_batteries.py --list
 
 | Klasse | Definition | Testfokus |
 |--------|-----------|-----------|
-| **SKILL** | Einzelfaehigkeit, eine SKILL.md-Datei | Lesbarkeit, Vollstaendigkeit, Anwendbarkeit |
+| **SKILL** | Einzelfähigkeit, eine SKILL.md-Datei | Lesbarkeit, Vollständigkeit, Anwendbarkeit |
 | **AGENT/HUB** | Skill-Sammlung mit zentraler Steuerung | Navigation, Tools, Hilfesystem, Konsistenz |
-| **TEXT-OS** | Vollstaendiges Betriebssystem fuer LLM-Sessions | Lebenszyklus, Gedaechtnis, Automatisierung, Recovery |
+| **TEXT-OS** | Vollständiges Betriebssystem für LLM-Sessions | Lebenszyklus, Gedächtnis, Automatisierung, Recovery |
 
-Detaillierte Dokumentation (Deutsch) befindet sich in [tests/README.md](tests/README.md).
+Detaillierte Battery-Runner-Dokumentation befindet sich in [tests/README.md](tests/README.md).
 
 ---
 

@@ -12,6 +12,9 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - German section in root README.md (bilingual policy)
 - This CHANGELOG.md
 
+### Changed
+- Translated `tests/README.md` to English and clarified the battery runner workflow.
+
 ---
 
 ## [0.1.1] — 2026-03-15
