@@ -5,6 +5,7 @@
 ![Python](https://img.shields.io/badge/Python-3.10+-blue?logo=python&logoColor=white)
 ![License](https://img.shields.io/badge/License-MIT-green)
 ![Tests](https://img.shields.io/badge/Tests-24_total-orange)
+![CI](https://github.com/ellmos-ai/ellmos-tests/actions/workflows/tests.yml/badge.svg)
 
 ---
 
@@ -72,6 +73,9 @@ python tests/run_batteries.py --list
 
 # Run a specific battery
 python tests/run_batteries.py --battery release_smoke --system-path "/path/to/system"
+
+# Run local smoke checks used by CI
+python -m unittest discover -s tests -p "test_*.py"
 ```
 
 ---

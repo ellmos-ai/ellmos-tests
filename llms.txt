@@ -1,0 +1,31 @@
+# ellmos-tests
+
+ellmos-tests is a Python test framework for SKILL.md-based LLM operating systems and agent hubs.
+
+Repository: https://github.com/ellmos-ai/ellmos-tests
+Default branch: master
+License: MIT
+Primary language: Python
+
+## What It Does
+
+- Runs B-tests for static observation of files, structure, documentation, dependencies, and age.
+- Runs O-tests for functional checks such as task roundtrips, memory persistence, tool registry checks, backup/restore, config validation, and export/import.
+- Defines E-tests for manual experience evaluation across onboarding, navigation, memory, tasks, tools, communication, and error tolerance.
+- Provides reusable test batteries in `tests/batteries/*.txt`.
+- Provides feature-mapping and cross-system comparison workflows under `system_diff_tests/`.
+
+## Important Commands
+
+```bash
+python tests/run_batteries.py --list
+python tests/run_batteries.py --battery release_smoke --system-path "/path/to/system"
+python system_diff_tests/run_all.py "/path/to/system"
+python -m unittest discover -s tests -p "test_*.py"
+```
+
+## Notes For Agents
+
+- Keep this repository lightweight and standard-library-first.
+- Do not commit generated output, local result JSON, `__pycache__`, or private BACH context.
+- German user-facing documentation should use real umlauts (`ä`, `ö`, `ü`, `Ä`, `Ö`, `Ü`, `ß`), not `ae`, `oe`, or `ue`.
