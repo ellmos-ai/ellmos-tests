@@ -14,6 +14,7 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Changed
 - Translated `tests/README.md` to English and clarified the battery runner workflow.
+- Normalized German umlauts in the public code of conduct and battery runner CLI text.
 
 ---
 

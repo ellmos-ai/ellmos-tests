@@ -3,7 +3,7 @@
 Smoke-Test Battery Runner
 ==========================
 Liest Testbatterien aus tests/batteries/*.txt, parst die Test-Definitionen
-und fuehrt automatisierbare Tests (B-Tests, O-Tests, DB-Tests) aus.
+und führt automatisierbare Tests (B-Tests, O-Tests, DB-Tests) aus.
 
 Usage:
     python run_batteries.py --list
@@ -27,7 +27,7 @@ from typing import Optional
 # ═══════════════════════════════════════════════════════════════════════════
 
 def _supports_color() -> bool:
-    """Prueft ob das Terminal Farben unterstuetzt."""
+    """Prüft, ob das Terminal Farben unterstützt."""
     if os.environ.get("NO_COLOR"):
         return False
     if os.environ.get("FORCE_COLOR"):
@@ -98,12 +98,12 @@ RESULTS_DIR = Path(__file__).resolve().parent / "results"
 
 
 def list_batteries() -> list[str]:
-    """Listet alle verfuegbaren Battery-Dateien."""
+    """Listet alle verfügbaren Battery-Dateien."""
     return sorted(p.stem for p in BATTERIES_DIR.glob("*.txt"))
 
 
 def parse_battery(name: str) -> list[TestCase]:
-    """Parst eine Battery-Datei und gibt TestCases zurueck."""
+    """Parst eine Battery-Datei und gibt TestCases zurück."""
     battery_file = BATTERIES_DIR / f"{name}.txt"
     if not battery_file.exists():
         print(red(f"FEHLER: Battery '{name}' nicht gefunden: {battery_file}"))
@@ -133,7 +133,7 @@ def parse_battery(name: str) -> list[TestCase]:
                 tests.append(current_test)
 
             test_id = match.group(1)
-            # Test-Typ aus Praefix ableiten
+            # Test-Typ aus Präfix ableiten
             type_match = re.match(r"([A-Z_]+)", test_id)
             test_type = type_match.group(1).rstrip("_") if type_match else "unknown"
             # Normalisiere: DB001 -> DB, B001 -> B, DB_R01 -> DB
@@ -150,9 +150,9 @@ def parse_battery(name: str) -> list[TestCase]:
             )
             continue
 
-        # Detail-Zeilen gehoeren zum aktuellen Test
+        # Detail-Zeilen gehören zum aktuellen Test
         if current_test:
-            if stripped.startswith("Pr"):  # Pruefmethode / Prüfmethode
+            if stripped.startswith("Pr"):  # Prüfmethode
                 current_test.check_method = stripped.split(":", 1)[-1].strip()
             elif stripped.startswith("Erwartet") or stripped.startswith("SQL:"):
                 current_test.expected = stripped
@@ -172,16 +172,16 @@ def parse_battery(name: str) -> list[TestCase]:
 # ═══════════════════════════════════════════════════════════════════════════
 
 def execute_test(test: TestCase, system_path: Optional[str] = None) -> TestResult:
-    """Fuehrt einen einzelnen Test aus.
+    """Führt einen einzelnen Test aus.
 
-    Automatisierbare Tests werden anhand ihrer Pruefmethode ausgefuehrt.
-    E-Tests und Tests ohne klare Pruefmethode werden als SKIP markiert.
+    Automatisierbare Tests werden anhand ihrer Prüfmethode ausgeführt.
+    E-Tests und Tests ohne klare Prüfmethode werden als SKIP markiert.
     """
     if not test.is_automatable:
         return TestResult(
             test_id=test.test_id,
             status="SKIP",
-            message="E-Test (manuell) - automatische Ausfuehrung nicht moeglich",
+            message="E-Test (manuell) - automatische Ausführung nicht möglich",
         )
 
     # Tests die os.path.exists() nutzen
@@ -204,12 +204,12 @@ def execute_test(test: TestCase, system_path: Optional[str] = None) -> TestResul
     return TestResult(
         test_id=test.test_id,
         status="SKIP",
-        message=f"Keine automatisierbare Pruefmethode: {test.check_method or 'nicht definiert'}",
+        message=f"Keine automatisierbare Prüfmethode: {test.check_method or 'nicht definiert'}",
     )
 
 
 def _run_existence_checks(test: TestCase, system_path: Optional[str]) -> TestResult:
-    """Fuehrt os.path.exists()-basierte Tests aus."""
+    """Führt os.path.exists()-basierte Tests aus."""
     if not system_path:
         return TestResult(test.test_id, "SKIP", "Kein System-Pfad angegeben")
 
@@ -251,15 +251,15 @@ def _run_existence_checks(test: TestCase, system_path: Optional[str]) -> TestRes
     elif found:
         return TestResult(
             test.test_id, "PASS",
-            f"Alle {len(found)} Pfade geprueft",
+            f"Alle {len(found)} Pfade geprüft",
             details=[f"OK: {f}" for f in found],
         )
     else:
-        return TestResult(test.test_id, "SKIP", "Keine pruefbaren Pfade gefunden")
+        return TestResult(test.test_id, "SKIP", "Keine prüfbaren Pfade gefunden")
 
 
 def _run_subprocess_checks(test: TestCase, system_path: Optional[str]) -> TestResult:
-    """Fuehrt subprocess-basierte Tests aus."""
+    """Führt subprocess-basierte Tests aus."""
     if not system_path:
         return TestResult(test.test_id, "SKIP", "Kein System-Pfad angegeben")
 
@@ -295,7 +295,7 @@ def _run_subprocess_checks(test: TestCase, system_path: Optional[str]) -> TestRe
                 all_pass = False
 
     if not results:
-        return TestResult(test.test_id, "SKIP", "Keine ausfuehrbaren Befehle gefunden")
+        return TestResult(test.test_id, "SKIP", "Keine ausführbaren Befehle gefunden")
 
     return TestResult(
         test.test_id,
@@ -306,7 +306,7 @@ def _run_subprocess_checks(test: TestCase, system_path: Optional[str]) -> TestRe
 
 
 def _run_sql_check(test: TestCase, system_path: Optional[str]) -> TestResult:
-    """Fuehrt SQL-basierte Tests aus."""
+    """Führt SQL-basierte Tests aus."""
     if not system_path:
         return TestResult(test.test_id, "SKIP", "Kein System-Pfad angegeben")
 
@@ -355,20 +355,20 @@ def _run_sql_check(test: TestCase, system_path: Optional[str]) -> TestResult:
     return TestResult(
         test.test_id,
         "PASS" if all_pass else "FAIL",
-        f"SQL-Pruefung: {len(results)} Statements",
+        f"SQL-Prüfung: {len(results)} Statements",
         details=results,
     )
 
 
 def _run_grep_check(test: TestCase, system_path: Optional[str]) -> TestResult:
-    """Fuehrt grep-basierte Tests aus."""
+    """Führt grep-basierte Tests aus."""
     if not system_path:
         return TestResult(test.test_id, "SKIP", "Kein System-Pfad angegeben")
 
     # Einfacher grep-basierter Check
     return TestResult(
         test.test_id, "SKIP",
-        "Grep-Tests erfordern manuelle Ausfuehrung",
+        "Grep-Tests erfordern manuelle Ausführung",
     )
 
 
@@ -377,7 +377,7 @@ def _run_grep_check(test: TestCase, system_path: Optional[str]) -> TestResult:
 # ═══════════════════════════════════════════════════════════════════════════
 
 def run_battery(name: str, system_path: Optional[str] = None, verbose: bool = False) -> list[TestResult]:
-    """Fuehrt eine komplette Test-Batterie aus."""
+    """Führt eine komplette Test-Batterie aus."""
     tests = parse_battery(name)
     if not tests:
         return []
@@ -431,13 +431,13 @@ def print_summary(battery_name: str, results: list[TestResult]):
     if failed:
         print(f"  {red('Fehlgeschlagen:')} {failed}")
     if skipped:
-        print(f"  {yellow('Uebersprungen:')} {skipped}")
+        print(f"  {yellow('Übersprungen:')} {skipped}")
     if errors:
         print(f"  {red('Fehler:')} {errors}")
 
     if failed == 0 and errors == 0:
         if skipped == total:
-            print(f"\n  {yellow('ERGEBNIS: Alle Tests uebersprungen (kein System-Pfad?)')}")
+            print(f"\n  {yellow('ERGEBNIS: Alle Tests übersprungen (kein System-Pfad?)')}")
         else:
             print(f"\n  {green(bold('ERGEBNIS: BESTANDEN'))}")
     else:
@@ -456,7 +456,7 @@ def print_summary(battery_name: str, results: list[TestResult]):
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Smoke-Test Battery Runner fuer ellmos-tests",
+        description="Smoke-Test Battery Runner für ellmos-tests",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Beispiele:
@@ -469,22 +469,22 @@ Beispiele:
 
     group = parser.add_mutually_exclusive_group(required=True)
     group.add_argument("--list", action="store_true",
-                       help="Zeigt alle verfuegbaren Batterien")
+                       help="Zeigt alle verfügbaren Batterien")
     group.add_argument("--battery", type=str,
                        help="Name einer Batterie (ohne .txt)")
     group.add_argument("--all", action="store_true",
-                       help="Alle Batterien ausfuehren")
+                       help="Alle Batterien ausführen")
 
     parser.add_argument("--system-path", type=str,
                         help="Pfad zum zu testenden System")
     parser.add_argument("-v", "--verbose", action="store_true",
-                        help="Ausfuehrliche Ausgabe")
+                        help="Ausführliche Ausgabe")
 
     args = parser.parse_args()
 
     if args.list:
         batteries = list_batteries()
-        print(f"\nVerfuegbare Testbatterien ({len(batteries)}):")
+        print(f"\nVerfügbare Testbatterien ({len(batteries)}):")
         print("-" * 40)
         for b in batteries:
             tests = parse_battery(b)
@@ -524,7 +524,7 @@ Beispiele:
         if total_fail:
             print(f"  {red('Fehlgeschlagen:')} {total_fail}")
         if total_skip:
-            print(f"  {yellow('Uebersprungen:')} {total_skip}")
+            print(f"  {yellow('Übersprungen:')} {total_skip}")
 
         if total_fail == 0:
             print(f"\n  {green(bold('ALLE BATTERIEN BESTANDEN'))}")
