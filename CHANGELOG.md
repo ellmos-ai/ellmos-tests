@@ -9,10 +9,16 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ## [Unreleased]
 
 ### Added
-- German section in root README.md (bilingual policy)
-- This CHANGELOG.md
+- CI: `tests.yml` GitHub Actions smoke workflow — Python 3.12 on ubuntu-latest, standard-library unit tests
+- CI: `welcome.yml` — welcome message posted on first-time issue or pull request
+- CI: `stale.yml` — marks issues and PRs stale after 30 days, auto-closes after 37 days
+- `tests/test_config_paths.py` — regression tests for environment-variable-based path resolution
+- Liability disclaimer in `README.md` (§ 521 BGB, MIT)
+- German section in root `README.md` (bilingual policy)
+- This `CHANGELOG.md`
 
 ### Changed
+- `system_diff_tests/config.py`: path resolution migrated to `.TOPICS/.AI/.OS` layout; `ELLMOS_BASE_PATH` and `ELLMOS_ONEDRIVE` env vars now supported across all config paths
 - Translated `tests/README.md` to English and clarified the battery runner workflow.
 - Normalized German umlauts in the public code of conduct and battery runner CLI text.
 

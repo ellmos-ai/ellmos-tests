@@ -24,8 +24,30 @@ python system_diff_tests/run_all.py "/path/to/system"
 python -m unittest discover -s tests -p "test_*.py"
 ```
 
+## Audience
+
+- **LLM-OS developers** building or extending SKILL.md-based systems (BACH, recludOS, custom agent hubs) who need a structured way to measure quality and compare across versions.
+- **AI agent researchers** evaluating how well LLM operating systems handle onboarding, navigation, memory, task management, and error tolerance.
+- **Open-source contributors** to ellmos-ai projects who want automated regression checks and a standard test battery before submitting changes.
+- **Teams adopting ellmos infrastructure** who need a reproducible baseline for continuous integration and release smoke tests.
+
+## Search Phrases
+
+- `LLM operating system test framework`
+- `SKILL.md evaluation tool`
+- `ellmos-tests agent hub testing`
+- `LLM-OS benchmark Python`
+- `B-test O-test E-test framework`
+- `BACH system test batteries`
+- `ellmos CI smoke tests`
+- `AI agent quality evaluation`
+- `recludOS testing tool`
+- `LLM system comparison framework`
+
 ## Notes For Agents
 
 - Keep this repository lightweight and standard-library-first.
 - Do not commit generated output, local result JSON, `__pycache__`, or private BACH context.
 - German user-facing documentation should use real umlauts (`ä`, `ö`, `ü`, `Ä`, `Ö`, `Ü`, `ß`), not `ae`, `oe`, or `ue`.
+
+## Last-checked: 2026-06-11
