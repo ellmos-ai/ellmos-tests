@@ -113,9 +113,14 @@ def parse_battery(name: str) -> list[TestCase]:
     tests: list[TestCase] = []
     current_test: Optional[TestCase] = None
 
-    # Pattern: TEST_ID | Kategorie | Beschreibung
+    # Patterns:
+    #   TEST_ID | Kategorie | Beschreibung
+    #   Kategorie | TEST_ID | Beschreibung
     test_header_re = re.compile(
         r"^([A-Z_]+\d+)\s*\|\s*(.+?)\s*\|\s*(.+)$"
+    )
+    category_first_header_re = re.compile(
+        r"^(.+?)\s*\|\s*([A-Z_]+\d+)\s*\|\s*(.+)$"
     )
 
     for line in content.splitlines():
@@ -145,6 +150,27 @@ def parse_battery(name: str) -> list[TestCase]:
             current_test = TestCase(
                 test_id=test_id,
                 category=match.group(2).strip(),
+                description=match.group(3).strip(),
+                test_type=test_type,
+            )
+            continue
+
+        match = category_first_header_re.match(stripped)
+        if match:
+            if current_test:
+                tests.append(current_test)
+
+            test_id = match.group(2)
+            type_match = re.match(r"([A-Z_]+)", test_id)
+            test_type = type_match.group(1).rstrip("_") if type_match else "unknown"
+            if test_type.startswith("DB"):
+                test_type = "DB"
+            elif len(test_type) > 3:
+                test_type = test_type[:2]
+
+            current_test = TestCase(
+                test_id=test_id,
+                category=match.group(1).strip(),
                 description=match.group(3).strip(),
                 test_type=test_type,
             )

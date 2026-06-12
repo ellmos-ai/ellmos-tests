@@ -13,6 +13,7 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - CI: `welcome.yml` — welcome message posted on first-time issue or pull request
 - CI: `stale.yml` — marks issues and PRs stale after 30 days, auto-closes after 37 days
 - `tests/test_config_paths.py` — regression tests for environment-variable-based path resolution
+- `tests/test_run_batteries.py` covers both ID-first and category-first battery definition formats.
 - Liability disclaimer in `README.md` (§ 521 BGB, MIT)
 - German section in root `README.md` (bilingual policy)
 - This `CHANGELOG.md`
@@ -21,6 +22,7 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - `system_diff_tests/config.py`: path resolution migrated to `.TOPICS/.AI/.OS` layout; `ELLMOS_BASE_PATH` and `ELLMOS_ONEDRIVE` env vars now supported across all config paths
 - Translated `tests/README.md` to English and clarified the battery runner workflow.
 - Normalized German umlauts in the public code of conduct and battery runner CLI text.
+- `tests/run_batteries.py`: category-first battery headers such as `TRANSPARENZ | V001 | ...` now parse correctly, restoring the 21-test Kantian reasonability battery in `--list`.
 
 ---
 
