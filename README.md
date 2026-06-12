@@ -23,17 +23,12 @@
 | **O-Tests** (Output) | Functional, input→output | *"Does it work?"* | 6 tests (O001–O006) |
 | **E-Tests** (Experience) | Subjective, process-oriented | *"How does it feel?"* | 10 tasks (E001–E010) |
 
-```
-┌─────────────────┐  ┌─────────────────┐  ┌─────────────────┐
-│ B-Tests         │  │ O-Tests         │  │ E-Tests         │
-│ OBSERVATION     │  │ OUTPUT          │  │ EXPERIENCE      │
-├─────────────────┤  ├─────────────────┤  ├─────────────────┤
-│ Inventory       │  │ Validation      │  │ Workflow         │
-│ Structure       │  │ Correctness     │  │ Orientation      │
-│ Consistency     │  │ Completeness    │  │ Cognitive Load   │
-│ Metrics         │  │ Robustness      │  │ Agency           │
-└─────────────────┘  └─────────────────┘  └─────────────────┘
-```
+| B-Tests — OBSERVATION | O-Tests — OUTPUT | E-Tests — EXPERIENCE |
+|-----------------------|------------------|----------------------|
+| Inventory | Validation | Workflow |
+| Structure | Correctness | Orientation |
+| Consistency | Completeness | Cognitive Load |
+| Metrics | Robustness | Agency |
 
 ---
 
