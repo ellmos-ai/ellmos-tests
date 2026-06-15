@@ -1,11 +1,15 @@
+<img src="assets/banner.svg" width="100%" alt="ellmos-tests Banner">
+
 # ellmos-tests
 
-> Testing framework for LLM operating systems
+> Structured B/O/E testing framework for LLM operating systems
 
-![Python](https://img.shields.io/badge/Python-3.10+-blue?logo=python&logoColor=white)
-![License](https://img.shields.io/badge/License-MIT-green)
-![Tests](https://img.shields.io/badge/Tests-24_total-orange)
-![CI](https://github.com/ellmos-ai/ellmos-tests/actions/workflows/tests.yml/badge.svg)
+[![Python](https://img.shields.io/badge/Python-3.10+-blue?logo=python&logoColor=white)](https://python.org)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green)](LICENSE)
+[![Tests](https://img.shields.io/badge/Tests-24_total-orange)](tests/)
+[![CI](https://github.com/ellmos-ai/ellmos-tests/actions/workflows/tests.yml/badge.svg)](https://github.com/ellmos-ai/ellmos-tests/actions/workflows/tests.yml)
+
+**Quick links:** [Test Philosophy](#test-philosophy-b--o--e) · [Quick Start](#quick-start) · [Features](#features) · [Contributing](CONTRIBUTING.md)
 
 ---
 

@@ -1,0 +1,212 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 340" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradient -->
+    <linearGradient id="bg-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#080c14"/>
+      <stop offset="50%" stop-color="#0e1726"/>
+      <stop offset="100%" stop-color="#06090f"/>
+    </linearGradient>
+
+    <!-- Glowing Green Gradient -->
+    <linearGradient id="green-glow" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#10b981"/>
+      <stop offset="100%" stop-color="#059669"/>
+    </linearGradient>
+
+    <!-- Liquid Gradient for Flask -->
+    <linearGradient id="liquid-green" x1="0%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" stop-color="#047857" stop-opacity="0.85"/>
+      <stop offset="70%" stop-color="#10b981" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#34d399" stop-opacity="0.95"/>
+    </linearGradient>
+
+    <!-- Liquid Gradient for Tube -->
+    <linearGradient id="liquid-teal" x1="0%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" stop-color="#0369a1" stop-opacity="0.85"/>
+      <stop offset="70%" stop-color="#0ea5e9" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#38bdf8" stop-opacity="0.95"/>
+    </linearGradient>
+
+    <!-- Glass Gradient -->
+    <linearGradient id="glass-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.3"/>
+      <stop offset="25%" stop-color="#ffffff" stop-opacity="0.1"/>
+      <stop offset="75%" stop-color="#ffffff" stop-opacity="0.05"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0.25"/>
+    </linearGradient>
+
+    <!-- Text Gradient -->
+    <linearGradient id="text-green-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#34d399"/>
+      <stop offset="100%" stop-color="#059669"/>
+    </linearGradient>
+
+    <!-- Drop Shadows and Glows -->
+    <filter id="glow-green" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="8" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+    <filter id="glow-subtle" x="-10%" y="-10%" width="120%" height="120%">
+      <feGaussianBlur stdDeviation="3" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+
+    <!-- Grid Pattern -->
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#334155" stroke-width="0.5" stroke-opacity="0.2"/>
+    </pattern>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="340" fill="url(#bg-grad)"/>
+  
+  <!-- Subtle Grid Pattern in background -->
+  <rect width="1200" height="340" fill="url(#grid)" opacity="0.7"/>
+
+  <!-- Glowing background blobs (light-leak effect) -->
+  <circle cx="260" cy="180" r="160" fill="#10b981" opacity="0.08" filter="url(#glow-green)"/>
+  <circle cx="950" cy="120" r="140" fill="#0ea5e9" opacity="0.04" filter="url(#glow-green)"/>
+
+  <!-- ==================== SAFE ZONE CONTENT (x:80..1120, y:60..300) ==================== -->
+  
+  <!-- BACKGROUND DECORATIONS (Inside Safe Zone) -->
+  <!-- Tech lines/nodes behind motif -->
+  <g opacity="0.25">
+    <line x1="100" y1="120" x2="200" y2="120" stroke="#475569" stroke-width="1.5" stroke-dasharray="4 4"/>
+    <line x1="200" y1="120" x2="250" y2="70" stroke="#475569" stroke-width="1.5" stroke-dasharray="4 4"/>
+    <line x1="250" y1="70" x2="350" y2="70" stroke="#475569" stroke-width="1.5" stroke-dasharray="4 4"/>
+    
+    <circle cx="100" cy="120" r="3" fill="#94a3b8"/>
+    <circle cx="200" cy="120" r="3" fill="#94a3b8"/>
+    <circle cx="250" cy="70" r="3" fill="#94a3b8"/>
+    <circle cx="350" cy="70" r="3" fill="#94a3b8"/>
+
+    <line x1="120" y1="260" x2="300" y2="260" stroke="#475569" stroke-width="1"/>
+    <circle cx="120" cy="260" r="2" fill="#475569"/>
+    <circle cx="300" cy="260" r="2" fill="#475569"/>
+  </g>
+
+  <!-- MOTIF GROUP (LEFT SIDE) -->
+  <!-- Centered around x=260, y=180 -->
+  <g id="motif-group">
+    
+    <!-- Erlenmeyer Flask (Behind/Left) -->
+    <g transform="translate(180, 140)">
+      <!-- Fluid -->
+      <path d="M 23 20 L 7 65 A 8 8 0 0 0 14 75 L 86 75 A 8 8 0 0 0 93 65 L 77 20 Z" fill="url(#liquid-green)" />
+      <!-- Fluid Surface (Meniscus) -->
+      <ellipse cx="50" cy="20" rx="27" ry="5" fill="#34d399" opacity="0.9" />
+      
+      <!-- Glass Outline -->
+      <!-- Neck: x=40 to x=60, y=-20 to y=20 -->
+      <!-- Body: slope to base at y=75, x=10 to x=90 -->
+      <path d="M 38 -20 L 62 -20 M 42 -20 L 42 15 L 12 70 A 10 10 0 0 0 20 82 L 80 82 A 10 10 0 0 0 88 70 L 58 15 L 58 -20" 
+            fill="none" stroke="url(#glass-grad)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+      <!-- Neck Lip -->
+      <ellipse cx="50" cy="-20" rx="12" ry="3" fill="none" stroke="url(#glass-grad)" stroke-width="4" />
+      
+      <!-- Bubbles in Flask -->
+      <circle cx="35" cy="45" r="3" fill="#ffffff" opacity="0.6" />
+      <circle cx="65" cy="55" r="4" fill="#ffffff" opacity="0.4" />
+      <circle cx="50" cy="62" r="2" fill="#ffffff" opacity="0.5" />
+      <circle cx="45" cy="30" r="2.5" fill="#ffffff" opacity="0.7" />
+    </g>
+
+    <!-- Test Tube (Foreground/Right, Tilted -15deg) -->
+    <g transform="translate(290, 195) rotate(-15)">
+      <!-- Liquid -->
+      <path d="M -18 0 L -18 55 A 18 18 0 0 0 18 55 L 18 0 Z" fill="url(#liquid-teal)" />
+      <!-- Meniscus -->
+      <ellipse cx="0" cy="0" rx="18" ry="4" fill="#38bdf8" opacity="0.9" />
+
+      <!-- Glass Outline -->
+      <path d="M -22 -60 L 22 -60 M -18 -60 L -18 55 A 18 18 0 0 0 18 55 L 18 -60" 
+            fill="none" stroke="url(#glass-grad)" stroke-width="4" stroke-linecap="round" />
+      <!-- Lip -->
+      <ellipse cx="0" cy="-60" rx="22" ry="4" fill="none" stroke="url(#glass-grad)" stroke-width="4" />
+
+      <!-- Bubbles in Tube -->
+      <circle cx="-6" cy="20" r="3" fill="#ffffff" opacity="0.6" />
+      <circle cx="8" cy="35" r="2" fill="#ffffff" opacity="0.5" />
+      <circle cx="-2" cy="45" r="4" fill="#ffffff" opacity="0.4" />
+      <circle cx="5" cy="10" r="2.5" fill="#ffffff" opacity="0.7" />
+    </g>
+
+    <!-- Lab Rack / Stand Lines (Sleek abstract version) -->
+    <path d="M 150 245 L 340 245" stroke="#475569" stroke-width="3" stroke-linecap="round" opacity="0.6" />
+    <path d="M 160 245 L 160 255 M 330 245 L 330 255" stroke="#475569" stroke-width="3" stroke-linecap="round" opacity="0.6" />
+
+    <!-- Scientific Measurement ticks on left side of Flask -->
+    <g opacity="0.4" transform="translate(180, 140)">
+      <line x1="28" y1="35" x2="33" y2="35" stroke="#ffffff" stroke-width="1.5" />
+      <line x1="24" y1="50" x2="31" y2="50" stroke="#ffffff" stroke-width="1.5" />
+      <line x1="20" y1="65" x2="27" y2="65" stroke="#ffffff" stroke-width="1.5" />
+    </g>
+
+    <!-- Dynamic Success Checkmarks -->
+    <!-- Large Glowing Checkmark -->
+    <g filter="url(#glow-subtle)">
+      <!-- Glowing green ring behind the checkmark -->
+      <circle cx="325" cy="125" r="28" fill="#080c14" stroke="#10b981" stroke-width="2" opacity="0.8"/>
+      <!-- The checkmark path -->
+      <path d="M 312 125 L 321 134 L 338 116" 
+            fill="none" stroke="url(#green-glow)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" />
+    </g>
+    
+    <!-- Small Floating Checkmark/Star particles -->
+    <g opacity="0.8">
+      <!-- Particle 1 -->
+      <path d="M 135 155 L 139 159 L 147 151" fill="none" stroke="#34d399" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+      <!-- Particle 2 -->
+      <path d="M 275 85 L 278 88 L 284 82" fill="none" stroke="#38bdf8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+      <!-- Small Sparkles -->
+      <path d="M 355 180 L 355 186 M 352 183 L 358 183" stroke="#34d399" stroke-width="1.5" stroke-linecap="round" />
+      <path d="M 170 100 L 170 104 M 168 102 L 172 102" stroke="#38bdf8" stroke-width="1" stroke-linecap="round" />
+    </g>
+  </g>
+
+  <!-- WORDMARK & TAGLINE (RIGHT SIDE) -->
+  <!-- Left aligned at x=480, vertically centered -->
+  <g transform="translate(480, 0)">
+    
+    <!-- Wordmark "ellmos-tests" -->
+    <text x="0" y="165" 
+          font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" 
+          font-size="76" 
+          font-weight="800" 
+          letter-spacing="-1.5">
+      <tspan fill="#ffffff">ellmos-</tspan>
+      <tspan fill="url(#text-green-grad)">tests</tspan>
+    </text>
+
+    <!-- Tagline "Testing framework for LLM operating systems" -->
+    <text x="5" y="212" 
+          font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" 
+          font-size="23" 
+          font-weight="400" 
+          fill="#94a3b8"
+          letter-spacing="-0.2">
+      Testing framework for LLM operating systems
+    </text>
+
+    <!-- Sleek Badge "QA & SYSTEM VALIDATION" -->
+    <g transform="translate(5, 245)">
+      <!-- Pill background -->
+      <rect x="0" y="0" width="210" height="28" rx="14" fill="#064e3b" fill-opacity="0.4" stroke="#059669" stroke-width="1" stroke-opacity="0.5" />
+      <!-- Status dot -->
+      <circle cx="16" cy="14" r="4" fill="#34d399" />
+      <!-- Text -->
+      <text x="30" y="18" 
+            font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" 
+            font-size="11" 
+            font-weight="700" 
+            fill="#a7f3d0" 
+            letter-spacing="1.5">SYSTEM VALIDATED</text>
+    </g>
+
+    <!-- Subtle Tech Accents under wordmark -->
+    <line x1="5" y1="110" x2="65" y2="110" stroke="#10b981" stroke-width="3" stroke-linecap="round" opacity="0.8" />
+    <circle cx="80" cy="110" r="3" fill="#0ea5e9" opacity="0.8" />
+  </g>
+
+</svg>
