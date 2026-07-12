@@ -120,8 +120,7 @@ def _find_db() -> Path:
         )
     candidates += [
         Path.home() / "OneDrive" / ".TOPICS" / ".AI" / ".OS" / "BACH" / "system" / "data" / "bach.db",
-        Path("C:/Users/lukas/OneDrive/.TOPICS/.AI/.OS/BACH/system/data/bach.db"),
-        Path("C:/Users/User/OneDrive/.TOPICS/.AI/.OS/BACH/system/data/bach.db"),
+        Path.home() / ".TOPICS" / ".AI" / ".OS" / "BACH" / "system" / "data" / "bach.db",
     ]
     for p in candidates:
         if p.exists():
@@ -250,7 +249,9 @@ def main() -> int:
     payload = {
         "_meta": {
             "generator":    "tools/usecases_sync.py",
-            "source_db":    str(db_path),
+            # Nur der Basename: der absolute Pfad zur lokalen BACH-Installation
+            # ist eine private Information und darf nicht ins Repo wandern.
+            "source_db":    db_path.name,
             "generated_at": datetime.now(timezone.utc).isoformat(),
             "audit_source": "NAIV_FINALAUDIT_2026-06-22.md",
             "note": (

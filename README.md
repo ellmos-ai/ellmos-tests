@@ -6,7 +6,8 @@
 
 [![Python](https://img.shields.io/badge/Python-3.10+-blue?logo=python&logoColor=white)](https://python.org)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green)](LICENSE)
-[![Tests](https://img.shields.io/badge/Tests-24_total-orange)](tests/)
+[![Test definitions](https://img.shields.io/badge/Test_definitions-24_B%2FO%2FE-orange)](system_diff_tests/)
+[![Automated suite](https://img.shields.io/badge/Automated_suite-14_unittest-brightgreen)](tests/)
 [![CI](https://github.com/ellmos-ai/ellmos-tests/actions/workflows/tests.yml/badge.svg)](https://github.com/ellmos-ai/ellmos-tests/actions/workflows/tests.yml)
 
 **Quick links:** [Test Philosophy](#test-philosophy-b--o--e) · [Quick Start](#quick-start) · [Features](#features) · [Contributing](CONTRIBUTING.md)
@@ -17,7 +18,7 @@
 
 **ellmos-tests** evaluates and compares SKILL.md-based systems (LLM operating systems) through three complementary test perspectives. It provides a structured methodology to assess how well an LLM-OS performs across onboarding, navigation, memory, task management, tools, communication, and error tolerance.
 
-It is also packaged as an LLM-bindable ellmos module: `SKILL.md` tells an agent how to operate the testkit, and `ellmos-module.json` declares entry points, storage boundaries, capabilities, and update metadata.
+It is also packaged as an LLM-bindable ellmos module: `SKILL.md` tells an agent how to operate the testkit, and `ellmos-module.v2.json` (canonical manifest) declares category, capabilities, surfaces, and boundaries. The older `ellmos-module.json` (v1 schema) is deprecated and only kept for readers that still discover modules by that filename.
 
 ---
 
@@ -28,6 +29,12 @@ It is also packaged as an LLM-bindable ellmos module: `SKILL.md` tells an agent 
 | **B-Tests** (Observation) | Automated, external | *"What exists?"* | 8 tests (B001–B008) |
 | **O-Tests** (Output) | Functional, input→output | *"Does it work?"* | 6 tests (O001–O006) |
 | **E-Tests** (Experience) | Subjective, process-oriented | *"How does it feel?"* | 10 tasks (E001–E010) |
+
+**Definitions vs. automated suite.** The 24 B/O/E entries above are *test definitions* that this kit runs
+against a target system — and the 10 E-tasks among them are prompts for a human or an LLM, not code.
+They are not the test suite of this repository. The repository's own regression suite is the 14 unittest
+tests under `tests/` (`python -m unittest discover -s tests`), which cover the battery parser, the
+config path resolution, the module surfaces, and the public-readiness gates.
 
 | B-Tests — OBSERVATION | O-Tests — OUTPUT | E-Tests — EXPERIENCE |
 |-----------------------|------------------|----------------------|
@@ -48,7 +55,7 @@ It is also packaged as an LLM-bindable ellmos module: `SKILL.md` tells an agent 
 - **Use-Case Catalog** — `usecases.json`: machine-readable catalog of 50 user-oriented BACH use cases with `covering_skill` and `coverage_status` (COVERED/PARTIAL/OPEN), generated from `bach.db` via `tools/usecases_sync.py`. Separate from the archived system-oriented legacy battery (`usecases_system_legacy.txt`, UC001–UC049).
 - **Test Batteries** — Predefined test collections (smoke tests, UX tests, integration tests, etc.)
 - **System Classification** — SKILL / AGENT / TEXT-OS with class-appropriate test weighting
-- **LLM module surface** — `SKILL.md`, `AGENTS.md`, and `ellmos-module.json` for direct agent use
+- **LLM module surface** — `SKILL.md`, `AGENTS.md`, and `ellmos-module.v2.json` for direct agent use
 - **Compatibility runners** — BACH-style wrappers under `system_diff_tests/testing/`
 - **Optional Playwright helpers** — portable browser smoke-test utilities; Playwright is not required for the core testkit
 
@@ -94,7 +101,8 @@ python -m unittest discover -s tests -p "test_*.py"
 ellmos-tests/
 ├── SKILL.md                    # LLM-facing module instructions
 ├── AGENTS.md                   # Agent entry note
-├── ellmos-module.json          # Machine-readable module manifest
+├── ellmos-module.v2.json       # Machine-readable module manifest (canonical)
+├── ellmos-module.json          # Legacy v1 manifest (deprecated, kept for older readers)
 ├── system_diff_tests/
 │   ├── config.py                 # Central configuration (paths, known systems)
 │   ├── run_all.py                # Main test runner (B + O tests)
@@ -228,6 +236,11 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 | **B-Tests** (Beobachtung) | Automatisiert, extern | *"Was existiert?"* | 8 Tests (B001–B008) |
 | **O-Tests** (Ausgabe) | Funktional, Input→Output | *"Funktioniert es?"* | 6 Tests (O001–O006) |
 | **E-Tests** (Erfahrung) | Subjektiv, prozessorientiert | *"Wie fühlt es sich an?"* | 10 Aufgaben (E001–E010) |
+
+**Testdefinitionen vs. automatisierte Suite.** Die 24 B/O/E-Einträge sind *Testdefinitionen*, die dieses Kit
+gegen ein Zielsystem ausführt — die 10 E-Aufgaben davon sind Prompts für Mensch oder LLM, kein Code.
+Die Regressionssuite des Repos selbst sind die 14 unittest-Tests unter `tests/`
+(`python -m unittest discover -s tests`).
 
 ### Schnellstart
 

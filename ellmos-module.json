@@ -1,5 +1,8 @@
 {
   "schema": "ellmos-module-v1",
+  "deprecated": true,
+  "superseded_by": "ellmos-module.v2.json",
+  "deprecation_note": "Kanonisch ist ellmos-module.v2.json (der Modul-Katalog referenziert manifest_format v2). Dieses v1-Manifest bleibt als Discovery-Signatur fuer Leser bestehen, die noch nach 'ellmos-module.json' suchen (z. B. ellmos-agent-bridge).",
   "name": "ellmos-tests",
   "display_name": "ellmos Tests",
   "version": "0.2.0",
@@ -48,7 +51,7 @@
   "update": {
     "type": "git",
     "repo": "ellmos-ai/ellmos-tests",
-    "ref": "main",
+    "ref": "master",
     "command": "git pull --ff-only"
   },
   "wiring": {

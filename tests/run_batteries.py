@@ -386,15 +386,85 @@ def _run_sql_check(test: TestCase, system_path: Optional[str]) -> TestResult:
     )
 
 
+_GREP_SPEC = re.compile(
+    r'grep\s+(?:-\w+\s+)*"(?P<pattern>[^"]+)"\s+(?P<target>\S+).*?->\s*(?P<expected>\d+)'
+)
+
+_SKIP_SUFFIXES = (".pyc", ".pyo", ".so", ".dll", ".png", ".jpg", ".jpeg",
+                  ".gif", ".svg", ".ico", ".pdf", ".zip", ".db")
+
+
+def _grep_targets(root: Path, target: str) -> list[Path]:
+    """Loest das grep-Ziel auf: direkter Pfad, Verzeichnis oder Dateiname."""
+    candidate = root / target
+    if candidate.is_file():
+        return [candidate]
+    if candidate.is_dir():
+        return [p for p in candidate.rglob("*") if p.is_file()]
+    # Nur ein Dateiname angegeben -> im System danach suchen.
+    return [p for p in root.rglob(Path(target).name) if p.is_file()]
+
+
 def _run_grep_check(test: TestCase, system_path: Optional[str]) -> TestResult:
-    """Führt grep-basierte Tests aus."""
+    """Fuehrt grep-basierte Tests aus (u. a. die Anti-PII-Gates vor Releases).
+
+    Erwartetes Format der Pruefmethode::
+
+        grep "Muster\\|Muster2" pfad/zur/datei.py -> 0
+
+    Faellt die Pruefmethode nicht darunter, wird der Test als FAIL gemeldet und
+    NICHT stillschweigend uebersprungen: ein Sicherheitsnetz, das nichts prueft
+    und trotzdem gruen meldet, ist gefaehrlicher als gar keines.
+    """
     if not system_path:
         return TestResult(test.test_id, "SKIP", "Kein System-Pfad angegeben")
 
-    # Einfacher grep-basierter Check
+    method = test.check_method or ""
+    match = _GREP_SPEC.search(method)
+    if not match:
+        return TestResult(
+            test.test_id, "FAIL",
+            "Grep-Pruefmethode nicht maschinell auswertbar - manuell pruefen",
+            details=[method or "(keine Pruefmethode hinterlegt)"],
+        )
+
+    # grep-BRE-Alternation (\|) in Python-Regex-Alternation uebersetzen.
+    raw_pattern = match.group("pattern").replace(r"\|", "|")
+    try:
+        pattern = re.compile(raw_pattern)
+    except re.error:
+        pattern = re.compile(re.escape(raw_pattern))
+
+    expected = int(match.group("expected"))
+    root = Path(system_path)
+    if not root.exists():
+        return TestResult(test.test_id, "FAIL", f"System-Pfad fehlt: {root}")
+
+    files = _grep_targets(root, match.group("target"))
+    if not files:
+        return TestResult(
+            test.test_id, "FAIL",
+            f"Grep-Ziel nicht gefunden: {match.group('target')}",
+        )
+
+    hits: list[str] = []
+    for path in files:
+        if path.suffix.lower() in _SKIP_SUFFIXES:
+            continue
+        try:
+            text = path.read_text(encoding="utf-8", errors="ignore")
+        except OSError as exc:
+            hits.append(f"{path}: nicht lesbar ({exc})")
+            continue
+        for lineno, line in enumerate(text.splitlines(), 1):
+            if pattern.search(line):
+                hits.append(f"{path.relative_to(root)}:{lineno}: {line.strip()[:100]}")
+
+    status = "PASS" if len(hits) == expected else "FAIL"
     return TestResult(
-        test.test_id, "SKIP",
-        "Grep-Tests erfordern manuelle Ausführung",
+        test.test_id, status,
+        f"grep '{raw_pattern}': {len(hits)} Treffer (erwartet {expected})",
+        details=hits[:20],
     )
 
 

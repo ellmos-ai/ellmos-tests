@@ -40,7 +40,19 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - German section in root `README.md` (bilingual policy)
 - This `CHANGELOG.md`
 
+### Added (public-readiness review, 2026-07-12)
+- `tests/test_public_readiness.py` — regression tests that keep absolute user paths out of tracked files and prove the grep gate reports real hits.
+- `pytest.ini` — pins the automated suite to `tests/`. The `test_*.py` scripts under `testing/` are manual HQ5/HQ6 scripts that load `bach_api` and write into a real BACH installation; a bare `pytest` in the repo root would otherwise collect and execute them.
+
+### Security / Privacy
+- `usecases.json` and `tools/usecases_sync.py` no longer leak the absolute path of the local BACH database. `_meta.source_db` now records the plain basename (`bach.db`); the generator writes `db_path.name` instead of the full path.
+- `tools/usecases_sync.py`: removed the two hardcoded personal fallback paths (`C:/Users/<name>/...`). Database discovery now runs through `ELLMOS_ONEDRIVE`/`OneDrive` and home-relative candidates only.
+- `tests/run_batteries.py::_run_grep_check` is implemented instead of always returning SKIP. It searches the configured system path for the patterns declared in a battery's check method and fails on unexpected hits, listing the offending file and line. The anti-PII gates in `release_smoke` and `connector_tests` were a no-op before this. Check methods that carry no machine-readable pattern now report FAIL ("check manually") rather than a silent SKIP.
+
 ### Changed
+- `ellmos-module.v2.json` is the canonical manifest (the module catalog references `manifest_format: v2`); its `source_of_truth` now points at `https://github.com/ellmos-ai/ellmos-tests`. The v1 `ellmos-module.json` is marked `deprecated` and kept only as a discovery signature for readers that still look for that filename (e.g. `ellmos-agent-bridge`).
+- README: the `Tests-24_total` badge was misleading — 24 counts B/O/E *definitions* (10 of them manual E-tasks), not automated tests. Split into a definitions badge and an automated-suite badge, with the distinction spelled out in both the English and German sections.
+- `testing/test_hq6_snapshot.py`: snapshot code moved into `main()` behind a `__main__` guard and the system path resolved via `system_diff_tests.config`. It previously imported a sibling directory that no longer exists (`BACH_strawberry`) at module level, which broke `pytest` collection for the whole repo.
 - `system_diff_tests/run_all.py`, `b_tests/run_b_tests.py`, and `o_tests/run_o_tests.py` now force UTF-8 subprocess decoding on Windows.
 - README project structure now reflects the actual module/test layout, including generated output folders.
 - `system_diff_tests/config.py`: path resolution migrated to `.TOPICS/.AI/.OS` layout; `ELLMOS_BASE_PATH` and `ELLMOS_ONEDRIVE` env vars now supported across all config paths

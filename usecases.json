@@ -1,7 +1,7 @@
 {
   "_meta": {
     "generator": "tools/usecases_sync.py",
-    "source_db": "C:\\Users\\lukas\\OneDrive\\.TOPICS\\.AI\\.OS\\BACH\\system\\data\\bach.db",
+    "source_db": "bach.db",
     "generated_at": "2026-06-22T05:53:57.629812+00:00",
     "audit_source": "NAIV_FINALAUDIT_2026-06-22.md",
     "note": "Anwenderorientierter BACH-Use-Case-Katalog (50 UCs). Nicht verwechseln mit tests/batteries/usecases_system_legacy.txt (systemorientiert, UC001-UC049, Stand 2026-02-18)."
