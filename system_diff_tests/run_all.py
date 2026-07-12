@@ -39,7 +39,7 @@ def run_test_suite(runner_script: str, system_path: str, output_dir: str, label:
     """Fuehrt einen Test-Runner aus und gibt Ergebnisse zurueck."""
     print(f"\n{'='*60}")
     print(f"  {label}")
-    print(f"  System: {Path(system_path).name}")
+    print(f"  System: {Path(system_path).resolve().name}")
     print(f"  Output: {output_dir}")
     print(f"{'='*60}")
 
@@ -48,6 +48,8 @@ def run_test_suite(runner_script: str, system_path: str, output_dir: str, label:
             [sys.executable, runner_script, system_path, output_dir],
             capture_output=False,
             text=True,
+            encoding="utf-8",
+            errors="replace",
             timeout=600
         )
         return {"status": "ok", "returncode": proc.returncode}
@@ -92,7 +94,7 @@ Bekannte Systeme (via config.py / ELLMOS_ONEDRIVE):
         parser.print_help()
         sys.exit(1)
 
-    system_name = Path(system_path).name
+    system_name = Path(system_path).resolve().name
 
     if not Path(system_path).exists():
         print(f"FEHLER: System-Pfad existiert nicht: {system_path}")

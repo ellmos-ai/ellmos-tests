@@ -14,7 +14,8 @@ tests/
 |-- batteries/              # Test battery definitions
 |   |-- release_smoke.txt           # Critical smoke checks before release
 |   |-- vernunft_kantian.txt        # Seven-dimensional reasonability test
-|   |-- usecases.txt                # Use-case coverage checks
+|   |-- usecases.txt                # Use-case coverage checks (anwenderorientiert, 50 UCs aus bach.db, generiert)
+|   |-- usecases_system_legacy.txt  # Archiv: systemorientierter Katalog UC001-UC049 (2026-02-18, veraltet)
 |   |-- db_integrity.txt            # Database integrity checks
 |   |-- dist_type_check.txt         # Distribution classification checks
 |   |-- llm_agnostic.txt            # LLM-agnostic behavior checks

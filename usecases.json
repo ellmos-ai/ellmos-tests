@@ -1,0 +1,518 @@
+{
+  "_meta": {
+    "generator": "tools/usecases_sync.py",
+    "source_db": "C:\\Users\\lukas\\OneDrive\\.TOPICS\\.AI\\.OS\\BACH\\system\\data\\bach.db",
+    "generated_at": "2026-06-22T05:53:57.629812+00:00",
+    "audit_source": "NAIV_FINALAUDIT_2026-06-22.md",
+    "note": "Anwenderorientierter BACH-Use-Case-Katalog (50 UCs). Nicht verwechseln mit tests/batteries/usecases_system_legacy.txt (systemorientiert, UC001-UC049, Stand 2026-02-18)."
+  },
+  "stats": {
+    "total": 50,
+    "covered": 33,
+    "partial": 13,
+    "open": 4,
+    "with_covering_skill": 45
+  },
+  "usecases": [
+    {
+      "id": 1,
+      "title": "ASCII Lebenslauf erstellen",
+      "description": "Claude erstelle mir einen aktuellen textbasierten ASCII Lebenslauf aus meinen Arbeitgeber-Dokumenten",
+      "module": "docs-analyse",
+      "test_score": 100,
+      "last_tested": "2026-02-06 08:13:06",
+      "covering_skill": "bewerbungsexperte",
+      "coverage_status": "COVERED"
+    },
+    {
+      "id": 2,
+      "title": "Office Lens Auto-Kategorisierung",
+      "description": "Automatisch neu fotografierte und hochgeladene Dokumente scannen, kategorisieren und auf Dateisystem oder User in BACH verteilen",
+      "module": "ordner-flattening",
+      "test_score": 80,
+      "last_tested": "2026-02-21 22:36:11",
+      "covering_skill": "folder-flattening",
+      "coverage_status": "PARTIAL"
+    },
+    {
+      "id": 3,
+      "title": "Wichtiges Dokument suchen",
+      "description": "Claude suche mir das Dokument heraus indem meine Steuernummer steht",
+      "module": "docs-analyse",
+      "test_score": 100,
+      "last_tested": "2026-02-06 08:13:06",
+      "covering_skill": "buero",
+      "coverage_status": "COVERED"
+    },
+    {
+      "id": 4,
+      "title": "Arztberichte zusammenfassen",
+      "description": "Claude lese alle Berichte zum Thema Schilddruese. Gib mir ein Verzeichnis (Name, Fachrichtung, Arzt, Kontakt, Befund) und fasse zusammen",
+      "module": "docs-analyse",
+      "test_score": 80,
+      "last_tested": "2026-02-21 22:36:11",
+      "covering_skill": "gesundheit",
+      "coverage_status": "COVERED"
+    },
+    {
+      "id": 5,
+      "title": "Haushalts-Routine abfragen",
+      "description": "Claude muss ich meine Bettwaesche wechseln? (Routine-Check basierend auf Turnus)",
+      "module": "system-testverfahren",
+      "test_score": 100,
+      "last_tested": "2026-02-06 08:13:06",
+      "covering_skill": "haushalt-manager",
+      "coverage_status": "COVERED"
+    },
+    {
+      "id": 6,
+      "title": "Versicherungsberatung",
+      "description": "Claude sollte ich eine bestimmte Versicherung abschliessen? Analyse basierend auf vorhandenen Policen",
+      "module": "docs-analyse",
+      "test_score": 80,
+      "last_tested": "2026-02-21 22:53:52",
+      "covering_skill": "finanz-versicherung",
+      "coverage_status": "COVERED"
+    },
+    {
+      "id": 7,
+      "title": "Versicherungs-Verzeichnis abfragen",
+      "description": "Was fuer Versicherungen gibt es? Regeln wann sinnvoll? Tabelle mit Uebersicht",
+      "module": "docs-analyse",
+      "test_score": 80,
+      "last_tested": "2026-02-21 22:53:52",
+      "covering_skill": "finanz-versicherung",
+      "coverage_status": "COVERED"
+    },
+    {
+      "id": 8,
+      "title": "Meine Versicherungen auflisten",
+      "description": "Liste meiner abgeschlossenen Versicherungen mit Police, Tarif, Kosten, Kontakt, Abdeckungsanalyse",
+      "module": "docs-analyse",
+      "test_score": 80,
+      "last_tested": "2026-02-21 22:53:52",
+      "covering_skill": "finanz-versicherung",
+      "coverage_status": "COVERED"
+    },
+    {
+      "id": 9,
+      "title": "Abo-Uebersicht anzeigen",
+      "description": "Claude gib mir eine Uebersicht meiner Abos und wiederkehrenden Kosten mit aktuellem Status",
+      "module": "system-synopse",
+      "test_score": 100,
+      "last_tested": "2026-02-06 08:13:06",
+      "covering_skill": "finanz-versicherung",
+      "coverage_status": "COVERED"
+    },
+    {
+      "id": 10,
+      "title": "Abo-Status aendern",
+      "description": "Claude stelle Abo 1,3,5 auf inaktiv und 2 auf aktiv. Zeige erwartete Monatskosten",
+      "module": "system-synopse",
+      "test_score": 100,
+      "last_tested": "2026-02-06 08:13:06",
+      "covering_skill": "finanz-versicherung",
+      "coverage_status": "COVERED"
+    },
+    {
+      "id": 11,
+      "title": "Abo-Abgleich mit Mails",
+      "description": "Vergleiche erkannte Financial-Mails mit hinterlegten Abos. Zeige Differenzen",
+      "module": "system-synopse",
+      "test_score": 100,
+      "last_tested": "2026-02-06 08:13:06",
+      "covering_skill": "finanz-versicherung",
+      "coverage_status": "COVERED"
+    },
+    {
+      "id": 12,
+      "title": "Irregulaere Kosten Vorschau",
+      "description": "Finanzagent bitte gib mir eine Uebersicht welche irregulaeren Kosten koennten mich naechsten Monat erwarten?",
+      "module": "system-synopse",
+      "test_score": 50,
+      "last_tested": "2026-05-17 10:39:55",
+      "covering_skill": "finanz-versicherung",
+      "coverage_status": "COVERED"
+    },
+    {
+      "id": 13,
+      "title": "Aerzte-Kontakte exportieren",
+      "description": "Claude gib mir einen uebersichtlichen Textauszug aller Telefon und Mailadressen meiner hinterlegten Aerzte",
+      "module": "docs-analyse",
+      "test_score": 100,
+      "last_tested": "2026-02-06T14:54:07.470400",
+      "covering_skill": "gesundheit",
+      "coverage_status": "COVERED"
+    },
+    {
+      "id": 14,
+      "title": "Wochen-Aufgaben abfragen",
+      "description": "Claude welche Aufgaben stehen diese Woche noch an? (aus Routinen: taeglich, woechentlich, monatlich)",
+      "module": "system-testverfahren",
+      "test_score": 100,
+      "last_tested": "2026-02-06 08:13:06",
+      "covering_skill": "haushalt-manager",
+      "coverage_status": "COVERED"
+    },
+    {
+      "id": 15,
+      "title": "Aufgaben als erledigt markieren",
+      "description": "Aufgabe 1, 4, 5 habe ich erledigt - aktualisiere die Datenbank",
+      "module": "system-testverfahren",
+      "test_score": 100,
+      "last_tested": "2026-02-06 08:13:06",
+      "covering_skill": "haushalt-manager",
+      "coverage_status": "COVERED"
+    },
+    {
+      "id": 16,
+      "title": "Medizin-Dokumentenverzeichnis aktualisieren",
+      "description": "Neue PDFs erkennen, kategorisieren (Wissen/Patient), ins Verzeichnis aufnehmen. Pruefen ob Dokumente hinzugekommen oder geloescht wurden.",
+      "module": "DOKUMENTENMODUL",
+      "test_score": 80,
+      "last_tested": "2026-06-22 00:00:00",
+      "covering_skill": "medizin-daten",
+      "coverage_status": "COVERED"
+    },
+    {
+      "id": 17,
+      "title": "Diagnosen und Hypothesen verwalten",
+      "description": "Diagnosen kategorisieren: gesichert/Verdacht/Hypothese/widerlegt mit Belegen. Belegsammlungen fuehren.",
+      "module": "DATENMODUL",
+      "test_score": 80,
+      "last_tested": "2026-02-21 22:36:11",
+      "covering_skill": "medizin-daten",
+      "coverage_status": "COVERED"
+    },
+    {
+      "id": 18,
+      "title": "Symptomverlauf dokumentieren",
+      "description": "Symptome ueber Zeit tracken: Auftreten, Verschwinden, Verbesserung, Verschlechterung. Aktiv/Inaktiv Status.",
+      "module": "DATENMODUL",
+      "test_score": 50,
+      "last_tested": "2026-02-21 22:36:11",
+      "covering_skill": "medizin-daten",
+      "coverage_status": "COVERED"
+    },
+    {
+      "id": 19,
+      "title": "Symptomabdeckung analysieren",
+      "description": "Welche Diagnosen erklaeren welche Symptome? Ueberschneidungen? Rest-Symptome ohne Erklaerung? Prozentsatz.",
+      "module": "DATENMODUL",
+      "test_score": 50,
+      "last_tested": "2026-02-21 22:36:11",
+      "covering_skill": "medizin-daten",
+      "coverage_status": "PARTIAL"
+    },
+    {
+      "id": 20,
+      "title": "Medikamentationsverlauf fuehren",
+      "description": "Medikamente tracken: Start, Ende, Dosierung, Grund, Wirkung, Nebenwirkungen ueber Zeit.",
+      "module": "DATENMODUL",
+      "test_score": 80,
+      "last_tested": "2026-02-21 22:36:11",
+      "covering_skill": "medizin-daten",
+      "coverage_status": "COVERED"
+    },
+    {
+      "id": 21,
+      "title": "Untersuchungsplan erstellen",
+      "description": "Ausstehende/empfohlene Diagnostik aus Diagnosen und Verdachtsdiagnosen ableiten. Priorisiert nach Wichtigkeit.",
+      "module": "DATENMODUL",
+      "test_score": 80,
+      "last_tested": "2026-02-21 22:36:11",
+      "covering_skill": "medizin-daten",
+      "coverage_status": "COVERED"
+    },
+    {
+      "id": 22,
+      "title": "Vorsorgeplan verwalten",
+      "description": "Vorsorgeuntersuchungen mit Status tracken: Hautscreening, Zahnarzt, Impfungen, Blutuntersuchung, Check-Up.",
+      "module": "CARE-MODUL",
+      "test_score": 80,
+      "last_tested": "2026-06-22 00:00:00",
+      "covering_skill": "gesundheit",
+      "coverage_status": "COVERED"
+    },
+    {
+      "id": 23,
+      "title": "Medikamentenplan aktuell halten",
+      "description": "Aktueller Medikationsplan aus Berichten + User-Korrektur. Name, Wirkstoff, Menge, Tageszeit, Wirkung.",
+      "module": "CARE-MODUL",
+      "test_score": 80,
+      "last_tested": "2026-06-22 00:00:00",
+      "covering_skill": "gesundheit",
+      "coverage_status": "COVERED"
+    },
+    {
+      "id": 24,
+      "title": "Arzttermine und Erinnerungen verwalten",
+      "description": "Termine bei Aerzten speichern und auf Nachfrage zurueckgeben. Erinnerungsfunktion.",
+      "module": "CARE-MODUL",
+      "test_score": 80,
+      "last_tested": "2026-06-22 00:00:00",
+      "covering_skill": "gesundheit",
+      "coverage_status": "COVERED"
+    },
+    {
+      "id": 25,
+      "title": "Dossier oder Briefing erstellen",
+      "description": "Vor Meetings: Person/Thema recherchieren und strukturiert aufbereiten.",
+      "module": "ASSISTENT",
+      "test_score": 80,
+      "last_tested": "2026-02-21 22:36:11",
+      "covering_skill": "dossier-briefing",
+      "coverage_status": "COVERED"
+    },
+    {
+      "id": 26,
+      "title": "Location Restaurant Hotel suchen",
+      "description": "Orte mit Kontaktdaten und Oeffnungszeiten finden. Passende Locations vorschlagen.",
+      "module": "ASSISTENT",
+      "test_score": 75,
+      "last_tested": "2026-02-21 22:36:11",
+      "covering_skill": "location-suche",
+      "coverage_status": "COVERED"
+    },
+    {
+      "id": 27,
+      "title": "Reiseroute planen",
+      "description": "Zugverbindungen, Hotels suchen und zusammenstellen. Buchungslinks bereitstellen.",
+      "module": "ASSISTENT",
+      "test_score": 75,
+      "last_tested": "2026-02-21 22:36:11",
+      "covering_skill": "reiseroute",
+      "coverage_status": "COVERED"
+    },
+    {
+      "id": 28,
+      "title": "Tagesablauf-Briefing Morgens",
+      "description": "Termine des Tages, offene Themen, wichtige Briefings bei besonderen Terminen praesentieren.",
+      "module": "ASSISTENT",
+      "test_score": 80,
+      "last_tested": "2026-02-21 22:36:11",
+      "covering_skill": "kalender",
+      "coverage_status": "PARTIAL"
+    },
+    {
+      "id": 29,
+      "title": "Kalender fuehren",
+      "description": "Termine, Aufgaben, Orte, Personen, Buchungen verwalten und aktuell halten.",
+      "module": "ASSISTENT",
+      "test_score": 80,
+      "last_tested": "2026-02-21 22:36:11",
+      "covering_skill": "kalender",
+      "coverage_status": "COVERED"
+    },
+    {
+      "id": 30,
+      "title": "Charaktersheet ueber User pflegen",
+      "description": "Lernende Praeferenzen, Eigenheiten, Beduerfnisse des Users dokumentieren und beruecksichtigen.",
+      "module": "ASSISTENT",
+      "test_score": 80,
+      "last_tested": "2026-02-21 22:36:11",
+      "covering_skill": "build-your-users-mind",
+      "coverage_status": "PARTIAL"
+    },
+    {
+      "id": 31,
+      "title": "Haushaltsaufgaben nach Turnus verwalten",
+      "description": "Taeglich/woechentlich/monatlich/vierteljaehrlich/halbjaehrlich/jaehrlich - Aufgaben tracken mit Status zuletzt erledigt. Quelle: Haushaltsaufgaben von taeglich bis jaehrlich.docx",
+      "module": "HAUSHALT",
+      "test_score": 100,
+      "last_tested": "2026-05-07 10:41:01",
+      "covering_skill": "haushalt-manager",
+      "coverage_status": "COVERED"
+    },
+    {
+      "id": 32,
+      "title": "Wiederkehrende jaehrliche Kosten planen",
+      "description": "Monatliche Uebersicht irregularer jaehrlicher Kosten (KFZ, TUeV, Uni, Versicherungen, Rundfunk). Quelle: Wiederkehrende Kosten Uebersicht.docx",
+      "module": "FINANZEN",
+      "test_score": 80,
+      "last_tested": "2026-02-21 22:36:11",
+      "covering_skill": "finanz-versicherung",
+      "coverage_status": "COVERED"
+    },
+    {
+      "id": 33,
+      "title": "Lebenskreise-Bereiche Balance pruefen",
+      "description": "7 Lebensbereiche mit Aktivitaeten-Pool. Rotation statt Ueberforderung. Beruf vs Hobby Zuordnung. Quelle: Lebenskreise_Bereiche.docx",
+      "module": "SELBSTMANAGEMENT",
+      "test_score": 80,
+      "last_tested": "2026-02-21 22:36:11",
+      "covering_skill": "selbstmanagement",
+      "coverage_status": "COVERED"
+    },
+    {
+      "id": 34,
+      "title": "Berufsziele und Kernkomplexe verfolgen",
+      "description": "3 Kernkomplexe: Lerntherapie-Praxis, Lehramt Sonderpaedagogik, Software-Nebenerwerb. Qualifikationswege tracken. Quelle: Berufsziele_Kernkomplexe.docx",
+      "module": "KARRIERE",
+      "test_score": 80,
+      "last_tested": "2026-02-21 22:36:11",
+      "covering_skill": "selbstmanagement",
+      "coverage_status": "COVERED"
+    },
+    {
+      "id": 35,
+      "title": "Fortbildungen und Selbststudium dokumentieren",
+      "description": "Weiterbildungen, Zertifikate, Kurse mit Datum und Status erfassen. Quelle: Dokumentation Fortbildungen.docx",
+      "module": "KARRIERE",
+      "test_score": 80,
+      "last_tested": "2026-02-21 22:36:11",
+      "covering_skill": "selbstmanagement",
+      "coverage_status": "PARTIAL"
+    },
+    {
+      "id": 36,
+      "title": "ADHS-Strategien anwenden",
+      "description": "Wiederverwendbare Listen, Body Doubling, Planungsphase verkuerzen. Quelle: adhs strategien.docx",
+      "module": "SELBSTMANAGEMENT",
+      "test_score": 100,
+      "last_tested": "2026-02-06T14:53:52.135262",
+      "covering_skill": "selbstmanagement",
+      "coverage_status": "COVERED"
+    },
+    {
+      "id": 37,
+      "title": "Medikamente Uebersicht fuehren",
+      "description": "Aktuelle Medikation mit Dosierung, Einnahmezeit, Wirkung. Aus Arztberichten extrahieren. Quelle: Medikamente Uebersicht.pdf",
+      "module": "GESUNDHEIT",
+      "test_score": 80,
+      "last_tested": "2026-06-22 00:00:00",
+      "covering_skill": "gesundheit",
+      "coverage_status": "COVERED"
+    },
+    {
+      "id": 38,
+      "title": "Wissensdatenbank navigieren und nutzen",
+      "description": "Wissen aus Wissensdatenbank-Ordner abrufen, strukturieren, verknuepfen.",
+      "module": "WISSEN",
+      "test_score": 80,
+      "last_tested": "2026-02-21 22:36:11",
+      "covering_skill": "notizblock",
+      "coverage_status": "PARTIAL"
+    },
+    {
+      "id": 39,
+      "title": "Arbeitsblaetter fuer Autismus-Foerderung erstellen",
+      "description": "Aus Wissensdatenbank recherchieren, nach Klientenbeschreibung spezifische Arbeitsblaetter und Uebungen generieren.",
+      "module": "THERAPIE",
+      "test_score": 70,
+      "last_tested": "2026-02-21 22:36:11",
+      "covering_skill": "foerderplaner",
+      "coverage_status": "PARTIAL"
+    },
+    {
+      "id": 40,
+      "title": "Arbeitsblaetter fuer psychologische Beratung erstellen",
+      "description": "Wissen aus Datenbank fuer Beratung nutzen, Uebungen und Arbeitsblaetter erstellen.",
+      "module": "THERAPIE",
+      "test_score": 70,
+      "last_tested": "2026-02-21 22:36:11",
+      "covering_skill": null,
+      "coverage_status": "PARTIAL"
+    },
+    {
+      "id": 41,
+      "title": "FormBuilder Formulare erstellen",
+      "description": "Mit A3 FormBuilder Formulare erstellen und exportieren.",
+      "module": "SOFTWARE",
+      "test_score": 100,
+      "last_tested": "2026-05-13 10:22:38",
+      "covering_skill": "formbuilder-reader",
+      "coverage_status": "COVERED"
+    },
+    {
+      "id": 42,
+      "title": "HausLagerist Datenbank auslesen",
+      "description": "Datenbank hauslagerist.db auslesen: Haushaltsgegenstaende, Lagerort, Inventar.",
+      "module": "SOFTWARE",
+      "test_score": 100,
+      "last_tested": "2026-05-07 10:27:16",
+      "covering_skill": "hauslagerist-reader",
+      "coverage_status": "COVERED"
+    },
+    {
+      "id": 43,
+      "title": "FinancialProof Dashboard integrieren",
+      "description": "Entscheidung: Standalone lassen. market/-Services in BACH fuer Backend-Analyse.",
+      "module": "SOFTWARE",
+      "test_score": 50,
+      "last_tested": "2026-05-17 10:40:56",
+      "covering_skill": null,
+      "coverage_status": "OPEN"
+    },
+    {
+      "id": 44,
+      "title": "MasterRoutine Datenbank nutzen",
+      "description": "routine_master.db auslesen: Routinen, Aufgaben, Turnus-basierte Erinnerungen.",
+      "module": "SOFTWARE",
+      "test_score": 80,
+      "last_tested": "2026-02-21 22:36:11",
+      "covering_skill": "haushalt-manager",
+      "coverage_status": "COVERED"
+    },
+    {
+      "id": 45,
+      "title": "MediPlaner Datenbank nutzen",
+      "description": "mediplaner.db auslesen: Medikamentenplaene, Einnahmezeiten, Dosierungen.",
+      "module": "SOFTWARE",
+      "test_score": 100,
+      "last_tested": "2026-05-07 10:27:16",
+      "covering_skill": "gesundheit",
+      "coverage_status": "COVERED"
+    },
+    {
+      "id": 46,
+      "title": "MediaBrain Datenbank nutzen",
+      "description": "media_brain.db auslesen: Medien-Sammlung, Kategorien, Metadaten.",
+      "module": "SOFTWARE",
+      "test_score": 100,
+      "last_tested": "2026-02-21 22:36:11",
+      "covering_skill": "mediabrain-reader",
+      "coverage_status": "COVERED"
+    },
+    {
+      "id": 47,
+      "title": "ProFiler Wissen indizieren",
+      "description": "ProFiler komplett integrieren: PDFs scannen, OCR, Wissensindizierung, Datenbanken erstellen und nutzen.",
+      "module": "SOFTWARE",
+      "test_score": 100,
+      "last_tested": "2026-02-06 08:13:06",
+      "covering_skill": null,
+      "coverage_status": "OPEN"
+    },
+    {
+      "id": 48,
+      "title": "RPG-Agent Spielleitung fuehren",
+      "description": "RPG integrieren: Als Spielleiter in Rollenspielen fungieren, Welten verwalten, Sessions leiten.",
+      "module": "SOFTWARE",
+      "test_score": 100,
+      "last_tested": "2026-02-06 08:13:06",
+      "covering_skill": "rpg",
+      "coverage_status": "COVERED"
+    },
+    {
+      "id": 49,
+      "title": "MetaWiki erstellen und exportieren",
+      "description": "MetaWiki-Struktur (hierarchische Markdown-Wikis) erstellen und als Funktion in BACH exportieren.",
+      "module": "SOFTWARE",
+      "test_score": 70,
+      "last_tested": "2026-05-07 10:27:16",
+      "covering_skill": null,
+      "coverage_status": "OPEN"
+    },
+    {
+      "id": 50,
+      "title": "Reflection Status",
+      "description": "bach reflection status zeigt Performance-Report",
+      "module": "reflection_status",
+      "test_score": 0,
+      "last_tested": "2026-05-15 10:25:08",
+      "covering_skill": null,
+      "coverage_status": "OPEN"
+    }
+  ]
+}

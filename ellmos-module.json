@@ -1,0 +1,61 @@
+{
+  "schema": "ellmos-module-v1",
+  "name": "ellmos-tests",
+  "display_name": "ellmos Tests",
+  "version": "0.2.0",
+  "kind": "testing",
+  "license": "MIT",
+  "origin": {
+    "type": "bach-extract",
+    "source_path": "BACH/system/tools/testing",
+    "extracted_at": "2026-06-18"
+  },
+  "capabilities": [
+    "llm_os_observation_tests",
+    "llm_os_output_tests",
+    "llm_os_experience_tasks",
+    "test_batteries",
+    "system_comparison",
+    "optional_playwright_helpers"
+  ],
+  "entrypoints": {
+    "run_all": "system_diff_tests/run_all.py",
+    "run_external": "system_diff_tests/testing/run_external.py",
+    "b_runner": "system_diff_tests/testing/b_tests/run_b_tests.py",
+    "o_runner": "system_diff_tests/testing/o_tests/run_o_tests.py",
+    "battery_runner": "tests/run_batteries.py",
+    "skill": "SKILL.md"
+  },
+  "storage": {
+    "default_output": "system_diff_tests/output",
+    "generated": [
+      "system_diff_tests/output/",
+      "tests/results/",
+      "tests/interpretations/"
+    ]
+  },
+  "boundaries": {
+    "net": "none",
+    "paths": [
+      "system_diff_tests/",
+      "tests/",
+      "testing/"
+    ],
+    "tools": [
+      "python"
+    ]
+  },
+  "update": {
+    "type": "git",
+    "repo": "ellmos-ai/ellmos-tests",
+    "ref": "main",
+    "command": "git pull --ff-only"
+  },
+  "wiring": {
+    "provides": [
+      "testing.llm_os",
+      "evaluation.boe"
+    ],
+    "consumes": []
+  }
+}

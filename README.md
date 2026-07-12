@@ -17,6 +17,8 @@
 
 **ellmos-tests** evaluates and compares SKILL.md-based systems (LLM operating systems) through three complementary test perspectives. It provides a structured methodology to assess how well an LLM-OS performs across onboarding, navigation, memory, task management, tools, communication, and error tolerance.
 
+It is also packaged as an LLM-bindable ellmos module: `SKILL.md` tells an agent how to operate the testkit, and `ellmos-module.json` declares entry points, storage boundaries, capabilities, and update metadata.
+
 ---
 
 ## Test Philosophy: B / O / E
@@ -43,8 +45,12 @@
 - **10 E-Tests** — SKILL.md readability, navigation, task creation, task finding, memory write/read, tool usage, error recovery, session start, overall impression
 - **Feature Mapping DB** — SQLite database with 50+ features, multi-dimensional ratings, alias resolution, gap analysis, and duplicate detection
 - **Synopsis Generator** — Automated cross-system comparisons with JSON + Markdown output
+- **Use-Case Catalog** — `usecases.json`: machine-readable catalog of 50 user-oriented BACH use cases with `covering_skill` and `coverage_status` (COVERED/PARTIAL/OPEN), generated from `bach.db` via `tools/usecases_sync.py`. Separate from the archived system-oriented legacy battery (`usecases_system_legacy.txt`, UC001–UC049).
 - **Test Batteries** — Predefined test collections (smoke tests, UX tests, integration tests, etc.)
 - **System Classification** — SKILL / AGENT / TEXT-OS with class-appropriate test weighting
+- **LLM module surface** — `SKILL.md`, `AGENTS.md`, and `ellmos-module.json` for direct agent use
+- **Compatibility runners** — BACH-style wrappers under `system_diff_tests/testing/`
+- **Optional Playwright helpers** — portable browser smoke-test utilities; Playwright is not required for the core testkit
 
 ---
 
@@ -67,6 +73,9 @@ python system_diff_tests/run_all.py "/path/to/your/llm-os"
 # Use a known system name (configured in config.py)
 python system_diff_tests/run_all.py --system recludOS
 
+# Run the BACH-extracted compatibility runner
+python system_diff_tests/testing/run_external.py "/path/to/your/llm-os" --profile STANDARD
+
 # List available test batteries
 python tests/run_batteries.py --list
 
@@ -83,6 +92,9 @@ python -m unittest discover -s tests -p "test_*.py"
 
 ```
 ellmos-tests/
+├── SKILL.md                    # LLM-facing module instructions
+├── AGENTS.md                   # Agent entry note
+├── ellmos-module.json          # Machine-readable module manifest
 ├── system_diff_tests/
 │   ├── config.py                 # Central configuration (paths, known systems)
 │   ├── run_all.py                # Main test runner (B + O tests)
@@ -90,20 +102,30 @@ ellmos-tests/
 │   ├── comparation_workflow.md   # Cross-system comparison guide
 │   ├── feature_mapping_workflow.md
 │   ├── testing/                  # B-Test and O-Test scripts
+│   │   ├── run_external.py      # BACH-extracted compatibility runner
+│   │   ├── run_b_tests.py       # Wrapper for b_tests/run_b_tests.py
+│   │   ├── run_o_tests.py       # Wrapper for o_tests/run_o_tests.py
 │   │   ├── b_tests/             # B001–B008 observation tests
-│   │   └── o_tests/             # O001–O006 output tests
+│   │   ├── o_tests/             # O001–O006 output tests
+│   │   ├── e_tests/             # Manual E-test prompts/tasks
+│   │   ├── profiles/            # Current profile names used by BACH help
+│   │   ├── t_profiles/          # Legacy profile folder kept for compatibility
+│   │   └── playwright/          # Optional browser helper scripts
 │   ├── mapping/
 │   │   ├── schema.sql           # Feature mapping DB schema
 │   │   ├── populate_db.py       # DB population script
 │   │   ├── query_db.py          # DB query utilities
 │   │   └── Templates/           # Scan and diff templates
-│   └── output/                  # Test results per system (JSON)
+│   └── output/                  # Generated test results (gitignored)
 ├── tests/
 │   ├── batteries/               # Test battery definitions (.txt)
-│   ├── results/                 # Battery runner results (JSON)
-│   ├── interpretations/         # Human-readable analysis
+│   ├── results/                 # Generated battery runner results (gitignored)
+│   ├── interpretations/         # Generated human-readable analysis (gitignored)
 │   ├── run_batteries.py         # Battery test runner
-│   └── run_db_tests.py          # Database-specific tests
+│   ├── run_db_tests.py          # Database-specific tests
+│   ├── test_config_paths.py
+│   ├── test_run_batteries.py
+│   └── test_module_surfaces.py
 ├── testing/                     # Additional test scripts
 │   ├── test_api_modus_a.py
 │   ├── test_api_modus_b.py
@@ -176,6 +198,8 @@ Environment variables:
 - `ELLMOS_ONEDRIVE` — OneDrive base path (default: `~/OneDrive`)
 - `NO_COLOR` — Disable colored terminal output
 - `FORCE_COLOR` — Force colored terminal output
+
+Optional browser helpers under `system_diff_tests/testing/playwright/` require `requirements-optional.txt` plus installed browser binaries. The core B/O/E testkit remains Python standard-library only.
 
 ---
 

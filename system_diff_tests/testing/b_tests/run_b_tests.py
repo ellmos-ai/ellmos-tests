@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# SPDX-License-Identifier: MIT
 """
 B-Test Runner
 =============
@@ -34,7 +35,7 @@ def run_b_tests(system_path: str, output_dir: str = None) -> dict:
     """Fuehrt alle B-Tests aus und sammelt Ergebnisse."""
     
     script_dir = Path(__file__).parent
-    system_name = Path(system_path).name
+    system_name = Path(system_path).resolve().name
     
     results = {
         "system": system_name,
@@ -68,6 +69,8 @@ def run_b_tests(system_path: str, output_dir: str = None) -> dict:
                 [sys.executable, str(script_path), system_path],
                 capture_output=True,
                 text=True,
+                encoding="utf-8",
+                errors="replace",
                 timeout=60
             )
             
@@ -139,7 +142,7 @@ def main():
     else:
         # Default: <project_root>/output/<system_name>/
         project_root = Path(__file__).parent.parent.parent
-        system_name = Path(system_path).name
+        system_name = Path(system_path).resolve().name
         output_dir = str(project_root / "output" / system_name)
     
     print(f"="*60)

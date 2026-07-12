@@ -1,0 +1,39 @@
+{
+  "schema": "ellmos.module.v2",
+  "id": "ellmos-tests",
+  "display_name": "ellmos-tests",
+  "category": "quality",
+  "kind": "testing",
+  "status": "development",
+  "visibility": "public",
+  "provides": [
+    "quality.tests",
+    "quality.evaluation.boe"
+  ],
+  "requires": [],
+  "optional": [],
+  "conflicts": [],
+  "surfaces": [
+    "cli",
+    "workflow"
+  ],
+  "state": {
+    "ownership": "module",
+    "location": "project"
+  },
+  "boundaries": {
+    "network": "optional",
+    "data": "application-defined",
+    "platforms": [
+      "windows",
+      "macos",
+      "linux"
+    ]
+  },
+  "source_of_truth": {
+    "type": "local-directory",
+    "path": ".",
+    "repository": null
+  },
+  "adapters": []
+}

@@ -1,5 +1,6 @@
 # Python
 __pycache__/
+.pytest_cache/
 *.py[cod]
 *$py.class
 *.so
@@ -40,3 +41,6 @@ system_diff_tests/output/
 tests/results/
 tests/interpretations/
 TODO.md
+
+# Multi-Agent-Koordination
+LOCK*.txt

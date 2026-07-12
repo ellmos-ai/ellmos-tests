@@ -9,6 +9,28 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ## [Unreleased]
 
 ### Added
+- `tools/usecases_sync.py` — Generator für zentralen, maschinenlesbaren Use-Case-Katalog.
+  Liest `BACH/system/data/bach.db` (read-only, mode=ro, kein bach_api-Import) und schreibt
+  `usecases.json` mit Feldern: id, title, description, module, test_score, last_tested,
+  covering_skill, coverage_status. covering_skill/coverage_status aus NAIV_FINALAUDIT_2026-06-22.
+- `usecases.json` — maschinenlesbarer UC-Katalog (50 anwenderorientierte UCs, 33 COVERED /
+  13 PARTIAL / 4 OPEN, 45 mit covering_skill). Zwei UC-Universen klar getrennt (siehe unten).
+- `tests/batteries/usecases.txt` — neu generiert aus den 50 aktuellen anwenderorientierten UCs
+  (Kalender, Medikamente, Versicherungen, RPG, ...) mit covering_skill-Annotation.
+- `tests/batteries/usecases_system_legacy.txt` — Archiv des alten systemorientierten Katalogs
+  (UC001–UC049, Stand 2026-02-18, ATI-Pipeline / MCP / DB-Integrität). Thematisch verschieden
+  vom anwenderorientierten Katalog; wird nicht gelöscht, aber nicht mehr aktiv gepflegt.
+
+### Hinweis: Zwei UC-Universen
+`usecases.json` / neues `usecases.txt` = anwenderorientiert (50 UCs aus bach.db).
+`usecases_system_legacy.txt` = systemorientiert (UC001–UC049, veraltet). Nicht verwechseln.
+
+### Added (cont.)
+- `SKILL.md`, `AGENTS.md`, and `ellmos-module.json` package the project as an LLM-bindable ellmos module.
+- BACH `tools/testing` compatibility surfaces: `system_diff_tests/testing/run_external.py`, top-level `run_b_tests.py` / `run_o_tests.py` wrappers, and `system_diff_tests/testing/profiles/`.
+- Optional Playwright helper scripts under `system_diff_tests/testing/playwright/` with portable output paths.
+- `requirements-optional.txt` documents optional browser-testing dependencies separately from the stdlib core.
+- `tests/test_module_surfaces.py` verifies the module manifest, profile mirror, and runner import surface.
 - CI: `tests.yml` GitHub Actions smoke workflow — Python 3.12 on ubuntu-latest, standard-library unit tests
 - CI: `welcome.yml` — welcome message posted on first-time issue or pull request
 - CI: `stale.yml` — marks issues and PRs stale after 30 days, auto-closes after 37 days
@@ -19,6 +41,8 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - This `CHANGELOG.md`
 
 ### Changed
+- `system_diff_tests/run_all.py`, `b_tests/run_b_tests.py`, and `o_tests/run_o_tests.py` now force UTF-8 subprocess decoding on Windows.
+- README project structure now reflects the actual module/test layout, including generated output folders.
 - `system_diff_tests/config.py`: path resolution migrated to `.TOPICS/.AI/.OS` layout; `ELLMOS_BASE_PATH` and `ELLMOS_ONEDRIVE` env vars now supported across all config paths
 - Translated `tests/README.md` to English and clarified the battery runner workflow.
 - Normalized German umlauts in the public code of conduct and battery runner CLI text.

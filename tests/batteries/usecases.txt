@@ -1,344 +1,277 @@
-# Usecase-Testbatterie (SQ014)
-# Alle 49+ BACH-Usecases systematisch zum Testen
-# Format: UC_ID | Modul | Beschreibung | Erwartetes Ergebnis | Status
-# Stand: 2026-02-18
-# Dach-Framework: SQ027 (Testpipeline)
-
-# ============================================================
-# MODUL: SOFTWARE (9 Usecases)
-# ============================================================
-
-UC001 | SOFTWARE | ATI-Pipeline: Neues Projekt anlegen
-  - Bach starten, ATI-Pipeline aufrufen
-  - Neues Softwareprojekt "Testprojekt-XY" anlegen
-  Erwartet: Projektordner wird erstellt, task.db angelegt
-  Status: pass (getestet)
-
-UC002 | SOFTWARE | ATI-Pipeline: Aufgabe zum Projekt hinzufügen
-  - Zu bestehendem Projekt eine neue Aufgabe hinzufügen
-  Erwartet: Aufgabe erscheint in task list
-  Status: pass
-
-UC003 | SOFTWARE | ATI-Pipeline: Code-Analyse durchführen
-  - Bach analysiert Quellcode-Ordner
-  Erwartet: Analyse-Report generiert
-  Status: pass
-
-UC004 | SOFTWARE | ATI-Pipeline: Commit-Nachricht generieren
-  - Git-Diff eingeben, Bach generiert passende Commit-Message
-  Erwartet: Semantisch korrekte Commit-Message
-  Status: pass
-
-UC005 | SOFTWARE | ATI-Pipeline: README automatisch generieren
-  - Aus vorhandenem Projekt README.md generieren
-  Erwartet: README mit Projektbeschreibung, Installation, Usage
-  Status: pass
-
-UC006 | SOFTWARE | ATI-Pipeline: Bug-Report erstellen
-  - Fehlermeldung eingeben, Bach erstellt strukturierten Bug-Report
-  Erwartet: Report mit Titel, Beschreibung, Reproduktion, Erwartetes/Tatsächliches
-  Status: pass
-
-UC007 | SOFTWARE | MCP-Server: Tool registrieren
-  - Neues Tool über MCP-Server registrieren
-  Erwartet: Tool taucht in tools list auf
-  Status: ungetestet
-
-UC008 | SOFTWARE | Self-Extension: Neuen Skill erstellen
-  - "bach skills create mein_skill"
-  - Skill-Template generieren, bearbeiten, aktivieren
-  Erwartet: Skill einsatzbereit, in skills list sichtbar
-  Status: ungetestet
-
-UC009 | SOFTWARE | Plugin-API: Externes Plugin aktivieren
-  - Plugin in extensions/ ablegen, BACH erkennt und lädt es
-  Erwartet: Plugin-Funktionen verfügbar
-  Status: ungetestet
-
-# ============================================================
-# MODUL: DOKUMENTENANALYSE (7 Usecases)
-# ============================================================
-
-UC010 | docs-analyse | PDF analysieren und zusammenfassen
-  - PDF einwerfen, BACH extrahiert Inhalt und erstellt Zusammenfassung
-  Erwartet: Zusammenfassung mit Kernpunkten
-  Status: pass
-
-UC011 | docs-analyse | Mehrere Dokumente vergleichen
-  - Zwei PDFs/Docs vergleichen
-  Erwartet: Vergleichsmatrix oder Differenz-Übersicht
-  Status: pass
-
-UC012 | docs-analyse | Dokument-Datenbank aufbauen
-  - Ordner mit Dokumenten indexieren
-  Erwartet: Dokumente in BACH-Datenbank, suchbar
-  Status: pass (teilweise)
-
-UC013 | docs-analyse | Volltext-Suche in Dokumenten
-  - Begriff in indexierten Dokumenten suchen
-  Erwartet: Treffer mit Fundstelle
-  Status: partial
-
-UC014 | docs-analyse | Dokument-Klassifizierung
-  - Dokument nach Typ/Kategorie klassifizieren
-  Erwartet: Korrekte Zuordnung
-  Status: ungetestet
-
-UC015 | docs-analyse | Rechnung automatisch verarbeiten
-  - Rechnung (PDF) einwerfen, BACH extrahiert Beträge/Datum/Empfänger
-  Erwartet: Strukturierte Daten extrahiert
-  Status: ungetestet
-
-UC016 | docs-analyse | Export-Bericht generieren
-  - Aus mehreren Dokumenten einen zusammenfassenden Report
-  Erwartet: Formatierter Bericht (PDF/DOCX)
-  Status: ungetestet
-
-# ============================================================
-# MODUL: ASSISTENT (6 Usecases)
-# ============================================================
-
-UC017 | ASSISTENT | Notiz speichern und abrufen
-  - "bach mem write 'Wichtige Notiz'"
-  - "bach mem read" -> Notiz erscheint
-  Erwartet: Persistenz über Session hinaus
-  Status: ungetestet
-
-UC018 | ASSISTENT | Erinnerung setzen
-  - Termin/Erinnerung speichern
-  - Beim nächsten Start erscheint Erinnerung
-  Erwartet: Reminder in Status-Ausgabe
-  Status: ungetestet
-
-UC019 | ASSISTENT | Tages-Routine ausführen
-  - Morgendliche Routine (Status, offene Tasks, Erinnerungen)
-  - "bach --startup" zeigt alles relevante
-  Erwartet: Vollständiger Morning-Briefing
-  Status: ungetestet
-
-UC020 | ASSISTENT | Gesprächskontext aufrechterhalten
-  - Mehrstufige Konversation mit Rückbezug auf frühere Aussagen
-  Erwartet: BACH erinnert sich an Kontext
-  Status: ungetestet
-
-UC021 | ASSISTENT | Task-Delegation an Sub-Agent
-  - Task erstellen, an spezifischen Agenten delegieren
-  Erwartet: Agent nimmt Task an und bearbeitet ihn
-  Status: ungetestet
-
-UC022 | ASSISTENT | Lessons gelernt anwenden
-  - BACH hat lesson "verwende immer UTF-8" - wendet es an
-  Erwartet: Lessons beeinflussen Verhalten nachweisbar
-  Status: ungetestet
-
-# ============================================================
-# MODUL: DATENMODUL (5 Usecases)
-# ============================================================
-
-UC023 | DATENMODUL | Tabellendaten importieren (CSV)
-  - CSV-Datei importieren, in BACH-DB speichern
-  Erwartet: Daten abrufbar via SQL/bach query
-  Status: ungetestet
-
-UC024 | DATENMODUL | Datenanalyse durchführen
-  - Datensatz analysieren: Mittelwert, Verteilung, Ausreißer
-  Erwartet: Statistischer Report
-  Status: ungetestet
-
-UC025 | DATENMODUL | Visualisierung erstellen
-  - Datensatz als Diagramm ausgeben
-  Erwartet: Diagramm (PNG/HTML) generiert
-  Status: ungetestet
-
-UC026 | DATENMODUL | Daten exportieren
-  - BACH-interne Daten nach CSV/JSON exportieren
-  Erwartet: Datei exportiert, korrektes Format
-  Status: ungetestet
-
-UC027 | DATENMODUL | Datenbankabfrage (SQL)
-  - Direktabfrage an bach.db
-  Erwartet: Korrektes Ergebnis
-  Status: ungetestet
-
-# ============================================================
-# MODUL: SYSTEM-SYNOPSE (4 Usecases)
-# ============================================================
-
-UC028 | system-synopse | System-Status abfragen
-  - "bach status" zeigt vollständige Übersicht
-  Erwartet: Memory, Tasks, Health, Datum/Zeit
-  Status: pass
-
-UC029 | system-synopse | Wiki-Eintrag abrufen
-  - "bach wiki search [Begriff]"
-  Erwartet: Relevante Wiki-Artikel gelistet
-  Status: pass
-
-UC030 | system-synopse | Handlerübersicht anzeigen
-  - "bach --handlers" oder "bach hub list"
-  Erwartet: Liste aller verfügbaren Handler
-  Status: pass
-
-UC031 | system-synopse | Tool-Registry einsehen
-  - "bach tools list" oder äquivalent
-  Erwartet: Alle registrierten Tools mit Status
-  Status: partial
-
-# ============================================================
-# MODUL: SYSTEM-TESTVERFAHREN (3 Usecases)
-# ============================================================
-
-UC032 | system-testverfahren | Selbsttest auslösen
-  - "bach test run release_smoke"
-  Erwartet: Alle B-Tests durchlaufen
-  Status: pass
-
-UC033 | system-testverfahren | DB-Integrität prüfen
-  - run_db_tests.py ausführen
-  Erwartet: 24/24 Tests PASS
-  Status: pass
-
-UC034 | system-testverfahren | Backup erstellen & wiederherstellen
-  - "bach backup create" + "bach backup restore [id]"
-  Erwartet: Backup erstellt, Wiederherstellung funktioniert
-  Status: pass
-
-# ============================================================
-# MODUL: CARE-MODUL (3 Usecases)
-# ============================================================
-
-UC035 | CARE-MODUL | Therapieprotokoll erstellen
-  - Session-Notizen eingeben, strukturiertes Protokoll generieren
-  Erwartet: Formatiertes Therapieprotokoll
-  Status: ungetestet
-
-UC036 | CARE-MODUL | Förderbericht generieren
-  - Schülerdaten + Beobachtungen eingeben
-  - Förderbericht nach offiziellen Vorgaben generieren
-  Erwartet: Vollständiger Förderbericht (DOCX/PDF)
-  Status: ungetestet
-
-UC037 | CARE-MODUL | ICF-Klassifikation anwenden
-  - Symptome/Beobachtungen nach ICF klassifizieren
-  Erwartet: ICF-Codes mit Begründung
-  Status: ungetestet
-
-# ============================================================
-# MODUL: THERAPIE (2 Usecases)
-# ============================================================
-
-UC038 | THERAPIE | Therapieplan erstellen
-  - Diagnose + Ziele eingeben, Therapieplan generieren
-  Erwartet: Strukturierter Therapieplan
-  Status: ungetestet
-
-UC039 | THERAPIE | Fortschritt dokumentieren
-  - Stundendokumentation über Zeit verfolgen
-  Erwartet: Trendanalyse und Fortschrittsbericht
-  Status: ungetestet
-
-# ============================================================
-# MODUL: SELBSTMANAGEMENT (2 Usecases)
-# ============================================================
-
-UC040 | SELBSTMANAGEMENT | Wochenplan organisieren
-  - Termine und Aufgaben eingeben, BACH erstellt strukturierten Plan
-  Erwartet: Priorisierter Wochenplan
-  Status: pass
-
-UC041 | SELBSTMANAGEMENT | Gewohnheit tracken
-  - Tägliche Gewohnheit eintragen, Streak verfolgen
-  Erwartet: Streak-Anzeige, Visualisierung
-  Status: ungetestet
-
-# ============================================================
-# MODUL: HAUSHALT (1 Usecase)
-# ============================================================
-
-UC042 | HAUSHALT | Einkaufsliste verwalten
-  - Artikel hinzufügen, Liste ausgeben, Artikel abhaken
-  Erwartet: Persistente Liste, korrekte Status-Updates
-  Status: pass
-
-# ============================================================
-# MODUL: KARRIERE (2 Usecases)
-# ============================================================
-
-UC043 | KARRIERE | Bewerbung erstellen
-  - Stelle + CV eingeben, BACH erstellt Anschreiben
-  Erwartet: Personalisiertes Bewerbungsschreiben
-  Status: ungetestet
-
-UC044 | KARRIERE | CV optimieren
-  - CV-Analyse, Verbesserungsvorschläge für Zielstelle
-  Erwartet: Optimierter CV mit Begründungen
-  Status: ungetestet
-
-# ============================================================
-# MODUL: WISSEN (1 Usecase)
-# ============================================================
-
-UC045 | WISSEN | Wissensartikel erstellen und verlinken
-  - Neuen Wiki-Eintrag erstellen, mit bestehendem verlinken
-  Erwartet: Eintrag in wiki/, korrekte Verlinkung
-  Status: ungetestet
-
-# ============================================================
-# MODUL: GESUNDHEIT (1 Usecase)
-# ============================================================
-
-UC046 | GESUNDHEIT | Gesundheitsdaten erfassen
-  - Vitaldaten (Gewicht, Schlaf, etc.) eintragen
-  - Trendanalyse abrufen
-  Erwartet: Datenpunkt gespeichert, Trend berechenbar
-  Status: ungetestet
-
-# ============================================================
-# MODUL: FINANZEN (1 Usecase)
-# ============================================================
-
-UC047 | FINANZEN | Ausgaben kategorisieren
-  - Ausgabe eingeben, BACH schlägt Kategorie vor
-  - Monatliche Ausgabenübersicht generieren
-  Erwartet: Korrekte Kategorisierung, Übersicht
-  Status: ungetestet
-
-# ============================================================
-# MODUL: DOKUMENTENMODUL (1 Usecase)
-# ============================================================
-
-UC048 | DOKUMENTENMODUL | Dokument formatiert ausgeben
-  - Rohen Text in formatiertes Dokument (DOCX/PDF) umwandeln
-  Erwartet: Professionell formatiertes Dokument
-  Status: ungetestet
-
-# ============================================================
-# MODUL: ORDNER-FLATTENING (1 Usecase)
-# ============================================================
-
-UC049 | ordner-flattening | Verschachtelte Ordnerstruktur flachen
-  - Tiefen Ordnerbaum auf flache Struktur umstrukturieren
-  Erwartet: Flache Struktur ohne Verlust
-  Status: ungetestet
-
-# ============================================================
-# NEUE BEREICHE (noch keine Usecases, zu ergänzen)
-# ============================================================
-
-# Noch zu formulieren:
-# - Bridge/Connectors (Telegram, Discord, HomeAssistant)
-# - Memory-System (Consolidation, Fakten)
-# - Backup-System
-# - Multi-LLM / Partner-Delegation
-# - Hook-Framework
-# - Wiki-System (Erstellen, Suchen, Navigieren)
-# - Email-System
-# - GUI/Dashboard
-
-# ============================================================
-# AUSWERTUNG
-# ============================================================
-# Getestet (pass):    16 (33%)
-# Teilweise (partial): 4 ( 8%)
-# Ungetestet:         29 (59%)
-# Release-Minimum: 80% aller UC pass oder partial
+# Use-Case-Batterie (anwenderorientiert) — automatisch generiert
+# Quelle: tools/usecases_sync.py aus BACH/system/data/bach.db
+# Audit-Basis: NAIV_FINALAUDIT_2026-06-22.md
+# Stand: 2026-06-22
+# Total: 50 | COVERED: 33 | PARTIAL: 13 | OPEN: 4
+#
+# HINWEIS: Dies ist der ANWENDERORIENTIERTE Katalog (Kalender, Medikamente,
+# Versicherungen, RPG, ...). Der systemorientierte Katalog (ATI-Pipeline, MCP,
+# DB-Integrität, UC001-UC049) wurde als usecases_system_legacy.txt archiviert.
+# Format: UC_ID | Modul | Titel | covering_skill | coverage_status
+
+# === ASSISTENT (6 UCs) ===
+UC025 | ASSISTENT | Dossier oder Briefing erstellen
+  covering_skill: dossier-briefing
+  coverage_status: COVERED
+  Beschreibung: Vor Meetings: Person/Thema recherchieren und strukturiert aufbereiten.
+
+UC026 | ASSISTENT | Location Restaurant Hotel suchen
+  covering_skill: location-suche
+  coverage_status: COVERED
+  Beschreibung: Orte mit Kontaktdaten und Oeffnungszeiten finden. Passende Locations vorschlagen.
+
+UC027 | ASSISTENT | Reiseroute planen
+  covering_skill: reiseroute
+  coverage_status: COVERED
+  Beschreibung: Zugverbindungen, Hotels suchen und zusammenstellen. Buchungslinks bereitstellen.
+
+UC028 | ASSISTENT | Tagesablauf-Briefing Morgens
+  covering_skill: kalender
+  coverage_status: PARTIAL
+  Beschreibung: Termine des Tages, offene Themen, wichtige Briefings bei besonderen Terminen praesentieren.
+
+UC029 | ASSISTENT | Kalender fuehren
+  covering_skill: kalender
+  coverage_status: COVERED
+  Beschreibung: Termine, Aufgaben, Orte, Personen, Buchungen verwalten und aktuell halten.
+
+UC030 | ASSISTENT | Charaktersheet ueber User pflegen
+  covering_skill: build-your-users-mind
+  coverage_status: PARTIAL
+  Beschreibung: Lernende Praeferenzen, Eigenheiten, Beduerfnisse des Users dokumentieren und beruecksichtigen.
+
+# === CARE-MODUL (3 UCs) ===
+UC022 | CARE-MODUL | Vorsorgeplan verwalten
+  covering_skill: gesundheit
+  coverage_status: PARTIAL
+  Beschreibung: Vorsorgeuntersuchungen mit Status tracken: Hautscreening, Zahnarzt, Impfungen, Blutuntersuchung, Check-Up.
+
+UC023 | CARE-MODUL | Medikamentenplan aktuell halten
+  covering_skill: gesundheit
+  coverage_status: PARTIAL
+  Beschreibung: Aktueller Medikationsplan aus Berichten + User-Korrektur. Name, Wirkstoff, Menge, Tageszeit, Wirkung.
+
+UC024 | CARE-MODUL | Arzttermine und Erinnerungen verwalten
+  covering_skill: gesundheit
+  coverage_status: PARTIAL
+  Beschreibung: Termine bei Aerzten speichern und auf Nachfrage zurueckgeben. Erinnerungsfunktion.
+
+# === DATENMODUL (5 UCs) ===
+UC017 | DATENMODUL | Diagnosen und Hypothesen verwalten
+  covering_skill: medizin-daten
+  coverage_status: COVERED
+  Beschreibung: Diagnosen kategorisieren: gesichert/Verdacht/Hypothese/widerlegt mit Belegen. Belegsammlungen fuehren.
+
+UC018 | DATENMODUL | Symptomverlauf dokumentieren
+  covering_skill: medizin-daten
+  coverage_status: COVERED
+  Beschreibung: Symptome ueber Zeit tracken: Auftreten, Verschwinden, Verbesserung, Verschlechterung. Aktiv/Inaktiv Status.
+
+UC019 | DATENMODUL | Symptomabdeckung analysieren
+  covering_skill: medizin-daten
+  coverage_status: PARTIAL
+  Beschreibung: Welche Diagnosen erklaeren welche Symptome? Ueberschneidungen? Rest-Symptome ohne Erklaerung? Prozentsatz.
+
+UC020 | DATENMODUL | Medikamentationsverlauf fuehren
+  covering_skill: medizin-daten
+  coverage_status: COVERED
+  Beschreibung: Medikamente tracken: Start, Ende, Dosierung, Grund, Wirkung, Nebenwirkungen ueber Zeit.
+
+UC021 | DATENMODUL | Untersuchungsplan erstellen
+  covering_skill: medizin-daten
+  coverage_status: COVERED
+  Beschreibung: Ausstehende/empfohlene Diagnostik aus Diagnosen und Verdachtsdiagnosen ableiten. Priorisiert nach Wichtigkeit.
+
+# === DOKUMENTENMODUL (1 UCs) ===
+UC016 | DOKUMENTENMODUL | Medizin-Dokumentenverzeichnis aktualisieren
+  covering_skill: gesundheit
+  coverage_status: PARTIAL
+  Beschreibung: Neue PDFs erkennen, kategorisieren (Wissen/Patient), ins Verzeichnis aufnehmen. Pruefen ob Dokumente hinzugekommen oder 
+
+# === FINANZEN (1 UCs) ===
+UC032 | FINANZEN | Wiederkehrende jaehrliche Kosten planen
+  covering_skill: finanz-versicherung
+  coverage_status: COVERED
+  Beschreibung: Monatliche Uebersicht irregularer jaehrlicher Kosten (KFZ, TUeV, Uni, Versicherungen, Rundfunk). Quelle: Wiederkehrende 
+
+# === GESUNDHEIT (1 UCs) ===
+UC037 | GESUNDHEIT | Medikamente Uebersicht fuehren
+  covering_skill: gesundheit
+  coverage_status: PARTIAL
+  Beschreibung: Aktuelle Medikation mit Dosierung, Einnahmezeit, Wirkung. Aus Arztberichten extrahieren. Quelle: Medikamente Uebersicht.
+
+# === HAUSHALT (1 UCs) ===
+UC031 | HAUSHALT | Haushaltsaufgaben nach Turnus verwalten
+  covering_skill: haushalt-manager
+  coverage_status: COVERED
+  Beschreibung: Taeglich/woechentlich/monatlich/vierteljaehrlich/halbjaehrlich/jaehrlich - Aufgaben tracken mit Status zuletzt erledigt.
+
+# === KARRIERE (2 UCs) ===
+UC034 | KARRIERE | Berufsziele und Kernkomplexe verfolgen
+  covering_skill: selbstmanagement
+  coverage_status: COVERED
+  Beschreibung: 3 Kernkomplexe: Lerntherapie-Praxis, Lehramt Sonderpaedagogik, Software-Nebenerwerb. Qualifikationswege tracken. Quelle:
+
+UC035 | KARRIERE | Fortbildungen und Selbststudium dokumentieren
+  covering_skill: selbstmanagement
+  coverage_status: PARTIAL
+  Beschreibung: Weiterbildungen, Zertifikate, Kurse mit Datum und Status erfassen. Quelle: Dokumentation Fortbildungen.docx
+
+# === SELBSTMANAGEMENT (2 UCs) ===
+UC033 | SELBSTMANAGEMENT | Lebenskreise-Bereiche Balance pruefen
+  covering_skill: selbstmanagement
+  coverage_status: COVERED
+  Beschreibung: 7 Lebensbereiche mit Aktivitaeten-Pool. Rotation statt Ueberforderung. Beruf vs Hobby Zuordnung. Quelle: Lebenskreise_Be
+
+UC036 | SELBSTMANAGEMENT | ADHS-Strategien anwenden
+  covering_skill: selbstmanagement
+  coverage_status: COVERED
+  Beschreibung: Wiederverwendbare Listen, Body Doubling, Planungsphase verkuerzen. Quelle: adhs strategien.docx
+
+# === SOFTWARE (9 UCs) ===
+UC041 | SOFTWARE | FormBuilder Formulare erstellen
+  covering_skill: formbuilder-reader
+  coverage_status: COVERED
+  Beschreibung: Mit A3 FormBuilder Formulare erstellen und exportieren.
+
+UC042 | SOFTWARE | HausLagerist Datenbank auslesen
+  covering_skill: hauslagerist-reader
+  coverage_status: COVERED
+  Beschreibung: Datenbank hauslagerist.db auslesen: Haushaltsgegenstaende, Lagerort, Inventar.
+
+UC043 | SOFTWARE | FinancialProof Dashboard integrieren
+  covering_skill: —
+  coverage_status: OPEN
+  Beschreibung: Entscheidung: Standalone lassen. market/-Services in BACH fuer Backend-Analyse.
+
+UC044 | SOFTWARE | MasterRoutine Datenbank nutzen
+  covering_skill: haushalt-manager
+  coverage_status: COVERED
+  Beschreibung: routine_master.db auslesen: Routinen, Aufgaben, Turnus-basierte Erinnerungen.
+
+UC045 | SOFTWARE | MediPlaner Datenbank nutzen
+  covering_skill: gesundheit
+  coverage_status: COVERED
+  Beschreibung: mediplaner.db auslesen: Medikamentenplaene, Einnahmezeiten, Dosierungen.
+
+UC046 | SOFTWARE | MediaBrain Datenbank nutzen
+  covering_skill: mediabrain-reader
+  coverage_status: COVERED
+  Beschreibung: media_brain.db auslesen: Medien-Sammlung, Kategorien, Metadaten.
+
+UC047 | SOFTWARE | ProFiler Wissen indizieren
+  covering_skill: —
+  coverage_status: OPEN
+  Beschreibung: ProFiler komplett integrieren: PDFs scannen, OCR, Wissensindizierung, Datenbanken erstellen und nutzen.
+
+UC048 | SOFTWARE | RPG-Agent Spielleitung fuehren
+  covering_skill: rpg
+  coverage_status: COVERED
+  Beschreibung: RPG integrieren: Als Spielleiter in Rollenspielen fungieren, Welten verwalten, Sessions leiten.
+
+UC049 | SOFTWARE | MetaWiki erstellen und exportieren
+  covering_skill: —
+  coverage_status: OPEN
+  Beschreibung: MetaWiki-Struktur (hierarchische Markdown-Wikis) erstellen und als Funktion in BACH exportieren.
+
+# === THERAPIE (2 UCs) ===
+UC039 | THERAPIE | Arbeitsblaetter fuer Autismus-Foerderung erstellen
+  covering_skill: foerderplaner
+  coverage_status: PARTIAL
+  Beschreibung: Aus Wissensdatenbank recherchieren, nach Klientenbeschreibung spezifische Arbeitsblaetter und Uebungen generieren.
+
+UC040 | THERAPIE | Arbeitsblaetter fuer psychologische Beratung erstellen
+  covering_skill: —
+  coverage_status: PARTIAL
+  Beschreibung: Wissen aus Datenbank fuer Beratung nutzen, Uebungen und Arbeitsblaetter erstellen.
+
+# === WISSEN (1 UCs) ===
+UC038 | WISSEN | Wissensdatenbank navigieren und nutzen
+  covering_skill: notizblock
+  coverage_status: PARTIAL
+  Beschreibung: Wissen aus Wissensdatenbank-Ordner abrufen, strukturieren, verknuepfen.
+
+# === docs-analyse (7 UCs) ===
+UC001 | docs-analyse | ASCII Lebenslauf erstellen
+  covering_skill: bewerbungsexperte
+  coverage_status: COVERED
+  Beschreibung: Claude erstelle mir einen aktuellen textbasierten ASCII Lebenslauf aus meinen Arbeitgeber-Dokumenten
+
+UC003 | docs-analyse | Wichtiges Dokument suchen
+  covering_skill: buero
+  coverage_status: COVERED
+  Beschreibung: Claude suche mir das Dokument heraus indem meine Steuernummer steht
+
+UC004 | docs-analyse | Arztberichte zusammenfassen
+  covering_skill: gesundheit
+  coverage_status: COVERED
+  Beschreibung: Claude lese alle Berichte zum Thema Schilddruese. Gib mir ein Verzeichnis (Name, Fachrichtung, Arzt, Kontakt, Befund) un
+
+UC006 | docs-analyse | Versicherungsberatung
+  covering_skill: finanz-versicherung
+  coverage_status: COVERED
+  Beschreibung: Claude sollte ich eine bestimmte Versicherung abschliessen? Analyse basierend auf vorhandenen Policen
+
+UC007 | docs-analyse | Versicherungs-Verzeichnis abfragen
+  covering_skill: finanz-versicherung
+  coverage_status: COVERED
+  Beschreibung: Was fuer Versicherungen gibt es? Regeln wann sinnvoll? Tabelle mit Uebersicht
+
+UC008 | docs-analyse | Meine Versicherungen auflisten
+  covering_skill: finanz-versicherung
+  coverage_status: COVERED
+  Beschreibung: Liste meiner abgeschlossenen Versicherungen mit Police, Tarif, Kosten, Kontakt, Abdeckungsanalyse
+
+UC013 | docs-analyse | Aerzte-Kontakte exportieren
+  covering_skill: gesundheit
+  coverage_status: COVERED
+  Beschreibung: Claude gib mir einen uebersichtlichen Textauszug aller Telefon und Mailadressen meiner hinterlegten Aerzte
+
+# === ordner-flattening (1 UCs) ===
+UC002 | ordner-flattening | Office Lens Auto-Kategorisierung
+  covering_skill: folder-flattening
+  coverage_status: PARTIAL
+  Beschreibung: Automatisch neu fotografierte und hochgeladene Dokumente scannen, kategorisieren und auf Dateisystem oder User in BACH v
+
+# === reflection_status (1 UCs) ===
+UC050 | reflection_status | Reflection Status
+  covering_skill: —
+  coverage_status: OPEN
+  Beschreibung: bach reflection status zeigt Performance-Report
+
+# === system-synopse (4 UCs) ===
+UC009 | system-synopse | Abo-Uebersicht anzeigen
+  covering_skill: finanz-versicherung
+  coverage_status: COVERED
+  Beschreibung: Claude gib mir eine Uebersicht meiner Abos und wiederkehrenden Kosten mit aktuellem Status
+
+UC010 | system-synopse | Abo-Status aendern
+  covering_skill: finanz-versicherung
+  coverage_status: COVERED
+  Beschreibung: Claude stelle Abo 1,3,5 auf inaktiv und 2 auf aktiv. Zeige erwartete Monatskosten
+
+UC011 | system-synopse | Abo-Abgleich mit Mails
+  covering_skill: finanz-versicherung
+  coverage_status: COVERED
+  Beschreibung: Vergleiche erkannte Financial-Mails mit hinterlegten Abos. Zeige Differenzen
+
+UC012 | system-synopse | Irregulaere Kosten Vorschau
+  covering_skill: finanz-versicherung
+  coverage_status: COVERED
+  Beschreibung: Finanzagent bitte gib mir eine Uebersicht welche irregulaeren Kosten koennten mich naechsten Monat erwarten?
+
+# === system-testverfahren (3 UCs) ===
+UC005 | system-testverfahren | Haushalts-Routine abfragen
+  covering_skill: haushalt-manager
+  coverage_status: COVERED
+  Beschreibung: Claude muss ich meine Bettwaesche wechseln? (Routine-Check basierend auf Turnus)
+
+UC014 | system-testverfahren | Wochen-Aufgaben abfragen
+  covering_skill: haushalt-manager
+  coverage_status: COVERED
+  Beschreibung: Claude welche Aufgaben stehen diese Woche noch an? (aus Routinen: taeglich, woechentlich, monatlich)
+
+UC015 | system-testverfahren | Aufgaben als erledigt markieren
+  covering_skill: haushalt-manager
+  coverage_status: COVERED
+  Beschreibung: Aufgabe 1, 4, 5 habe ich erledigt - aktualisiere die Datenbank

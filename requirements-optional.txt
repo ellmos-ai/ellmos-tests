@@ -1,0 +1,2 @@
+# Optional browser testing helpers
+playwright>=1.44
