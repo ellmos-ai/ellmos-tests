@@ -25,10 +25,20 @@ FORBIDDEN = ("C:/Users/", "C:\\Users\\", "/home/lukas", "/Users/lukas")
 
 
 def _tracked_files() -> list[str]:
-    out = subprocess.run(
-        ["git", "ls-files"], cwd=REPO_ROOT,
-        capture_output=True, text=True, check=True,
-    )
+    """Getrackte Dateien via git.
+
+    Raises:
+        unittest.SkipTest: wenn kein git verfuegbar ist (z. B. Quell-Tarball
+            ohne .git). Der Test soll dort uebersprungen werden, nicht mit
+            einem Fehler abbrechen - in CI und in jedem Klon laeuft er normal.
+    """
+    try:
+        out = subprocess.run(
+            ["git", "ls-files"], cwd=REPO_ROOT,
+            capture_output=True, text=True, check=True,
+        )
+    except (OSError, subprocess.CalledProcessError) as exc:
+        raise unittest.SkipTest(f"git nicht verfuegbar: {exc}") from exc
     return [line for line in out.stdout.splitlines() if line.strip()]
 
 
