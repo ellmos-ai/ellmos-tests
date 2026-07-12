@@ -31,7 +31,7 @@
     ]
   },
   "source_of_truth": {
-    "type": "git",
+    "type": "local-directory",
     "path": ".",
     "repository": "https://github.com/ellmos-ai/ellmos-tests"
   },
