@@ -8,6 +8,11 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Changed (technical hygiene & documentation, 2026-07-21)
+- `llms.txt`: updated `Last-checked` timestamp to `2026-07-21`.
+- `TODO.md`: updated repository name item to confirmed `ellmos-ai/ellmos-tests`.
+- Automated test suite (14/14 passed) and clean compilation verified.
+
 ### Added
 - `tools/usecases_sync.py` — Generator für zentralen, maschinenlesbaren Use-Case-Katalog.
   Liest `BACH/system/data/bach.db` (read-only, mode=ro, kein bach_api-Import) und schreibt
