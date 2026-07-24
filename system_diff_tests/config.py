@@ -101,14 +101,61 @@ def get_system_path(name: str) -> Path:
     return _resolve_relative_path(relative_paths)
 
 
+# Layout eines Systems: wo liegt der importierbare Python-Code, wo die DB.
+# BACH legt beides unter "system/" ab, andere Stacks tun das nicht -- deshalb
+# gehoert das Layout zum System, nicht in die Helferfunktion. Systeme ohne
+# Eintrag verwenden _DEFAULT_LAYOUT (Code im Wurzelverzeichnis, keine DB).
+_DEFAULT_LAYOUT = {"code_subdir": "", "db_relpath": ""}
+
+_SYSTEM_LAYOUTS = {
+    "BACH_v2_vanilla": {"code_subdir": "system", "db_relpath": "data/bach.db"},
+    "BACH_strawberry": {"code_subdir": "system", "db_relpath": "data/bach.db"},
+    "BACH_v1.1": {"code_subdir": "system", "db_relpath": "data/bach.db"},
+    "BACH_STREAM": {"code_subdir": "system", "db_relpath": "data/bach.db"},
+}
+
+
+def get_system_layout(name: str) -> dict[str, str]:
+    """Gibt das Layout-Dict eines Systems zurueck (Default: Code im Root)."""
+    return _SYSTEM_LAYOUTS.get(name, _DEFAULT_LAYOUT)
+
+
+def get_system_code_path(name: str = "BACH_v2_vanilla") -> Path:
+    """Gibt den importierbaren Python-Pfad eines bekannten Systems zurueck.
+
+    Systemagnostisch: Der Unterordner kommt aus dem Layout des Systems, nicht
+    aus einer festen Annahme. Ein Stack, dessen Code im Wurzelverzeichnis
+    liegt, braucht keinen Layout-Eintrag.
+    """
+    subdir = get_system_layout(name)["code_subdir"]
+    base = get_system_path(name)
+    return base / subdir if subdir else base
+
+
+def get_system_db_path(name: str = "BACH_v2_vanilla") -> Path:
+    """Gibt den Standardpfad zur Datenbank eines bekannten Systems zurueck.
+
+    Wirft KeyError, wenn das System kein DB-Layout deklariert -- besser als
+    ein Pfad, der auf nichts zeigt.
+    """
+    relpath = get_system_layout(name)["db_relpath"]
+    if not relpath:
+        raise KeyError(f"System deklariert keinen DB-Pfad: {name}")
+    return get_system_code_path(name) / Path(relpath)
+
+
+# Abwaertskompatible Aliase. Die BACH-benannten Funktionen stammen aus der
+# Zeit, in der dieses Testkit nur BACH geprueft hat; sie bleiben erhalten,
+# damit bestehende Aufrufer weiterlaufen. Neuer Code nutzt die generischen
+# Namen oben.
 def get_bach_system_path(name: str = "BACH_v2_vanilla") -> Path:
-    """Gibt den Python-Systempfad einer bekannten BACH-Installation zurueck."""
-    return get_system_path(name) / "system"
+    """Deprecated: nutze get_system_code_path()."""
+    return get_system_code_path(name)
 
 
 def get_bach_db_path(name: str = "BACH_v2_vanilla") -> Path:
-    """Gibt den Standardpfad zur BACH-Datenbank zurueck."""
-    return get_bach_system_path(name) / "data" / "bach.db"
+    """Deprecated: nutze get_system_db_path()."""
+    return get_system_db_path(name)
 
 
 def get_systems_dict() -> dict[str, str]:
