@@ -1,5 +1,5 @@
 """
-Automatisierter DB-Integritäts-Tester (SQ027)
+Automatisierter DB-Integritäts-Tester
 Führt DB001-DB015 + DT001-DT017 aus und speichert Ergebnisse.
 
 Ausführung: python tests/run_db_tests.py [--battery db_integrity|dist_type|all]

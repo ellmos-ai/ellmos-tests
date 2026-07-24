@@ -1,8 +1,8 @@
-# Usecase-Testbatterie (SQ014)
+# Usecase-Testbatterie
 # Alle 49+ BACH-Usecases systematisch zum Testen
 # Format: UC_ID | Modul | Beschreibung | Erwartetes Ergebnis | Status
 # Stand: 2026-02-18
-# Dach-Framework: SQ027 (Testpipeline)
+# Dach-Framework: Testpipeline
 
 # ============================================================
 # MODUL: SOFTWARE (9 Usecases)

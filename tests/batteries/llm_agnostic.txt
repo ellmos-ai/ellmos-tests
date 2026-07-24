@@ -1,6 +1,6 @@
 # LLM-Agnostik Testbatterie
 # Prüft ob BACH mit verschiedenen LLM-Partnern funktioniert
-# Stand: 2026-02-18 | Bezug: MASTERPLAN SQ015
+# Stand: 2026-02-18
 
 # Hintergrund:
 # BACH soll LLM-agnostisch sein: Claude, Gemini, Ollama sollen alle

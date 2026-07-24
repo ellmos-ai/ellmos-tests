@@ -1,6 +1,6 @@
-# Kantischer Vernunftstest (SQ036)
+# Kantischer Vernunftstest
 # 7-dimensionale Bewertung des BACH-Systems nach Vernunftprinzipien
-# Stand: 2026-02-18 | Bezug: MASTERPLAN SQ036
+# Stand: 2026-02-18
 
 # Hintergrund:
 # Kant unterscheidet zwischen "bloßer Vernunft" (nur was ich kann) und
@@ -142,5 +142,5 @@ FAIRNESS | V021 | System dokumentiert was es mit Daten macht
 # 45-59:  Schwach - Überarbeitung vor Release
 # <45:    Kritisch - Grundlegende Probleme
 
-# Testautor: MASTERPLAN SQ036 (Kantischer Vernunftstest)
+# Testautor: Kantischer Vernunftstest
 # Methodik: Adaptiert aus Forschungs-Review-Prompts

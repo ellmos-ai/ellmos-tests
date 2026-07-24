@@ -1,15 +1,13 @@
 #!/usr/bin/env python3
 """
-SQ072 Smoke-Test: PDF-Migration Verification
+Smoke test: PDF migration verification
 =============================================
 Testet ob BACH PDFs ohne PyMuPDF lesen kann (MIT-Lizenz-Kompatibilität).
 
 Strategie:
 1. Prüfe ob pypdf oder pdfplumber installiert sind
 2. Teste PDF-Extraktion mit document_indexer.py
-3. Verifiziere dass PyMuPDF optional ist (nicht zwingend erforderlich)
-
-Runde 12, 2026-02-20
+3. Verifiziere dass PyMuPDF optional ist (nicht zwingend erforderlich), 2026-02-20
 """
 
 import sys
@@ -58,7 +56,7 @@ def check_pdf_libraries():
 
 def test_pdf_extraction():
     """Teste ob PDF-Extraktion ohne PyMuPDF funktioniert."""
-    print("\n=== SQ072 SMOKE-TEST: PDF-MIGRATION ===\n")
+    print("\n=== SMOKE TEST: PDF MIGRATION ===\n")
 
     # 1. Library-Check
     print("1. PDF-Bibliotheken Check:")
@@ -110,7 +108,7 @@ def test_pdf_extraction():
 
     # 4. Zusammenfassung
     print("\n" + "="*50)
-    print("ERGEBNIS: ✓ SQ072 SMOKE-TEST BESTANDEN")
+    print("ERGEBNIS: ✓ SMOKE-TEST BESTANDEN")
     print("="*50)
     print("\nMIT-Kompatibilität: ERREICHT")
     print("- BACH kann PDFs mit pypdf/pdfplumber lesen (MIT)")

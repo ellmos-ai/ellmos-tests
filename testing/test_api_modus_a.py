@@ -3,7 +3,7 @@
 """
 Test-Skript für BACH API - Modus A (Synchron)
 HQ5 Nutzertest - Modus A/B Testing
-Erstellt: 2026-02-21, Runde 27
+Erstellt: 2026-02-21
 """
 
 import time
