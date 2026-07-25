@@ -8,7 +8,16 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Added (technical hygiene & packaging, 2026-07-25)
+- `pyproject.toml`: PEP 621 compliant package configuration with metadata, dependencies, and `pytest` options (`[tool.pytest.ini_options]`).
+- `README.md`: added AI / LLM Agent context callout (`> [!NOTE]`) pointing to `llms.txt`.
+
+### Changed (technical hygiene & documentation, 2026-07-25)
+- `llms.txt`: updated `Last-checked` timestamp to `2026-07-25`.
+- Automated test suite (14/14 passed) and repository health verified.
+
 ### Changed (technical hygiene & documentation, 2026-07-21)
+
 - `llms.txt`: updated `Last-checked` timestamp to `2026-07-21`.
 - `TODO.md`: updated repository name item to confirmed `ellmos-ai/ellmos-tests`.
 - Automated test suite (14/14 passed) and clean compilation verified.

@@ -20,6 +20,10 @@
 
 It is also packaged as an LLM-bindable ellmos module: `SKILL.md` tells an agent how to operate the testkit, and `ellmos-module.v2.json` (canonical manifest) declares category, capabilities, surfaces, and boundaries. The older `ellmos-module.json` (v1 schema) is deprecated and only kept for readers that still discover modules by that filename.
 
+> [!NOTE]
+> **LLM / AI Agent Context**: Machine-readable architecture, search phrases, and module guidelines are indexed in [`llms.txt`](llms.txt).
+
+
 ---
 
 ## Test Philosophy: B / O / E

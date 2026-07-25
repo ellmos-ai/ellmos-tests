@@ -50,4 +50,4 @@ python -m unittest discover -s tests -p "test_*.py"
 - Do not commit generated output, local result JSON, `__pycache__`, or private BACH context.
 - German user-facing documentation should use real umlauts (`ä`, `ö`, `ü`, `Ä`, `Ö`, `Ü`, `ß`), not `ae`, `oe`, or `ue`.
 
-## Last-checked: 2026-07-21
+## Last-checked: 2026-07-25
