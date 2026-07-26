@@ -4,10 +4,13 @@
 
 > Structured B/O/E testing framework for LLM operating systems
 
+[English](README.md) | [Deutsch](README_de.md)
+
 [![Python](https://img.shields.io/badge/Python-3.10+-blue?logo=python&logoColor=white)](https://python.org)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green)](LICENSE)
 [![Test definitions](https://img.shields.io/badge/Test_definitions-24_B%2FO%2FE-orange)](system_diff_tests/)
-[![Automated suite](https://img.shields.io/badge/Automated_suite-14_unittest-brightgreen)](tests/)
+[![Automated suite](https://img.shields.io/badge/Automated_suite-15_unittest-brightgreen)](tests/)
+[![LLM-Ready](https://img.shields.io/badge/LLM--Ready-llms.txt-blueviolet)](llms.txt)
 [![CI](https://github.com/ellmos-ai/ellmos-tests/actions/workflows/tests.yml/badge.svg)](https://github.com/ellmos-ai/ellmos-tests/actions/workflows/tests.yml)
 
 **Quick links:** [Test Philosophy](#test-philosophy-b--o--e) · [Quick Start](#quick-start) · [Features](#features) · [Contributing](CONTRIBUTING.md)
@@ -22,6 +25,27 @@ It is also packaged as an LLM-bindable ellmos module: `SKILL.md` tells an agent 
 
 > [!NOTE]
 > **LLM / AI Agent Context**: Machine-readable architecture, search phrases, and module guidelines are indexed in [`llms.txt`](llms.txt).
+
+---
+
+## Architecture & Testing Flow
+
+```mermaid
+graph TD
+    A["Target LLM-OS / Agent Hub<br/>(SKILL.md / AGENTS.md / Text-OS)"] --> B["ellmos-tests Framework"]
+
+    subgraph "B / O / E Testing Battery"
+        B --> B1["B-Tests (Observation)<br/>Automated Static Checks (B001–B008)"]
+        B --> B2["O-Tests (Output)<br/>Functional Input-Output Checks (O001–O006)"]
+        B --> B3["E-Tests (Experience)<br/>Evaluative UX & Workflow Tasks (E001–E010)"]
+    end
+
+    B1 --> C["Feature Mapping DB<br/>& Synopsis Generator"]
+    B2 --> C
+    B3 --> C
+
+    C --> D["Comprehensive Quality Score<br/>7 Dimensions (D1–D7)"]
+```
 
 
 ---

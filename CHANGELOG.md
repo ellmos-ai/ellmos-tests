@@ -8,6 +8,11 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Added (discoverability & marketing check, 2026-07-26)
+- `README_de.md`: added full German README / landing page with language switcher, badges, B/O/E framework breakdown, and quickstart guide.
+- `README.md`: added language switcher (`[English](README.md) | [Deutsch](README_de.md)`), Mermaid system architecture & B/O/E testing pipeline diagram, updated `15_unittest` & `LLM-Ready` badges.
+- `llms.txt`: updated `Last-checked` timestamp to `2026-07-26` and verified 15/15 unit test suite (100% green).
+
 ### Added (technical hygiene & packaging, 2026-07-25)
 - `pyproject.toml`: PEP 621 compliant package configuration with metadata, dependencies, and `pytest` options (`[tool.pytest.ini_options]`).
 - `README.md`: added AI / LLM Agent context callout (`> [!NOTE]`) pointing to `llms.txt`.
