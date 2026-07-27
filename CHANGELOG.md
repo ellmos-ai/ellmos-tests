@@ -8,6 +8,10 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Changed (discoverability & marketing audit, 2026-07-27)
+- `llms.txt`: updated `Last-checked` timestamp to `2026-07-27` and verified 15/15 unit test suite (100% green).
+- `README.md`: updated test suite reference in text to 15 unittest tests.
+
 ### Added (discoverability & marketing check, 2026-07-26)
 - `README_de.md`: added full German README / landing page with language switcher, badges, B/O/E framework breakdown, and quickstart guide.
 - `README.md`: added language switcher (`[English](README.md) | [Deutsch](README_de.md)`), Mermaid system architecture & B/O/E testing pipeline diagram, updated `15_unittest` & `LLM-Ready` badges.

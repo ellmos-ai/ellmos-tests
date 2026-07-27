@@ -58,10 +58,7 @@ graph TD
 | **O-Tests** (Output) | Functional, input→output | *"Does it work?"* | 6 tests (O001–O006) |
 | **E-Tests** (Experience) | Subjective, process-oriented | *"How does it feel?"* | 10 tasks (E001–E010) |
 
-**Definitions vs. automated suite.** The 24 B/O/E entries above are *test definitions* that this kit runs
-against a target system — and the 10 E-tasks among them are prompts for a human or an LLM, not code.
-They are not the test suite of this repository. The repository's own regression suite is the 14 unittest
-tests under `tests/` (`python -m unittest discover -s tests`), which cover the battery parser, the
+**Definitions vs. automated suite.** The 24 B/O/E entries are *test definitions* that this kit runs against a target system — the 10 E tasks among them are prompts for human or LLM, not code. The repository's own regression suite is the 15 unittest tests under `tests/` (`python -m unittest discover -s tests`), which cover the battery parser, the
 config path resolution, the module surfaces, and the public-readiness gates.
 
 | B-Tests — OBSERVATION | O-Tests — OUTPUT | E-Tests — EXPERIENCE |
