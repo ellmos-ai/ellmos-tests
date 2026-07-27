@@ -47,6 +47,11 @@ Known systems are resolved through `system_diff_tests/config.py`.
 - Prefer environment variables (`ELLMOS_BASE_PATH`, `ELLMOS_ONEDRIVE`, `BACH_SYSTEM_PATH`, `BACH_DB_PATH`) over hardcoded user paths.
 - Playwright is optional; the core module remains Python-stdlib only.
 
-## Extraction Note
+## Ownership and Extraction
 
-This module preserves the portable part of BACH `system/tools/testing`. BACH remains the upstream feature source, while `ellmos-tests` is the standalone module surface for reuse across ellmos, Sovereign, and other LLM-OS systems.
+This module originated by extracting the portable part of BACH `system/tools/testing`.
+For the reusable B/O/E testing surface, `ellmos-tests` is now the canonical feature
+source. BACH consumes it through a compatibility adapter and retains only its
+integration contract plus a rollback-safe legacy copy while the gated migration is
+validated. Changes to reusable runners, profiles, and B/O/E test definitions belong
+here first; BACH-specific lifecycle or handler behavior remains in BACH.

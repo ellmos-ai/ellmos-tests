@@ -8,6 +8,11 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Changed (BACH adapter ownership, 2026-07-27)
+- `SKILL.md`: resolved the historical extraction ambiguity. `ellmos-tests` is the
+  canonical source for reusable B/O/E testing surfaces; BACH consumes the module
+  through a gated compatibility adapter and keeps BACH-specific lifecycle contracts.
+
 ### Changed (discoverability & marketing audit, 2026-07-27)
 - `llms.txt`: updated `Last-checked` timestamp to `2026-07-27` and verified 15/15 unit test suite (100% green).
 - `README.md`: updated test suite reference in text to 15 unittest tests.
