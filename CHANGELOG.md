@@ -8,6 +8,10 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Changed (technical hygiene & maintenance audit, 2026-07-29)
+- `llms.txt`: updated `Last-checked` timestamp to `2026-07-29` and verified 15/15 unit test suite (100% green).
+- Repository technical hygiene and test suite integrity verified.
+
 ### Changed (BACH adapter ownership, 2026-07-27)
 - `SKILL.md`: resolved the historical extraction ambiguity. `ellmos-tests` is the
   canonical source for reusable B/O/E testing surfaces; BACH consumes the module
