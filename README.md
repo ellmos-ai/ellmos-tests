@@ -1,4 +1,4 @@
-<img src="assets/banner.svg" width="100%" alt="ellmos-tests Banner">
+<img src="assets/banner.png" width="100%" alt="ellmos-tests Banner">
 
 # ellmos-tests
 
