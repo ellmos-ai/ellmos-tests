@@ -40,8 +40,8 @@ PROFILES = {
     },
     "FULL": {
         "b_tests": ["B001", "B002", "B003", "B004", "B005", "B006", "B007", "B008"],
-        "o_tests": ["O001", "O002", "O003", "O004", "O005", "O006"],
-        "description": "Vollstaendig (~40 Min)"
+        "o_tests": ["O001", "O002", "O003", "O004", "O005", "O006", "O007", "O008"],
+        "description": "Vollstaendig (~45 Min)"
     },
     "OBSERVATION": {
         "b_tests": ["B001", "B002", "B003", "B004", "B005", "B006", "B007", "B008"],
@@ -50,8 +50,13 @@ PROFILES = {
     },
     "OUTPUT": {
         "b_tests": [],
-        "o_tests": ["O001", "O002", "O003", "O004", "O005", "O006"],
-        "description": "Nur O-Tests (~20 Min)"
+        "o_tests": ["O001", "O002", "O003", "O004", "O005", "O006", "O007", "O008"],
+        "description": "Nur O-Tests (~25 Min)"
+    },
+    "MODULE_STACK_FOCUS": {
+        "b_tests": [],
+        "o_tests": ["O007", "O008"],
+        "description": "Modulfindbarkeit und Stack-Aufbau (~5 Min)"
     }
 }
 

@@ -8,8 +8,8 @@
 
 [![Python](https://img.shields.io/badge/Python-3.10+-blue?logo=python&logoColor=white)](https://python.org)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green)](LICENSE)
-[![Test definitions](https://img.shields.io/badge/Test_definitions-24_B%2FO%2FE-orange)](system_diff_tests/)
-[![Automated suite](https://img.shields.io/badge/Automated_suite-15_unittest-brightgreen)](tests/)
+[![Test definitions](https://img.shields.io/badge/Test_definitions-26_B%2FO%2FE-orange)](system_diff_tests/)
+[![Automated suite](https://img.shields.io/badge/Automated_suite-23_unittest-brightgreen)](tests/)
 [![LLM-Ready](https://img.shields.io/badge/LLM--Ready-llms.txt-blueviolet)](llms.txt)
 [![CI](https://github.com/ellmos-ai/ellmos-tests/actions/workflows/tests.yml/badge.svg)](https://github.com/ellmos-ai/ellmos-tests/actions/workflows/tests.yml)
 
@@ -36,7 +36,7 @@ graph TD
 
     subgraph "B / O / E Testing Battery"
         B --> B1["B-Tests (Observation)<br/>Automated Static Checks (B001–B008)"]
-        B --> B2["O-Tests (Output)<br/>Functional Input-Output Checks (O001–O006)"]
+        B --> B2["O-Tests (Output)<br/>Functional Input-Output Checks (O001–O008)"]
         B --> B3["E-Tests (Experience)<br/>Evaluative UX & Workflow Tasks (E001–E010)"]
     end
 
@@ -55,11 +55,11 @@ graph TD
 | Perspective | Type | Question | Tests |
 |-------------|------|----------|-------|
 | **B-Tests** (Observation) | Automated, external | *"What exists?"* | 8 tests (B001–B008) |
-| **O-Tests** (Output) | Functional, input→output | *"Does it work?"* | 6 tests (O001–O006) |
+| **O-Tests** (Output) | Functional, input→output | *"Does it work?"* | 8 tests (O001–O008) |
 | **E-Tests** (Experience) | Subjective, process-oriented | *"How does it feel?"* | 10 tasks (E001–E010) |
 
-**Definitions vs. automated suite.** The 24 B/O/E entries are *test definitions* that this kit runs against a target system — the 10 E tasks among them are prompts for human or LLM, not code. The repository's own regression suite is the 15 unittest tests under `tests/` (`python -m unittest discover -s tests`), which cover the battery parser, the
-config path resolution, the module surfaces, and the public-readiness gates.
+**Definitions vs. automated suite.** The 26 B/O/E entries are *test definitions* that this kit runs against a target system — the 10 E tasks among them are prompts for human or LLM, not code. The repository's own regression suite is the 23 unittest tests under `tests/` (`python -m unittest discover -s tests`), which cover the battery parser, the
+config path resolution, the module surfaces, the public-readiness gates, and the O007/O008 module-findability/stack-composition wiring.
 
 | B-Tests — OBSERVATION | O-Tests — OUTPUT | E-Tests — EXPERIENCE |
 |-----------------------|------------------|----------------------|
@@ -73,7 +73,7 @@ config path resolution, the module surfaces, and the public-readiness gates.
 ## Features
 
 - **8 B-Tests** — File inventory, format consistency, directory depth, naming analysis, documentation check, code metrics, dependency scan, age analysis
-- **6 O-Tests** — Task roundtrip, memory persistence, tool registry, backup/restore, config validation, export/import
+- **8 O-Tests** — Task roundtrip, memory persistence, tool registry, backup/restore, config validation, export/import, module findability, stack composition
 - **10 E-Tests** — SKILL.md readability, navigation, task creation, task finding, memory write/read, tool usage, error recovery, session start, overall impression
 - **Feature Mapping DB** — SQLite database with 50+ features, multi-dimensional ratings, alias resolution, gap analysis, and duplicate detection
 - **Synopsis Generator** — Automated cross-system comparisons with JSON + Markdown output
@@ -139,7 +139,7 @@ ellmos-tests/
 │   │   ├── run_b_tests.py       # Wrapper for b_tests/run_b_tests.py
 │   │   ├── run_o_tests.py       # Wrapper for o_tests/run_o_tests.py
 │   │   ├── b_tests/             # B001–B008 observation tests
-│   │   ├── o_tests/             # O001–O006 output tests
+│   │   ├── o_tests/             # O001–O008 output tests
 │   │   ├── e_tests/             # Manual E-test prompts/tasks
 │   │   ├── profiles/            # Current profile names used by BACH help
 │   │   ├── t_profiles/          # Legacy profile folder kept for compatibility
@@ -178,7 +178,7 @@ ellmos-tests/
 | **MEMORY_FOCUS** | ~15 min | E005, E006, E010 | Memory comparison |
 | **TASK_FOCUS** | ~15 min | E003, E004, E010 | Task comparison |
 | **OBSERVATION** | ~20 min | B001–B008 | External analysis (automated) |
-| **OUTPUT** | ~30 min | O001–O006 | Functional tests (automated) |
+| **OUTPUT** | ~35 min | O001–O008 | Functional tests (automated) |
 
 **Recommended order:** OBSERVATION → OUTPUT → QUICK → STANDARD/FULL
 
@@ -259,10 +259,10 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 | Perspektive | Typ | Fragestellung | Tests |
 |-------------|-----|---------------|-------|
 | **B-Tests** (Beobachtung) | Automatisiert, extern | *"Was existiert?"* | 8 Tests (B001–B008) |
-| **O-Tests** (Ausgabe) | Funktional, Input→Output | *"Funktioniert es?"* | 6 Tests (O001–O006) |
+| **O-Tests** (Ausgabe) | Funktional, Input→Output | *"Funktioniert es?"* | 8 Tests (O001–O008) |
 | **E-Tests** (Erfahrung) | Subjektiv, prozessorientiert | *"Wie fühlt es sich an?"* | 10 Aufgaben (E001–E010) |
 
-**Testdefinitionen vs. automatisierte Suite.** Die 24 B/O/E-Einträge sind *Testdefinitionen*, die dieses Kit
+**Testdefinitionen vs. automatisierte Suite.** Die 26 B/O/E-Einträge sind *Testdefinitionen*, die dieses Kit
 gegen ein Zielsystem ausführt — die 10 E-Aufgaben davon sind Prompts für Mensch oder LLM, kein Code.
 Die Regressionssuite des Repos selbst sind die 14 unittest-Tests unter `tests/`
 (`python -m unittest discover -s tests`).

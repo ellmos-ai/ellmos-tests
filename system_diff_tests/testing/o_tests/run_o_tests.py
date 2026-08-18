@@ -27,6 +27,8 @@ O_TESTS = [
     ("O004", "backup_restore", "Backup-Restore"),
     ("O005", "config_validation", "Config-Validierung"),
     ("O006", "export_import", "Export-Import"),
+    ("O007", "module_findability", "Module-Findability"),
+    ("O008", "stack_composition", "Stack-Composition"),
 ]
 
 def run_o_tests(system_path: str, output_dir: str = None) -> dict:

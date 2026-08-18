@@ -8,8 +8,8 @@
 
 [![Python](https://img.shields.io/badge/Python-3.10+-blue?logo=python&logoColor=white)](https://python.org)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green)](LICENSE)
-[![Test-Definitionen](https://img.shields.io/badge/Test--Definitionen-24_B%2FO%2FE-orange)](system_diff_tests/)
-[![Automatisierte Suite](https://img.shields.io/badge/Automatisierte_Suite-15_unittest-brightgreen)](tests/)
+[![Test-Definitionen](https://img.shields.io/badge/Test--Definitionen-26_B%2FO%2FE-orange)](system_diff_tests/)
+[![Automatisierte Suite](https://img.shields.io/badge/Automatisierte_Suite-23_unittest-brightgreen)](tests/)
 [![LLM-Ready](https://img.shields.io/badge/LLM--Ready-llms.txt-blueviolet)](llms.txt)
 [![CI](https://github.com/ellmos-ai/ellmos-tests/actions/workflows/tests.yml/badge.svg)](https://github.com/ellmos-ai/ellmos-tests/actions/workflows/tests.yml)
 
@@ -36,7 +36,7 @@ graph TD
     
     subgraph "B / O / E Test-Batterie"
         B --> B1["B-Tests (Beobachtung)<br/>Automatisiertes Statik-Audit (B001–B008)"]
-        B --> B2["O-Tests (Ausgabe)<br/>Funktionale Input-Output Checks (O001–O006)"]
+        B --> B2["O-Tests (Ausgabe)<br/>Funktionale Input-Output Checks (O001–O008)"]
         B --> B3["E-Tests (Erfahrung)<br/>Evaluative UX & Workflow-Tasks (E001–E010)"]
     end
     
@@ -54,10 +54,10 @@ graph TD
 | Perspektive | Typ | Fragestellung | Tests |
 |-------------|-----|---------------|-------|
 | **B-Tests** (Beobachtung) | Automatisiert, extern | *"Was existiert?"* | 8 Tests (B001–B008) |
-| **O-Tests** (Ausgabe) | Funktional, Input→Output | *"Funktioniert es?"* | 6 Tests (O001–O006) |
+| **O-Tests** (Ausgabe) | Funktional, Input→Output | *"Funktioniert es?"* | 8 Tests (O001–O008) |
 | **E-Tests** (Erfahrung) | Subjektiv, prozessorientiert | *"Wie fühlt es sich an?"* | 10 Aufgaben (E001–E010) |
 
-**Testdefinitionen vs. automatisierte Suite.** Die 24 B/O/E-Einträge sind *Testdefinitionen*, die dieses Kit gegen ein Zielsystem ausführt — die 10 E-Aufgaben davon sind Prompts für Mensch oder LLM, kein Code. Die Regressionssuite des Repos selbst sind die 15 unittest-Tests unter `tests/` (`python -m unittest discover -s tests`).
+**Testdefinitionen vs. automatisierte Suite.** Die 26 B/O/E-Einträge sind *Testdefinitionen*, die dieses Kit gegen ein Zielsystem ausführt — die 10 E-Aufgaben davon sind Prompts für Mensch oder LLM, kein Code. Die Regressionssuite des Repos selbst sind die 23 unittest-Tests unter `tests/` (`python -m unittest discover -s tests`), inklusive der O007/O008-Verdrahtung (Modul-Findbarkeit/Stack-Komposition).
 
 | B-Tests — BEOBACHTUNG | O-Tests — AUSGABE | E-Tests — ERFAHRUNG |
 |-----------------------|-------------------|---------------------|
@@ -71,7 +71,7 @@ graph TD
 ## Funktionen
 
 - **8 B-Tests** — Dateiinventar, Formatkonsistenz, Verzeichnistiefe, Benennungsanalyse, Dokumentationsprüfung, Code-Metriken, Abhängigkeitsscan, Altersanalyse
-- **6 O-Tests** — Task-Roundtrip, Speicher-Persistenz, Tool-Register, Backup/Restore, Konfigurationsvalidierung, Export/Import
+- **8 O-Tests** — Task-Roundtrip, Speicher-Persistenz, Tool-Register, Backup/Restore, Konfigurationsvalidierung, Export/Import, Modul-Findbarkeit, Stack-Komposition
 - **10 E-Tests** — SKILL.md-Lesbarkeit, Navigation, Erstellung von Aufgaben, Auffinden von Aufgaben, Schreiben/Lesen des Speichers, Tool-Nutzung, Fehler-Wiederherstellung, Sitzungsstart, Gesamteindruck
 - **Feature-Mapping-DB** — SQLite-Datenbank mit 50+ Features, mehrdimensionalen Bewertungen, Alias-Auflösung, Lückenanalyse und Duplikaterkennung
 - **Synopsis-Generator** — Automatisierte systemübergreifende Vergleiche mit JSON- und Markdown-Ausgabe

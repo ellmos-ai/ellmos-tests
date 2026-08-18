@@ -8,6 +8,20 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Added (module-findability & stack-composition testing, 2026-08-18)
+- `system_diff_tests/testing/o_tests/O007_module_findability.py`: new O-test -- checks whether a target system exposes a machine-readable module catalog with capability declarations plus a resolver script, and (bonus, functional) actually invokes a resolver that follows the known `resolve <id>` CLI contract.
+- `system_diff_tests/testing/o_tests/O008_stack_composition.py`: new O-test -- checks whether a target system catalogs stacks with real manifest references plus a composer/validator script, and (bonus, functional) actually resolves a manifest through a script following the known `resolve <manifest>` CLI contract.
+- `system_diff_tests/testing/t_profiles/MODULE_STACK_FOCUS.json`: new focused profile (O007+O008 only, ~5 min) for systems built as a module/stack Baukasten.
+- `tests/test_module_stack_focus.py`: 8 new regression tests (wiring across run_o_tests.py::O_TESTS, test_runner.py::PROFILES and the t_profiles/ JSON data, plus functional degrade-gracefully coverage for O007/O008 against synthetic fixtures). Unittest suite: 15 -> 23, all green.
+- O007/O008 verified functionally (not just statically) against the ellmos Module-Baukasten (`.TOPICS/.AI/.MODULES` + `.STACKS`): O007 5/5 PASS, O008 4/4 PASS, `test_runner.py --profile MODULE_STACK_FOCUS` end-to-end 5.0/5.0.
+
+### Changed (badge/prose sync for the new O-tests, 2026-08-18)
+- `README.md`, `README_de.md`: test-definition badges and prose updated from "24 B/O/E" (8 B + 6 O + 10 E) to "26 B/O/E" (8 B + 8 O + 10 E); O-test feature list, the OUTPUT/FULL profile table, and the o_tests/ tree comment now list O007/O008.
+- `llms.txt`: `Last-checked` timestamp updated to `2026-08-18`.
+
+### Note
+- `system_diff_tests/testing/profiles/*.json` (the older, E-only, flat profile directory that `tests/test_module_surfaces.py` asserts an exact file set against) was deliberately left untouched -- MODULE_STACK_FOCUS is an O-only profile and belongs with the richer `t_profiles/` schema, not that legacy directory.
+
 ### Changed (technical hygiene & maintenance audit, 2026-07-29)
 - `llms.txt`: updated `Last-checked` timestamp to `2026-07-29` and verified 15/15 unit test suite (100% green).
 - Repository technical hygiene and test suite integrity verified.

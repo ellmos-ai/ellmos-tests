@@ -3,8 +3,12 @@
   "profile_name": "Vollstaendige Analyse",
   "description": "Alle Tests: B-Tests (Beobachtung) + O-Tests (Ausgabe) + E-Tests (Erfahrung)",
   "version": "2.0",
-  "duration_minutes": 90,
-  "test_types": ["B", "O", "E"],
+  "duration_minutes": 95,
+  "test_types": [
+    "B",
+    "O",
+    "E"
+  ],
   "phases": [
     {
       "phase": 1,
@@ -12,15 +16,33 @@
       "description": "Automatisierte externe Analyse",
       "duration_minutes": 15,
       "runner": "BEOBACHTUNG/run_b_tests.py",
-      "tests": ["B001", "B002", "B003", "B004", "B005", "B006", "B007", "B008"]
+      "tests": [
+        "B001",
+        "B002",
+        "B003",
+        "B004",
+        "B005",
+        "B006",
+        "B007",
+        "B008"
+      ]
     },
     {
       "phase": 2,
       "name": "O-Tests (Ausgabe)",
       "description": "Funktionale Infrastruktur-Checks",
-      "duration_minutes": 20,
+      "duration_minutes": 25,
       "runner": "AUSGABE/run_o_tests.py",
-      "tests": ["O001", "O002", "O003", "O004", "O005", "O006"]
+      "tests": [
+        "O001",
+        "O002",
+        "O003",
+        "O004",
+        "O005",
+        "O006",
+        "O007",
+        "O008"
+      ]
     },
     {
       "phase": 3,
@@ -28,7 +50,18 @@
       "description": "Subjektive Claude-Erfahrung",
       "duration_minutes": 45,
       "runner": "manual (Claude)",
-      "tests": ["E001", "E002", "E003", "E004", "E005", "E006", "E007", "E008", "E009", "E010"]
+      "tests": [
+        "E001",
+        "E002",
+        "E003",
+        "E004",
+        "E005",
+        "E006",
+        "E007",
+        "E008",
+        "E009",
+        "E010"
+      ]
     }
   ],
   "abort_criteria": {
@@ -41,7 +74,7 @@
     "weights": {
       "B": 0.25,
       "O": 0.25,
-      "E": 0.50
+      "E": 0.5
     },
     "scale": "1-5"
   },

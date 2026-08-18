@@ -1,0 +1,34 @@
+{
+  "profile_id": "MODULE_STACK_FOCUS",
+  "profile_name": "Modulfindbarkeit und Stack-Aufbau",
+  "description": "Fokusprofil fuer Baukasten-artige Systeme: kann ein System Module ueber Katalog + Resolver finden, und kann es aus einem Stack-Katalog tatsaechlich eine Komposition zusammensetzen/pruefen?",
+  "version": "1.0",
+  "duration_minutes": 5,
+  "test_types": ["O"],
+  "phases": [
+    {
+      "phase": 1,
+      "name": "O-Tests (Ausgabe)",
+      "description": "Funktionale Checks: Modul-Findbarkeit und Stack-Komposition",
+      "duration_minutes": 5,
+      "runner": "o_tests/run_o_tests.py",
+      "tests": ["O007", "O008"]
+    }
+  ],
+  "abort_criteria": {
+    "single_task_timeout_sec": 60,
+    "total_timeout_sec": 300,
+    "consecutive_failures": 1
+  },
+  "scoring": {
+    "method": "weighted_average",
+    "scale": "1-5",
+    "status_mapping": {
+      "PASS": 5,
+      "PARTIAL": 3,
+      "FAIL": 1,
+      "BLOCKED": 0
+    }
+  },
+  "notes": "Nicht auf ein bestimmtes System festgelegt: O007/O008 erkennen Katalog- und Resolver-Konventionen generisch (Glob-Muster) und rufen einen gefundenen Resolver/Composer funktional auf, wenn er dem bekannten CLI-Vertrag (resolve/validate <manifest_or_id>) folgt -- sonst bleibt der Bonus-Check unfunktional, ohne die statischen Checks zu blockieren. Verifiziert gegen den ellmos-Modul-Baukasten (.TOPICS/.AI/.MODULES + .STACKS): O007 5/5 PASS, O008 4/4 PASS (2026-08-18)."
+}
