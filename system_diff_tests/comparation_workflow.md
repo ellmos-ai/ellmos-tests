@@ -1,157 +1,157 @@
-# Comparation Workflow
+# Comparison Workflow
 
-> Vergleichende Analyse und Synopse mehrerer LLM-OS-Systeme
+> Comparative analysis and synopsis of multiple LLM OS systems
 
-**Version:** 1.0 | **Stand:** 2026-01-26
-**Quelle:** Konsolidiert aus WORKFLOW_3_SYNOPSE, WORKFLOW_1_SYNTHESE (Phase 1-3), Synopse-Vorlagen
+**Version:** 1.0 | **As of:** 2026-01-26
+**Source:** Consolidated from WORKFLOW_3_SYNOPSE, WORKFLOW_1_SYNTHESE (Phases 1–3), Synopsis templates
 
 ---
 
-## 1. Uebersicht
+## 1. Overview
 
-Dieses Workflow beschreibt den systematischen Vergleich und die Bewertung mehrerer Systeme. Es vereint Testergebnisse (testing_workflow.md) und Feature-Mappings (feature_mapping_workflow.md) zu einer Gesamtbewertung.
+This workflow describes the systematic comparison and evaluation of multiple systems. It combines test results (`testing_workflow.md`) and feature mappings (`feature_mapping_workflow.md`) into a comprehensive assessment.
 
 ```
 +----------+    +----------+    +----------+    +----------+
-| SCHRITT 1|---->| SCHRITT 2|---->| SCHRITT 3|---->| SCHRITT 4|
-| Sammeln  |    |Vergleich |    | Bewerten |    |Synopse   |
+| STEP 1   |---->| STEP 2   |---->| STEP 3   |---->| STEP 4   |
+| Collect  |    | Compare  |    | Evaluate |    | Synopsis |
 +----------+    +----------+    +----------+    +----------+
 ```
 
 ---
 
-## 2. Voraussetzungen
+## 2. Prerequisites
 
-Bevor ein Vergleich moeglich ist:
+Before a comparison can take place:
 
-- [ ] Alle Systeme kartographiert (feature_mapping_workflow.md, Schritte 1-3)
-- [ ] Feature-Datenbank befuellt (`mapping/feature_mapping.db`)
-- [ ] Testergebnisse vorhanden (testing_workflow.md)
-  - Mindestens: B-Tests und O-Tests (automatisiert)
-  - Ideal: Auch E-Tests (manuell)
+- [ ] All target systems mapped (`feature_mapping_workflow.md`, Steps 1–3)
+- [ ] Feature database populated (`mapping/feature_mapping.db`)
+- [ ] Test results available (`testing_workflow.md`)
+  - Minimum requirement: B-Tests and O-Tests (automated)
+  - Ideal: E-Tests as well (manual)
 
 ---
 
-## 3. Schritt 1: Daten sammeln
+## 3. Step 1: Collect Data
 
-**Sammeln aus drei Quellen:**
+**Collect from three sources:**
 
-| Quelle | Pfad | Inhalt |
-|--------|------|--------|
-| Feature-Mapping | `mapping/<system>/Features.txt` | Kern-Konzepte, Tools, Workflows |
-| Testergebnisse | `tests/ERGEBNISSE/<system>/*.json` | B/O/E-Test Scores |
-| Feature-DB | `mapping/feature_mapping.db` | Implementierungsstatus |
+| Source | Path | Content |
+|---|---|---|
+| Feature Mapping | `mapping/<system>/Features.txt` | Core concepts, tools, workflows |
+| Test Results | `tests/ERGEBNISSE/<system>/*.json` | B/O/E Test Scores |
+| Feature DB | `mapping/feature_mapping.db` | Implementation status |
 
-**DB-Abfrage fuer Schnelluebersicht:**
+**Database Queries for Quick Overview:**
 ```bash
 cd mapping
-python query_db.py matrix     # Feature-Matrix
-python query_db.py synopsis   # Auto-Synopse
+python query_db.py matrix     # Feature Matrix
+python query_db.py synopsis   # Automated Synopsis
 ```
 
 ---
 
-## 4. Schritt 2: Feature-Vergleich
+## 4. Step 2: Feature Comparison
 
-**Aktivitaeten:**
-1. Feature-Matrix erstellen (welches System hat was?)
-2. Implementierungsstatus pro System vergleichen
-3. Unterschiede identifizieren
-4. Gemeinsamkeiten finden
+**Activities:**
+1. Generate feature matrix (which system offers which features?)
+2. Compare implementation status across systems
+3. Identify differences
+4. Highlight commonalities
 
-**Matrix-Format:**
+**Matrix Format:**
 
 ```
 Feature              Sys1      Sys2      Sys3      Sys4
 -------------------------------------------------------
 CLI                  full      full      none      full
 Auto-Logging         none      full      none      full
-Task-Manager         JSON      SQLite    JSON      SQLite
-Memory Kurzzeit      MD        MD+DB     MD        DB
-Memory Langzeit      100+Ber.  archive/  snapshots DB
+Task Manager         JSON      SQLite    JSON      SQLite
+Short-Term Memory    MD        MD+DB     MD        DB
+Long-Term Memory     100+Rep.  archive/  snapshots DB
 GUI/Dashboard        Manager   none      ControlCt Streamlit
-Daemon/Headless      ja        nein      nein      ja
+Daemon/Headless      yes       no        no        yes
 ```
 
-**Implementierungs-Zaehlung:**
+**Implementation Metrics:**
 ```bash
-python query_db.py gaps <system>   # Fehlende Features
-python query_db.py profile <system> # System-Profil
+python query_db.py gaps <system>    # Missing features
+python query_db.py profile <system> # System profile
 ```
 
 ---
 
-## 5. Schritt 3: Bewertung
+## 5. Step 3: Evaluation
 
-### 5.1 Dimensionsbewertung (7 Dimensionen, Skala 1-5)
+### 5.1 Dimensional Rating (7 Dimensions, 1–5 Scale)
 
-| Dimension | Was wird bewertet |
-|-----------|------------------|
-| D1 Onboarding | Wie schnell kann man loslegen? SKILL.md-Qualitaet, Getting Started |
-| D2 Navigation | Wie gut findet man sich zurecht? Ordnerstruktur, Naming |
-| D3 Memory | Persistenz, Kurzzeit/Langzeit, Kontext-Wiederherstellung |
-| D4 Tasks | Aufgabenverwaltung, Priorisierung, CRUD |
-| D5 Kommunikation | User-Interaktion, Feedback, Messaging |
-| D6 Tools | Werkzeug-Verfuegbarkeit, Registry, Dokumentation |
-| D7 Fehlertoleranz | Backup, Recovery, Papierkorb, Robustheit |
+| Dimension | Evaluation Focus |
+|---|---|
+| D1 Onboarding | How quickly can a user get started? SKILL.md quality, Getting Started guide |
+| D2 Navigation | How well organized is the layout? Directory structure, naming conventions |
+| D3 Memory | State persistence, short-term/long-term split, context restoration |
+| D4 Tasks | Task management, prioritization, CRUD operations |
+| D5 Communication | User interaction, feedback loops, messaging |
+| D6 Tools | Tool availability, registry clarity, documentation |
+| D7 Error Tolerance | Backup, recovery, recycle bin, system robustness |
 
-**Berechnung Gesamtnote:**
+**Overall Score Calculation:**
 ```
-Gesamtnote = Durchschnitt aller 7 Dimensionen
+Overall Score = Average of all 7 dimension scores
 ```
 
-### 5.2 Staerken-Schwaechen-Analyse
+### 5.2 Strengths & Weaknesses Analysis
 
-Pro System:
-- Top 3 Staerken (mit Begruendung)
-- Top 3 Schwaechen (mit Begruendung)
-- Top 3 Empfehlungen
+For each system:
+- Top 3 strengths (with rationale)
+- Top 3 weaknesses (with rationale)
+- Top 3 recommendations
 
-### 5.3 Systemklassifizierung
+### 5.3 System Classification
 
-Systeme in Klassen einordnen (siehe testing_workflow.md, Abschnitt 2):
-- SKILL (einfach)
-- AGENT/HUB (mittel)
-- TEXT-OS (komplex)
+Classify systems into standard tiers (see `testing_workflow.md`, Section 2):
+- SKILL (basic)
+- AGENT/HUB (intermediate)
+- TEXT-OS (complex)
 
-**Wichtig:** Vergleiche nur innerhalb derselben Klasse, oder nutze klassenspezifische Gewichtung!
+**Important:** Compare only within the same class, or apply class-specific weightings!
 
 ---
 
-## 6. Schritt 4: Synopse schreiben
+## 6. Step 4: Write Synopsis
 
-### 6.1 Struktur
+### 6.1 Structure
 
-Die Synopse folgt diesem Aufbau:
+The synopsis follows this structure:
 
-1. **Gesamtergebnis** - Ranking-Tabelle (Note, Zeit, Klasse, Charakter)
-2. **Systemklassifizierung** - SKILL/AGENT/TEXT-OS Einordnung
-3. **Dimensionsvergleich** - 7 Dimensionen im Direktvergleich
-4. **Automatisierte Testergebnisse** - B-Test und O-Test Scores
-5. **B-Test Detail** - Einzelne B-Test Ergebnisse
-6. **O-Test Detail** - Einzelne O-Test Ergebnisse
-7. **E-Test Detail** - Einzelne E-Test Ergebnisse (falls vorhanden)
-8. **Feature-Matrix** - Implementierungsvergleich
-9. **Staerken-Schwaechen-Matrix** - Pro System
-10. **Feature-Statistik** - Zaehlung full/partial/none/planned
-11. **Einzigartige Features** - Was hat nur dieses System?
-12. **Empfehlungen** - Pro System
-13. **Feature-Mapping DB** - DB-basierte Analyse (falls vorhanden)
-14. **Fazit** - Gesamtsieger, Bester Einstieg, Beste Doku
+1. **Overall Result** - Ranking table (Score, Time, Class, Characteristics)
+2. **System Classification** - SKILL / AGENT / TEXT-OS categorization
+3. **Dimensional Comparison** - Direct side-by-side breakdown of the 7 dimensions
+4. **Automated Test Results** - B-Test and O-Test scores
+5. **B-Test Details** - Individual B-test metrics
+6. **O-Test Details** - Individual O-test metrics
+7. **E-Test Details** - Individual E-test results (if conducted)
+8. **Feature Matrix** - Implementation comparison table
+9. **Strengths/Weaknesses Matrix** - Per system breakdown
+10. **Feature Statistics** - Totals for full/partial/none/planned
+11. **Unique Features** - Features exclusive to specific systems
+12. **Recommendations** - Actionable advice per system
+13. **Feature Mapping DB Analysis** - Database-backed insights (if available)
+14. **Conclusion** - Overall winner, best onboarding, best documentation
 
-### 6.2 Vorlage Gesamtergebnis
+### 6.2 Overall Result Template
 
 ```
 +-------------+----------+---------+-----------+-------------------------------+
-| System      | Note     | Zeit    | Klasse    | Charakter                     |
+| System      | Score    | Time    | Class     | Characteristics               |
 +-------------+----------+---------+-----------+-------------------------------+
 | 1. SysA     | X.X/5.0  | MM:SS   | TEXT-OS   | ...                           |
-| 2. SysB     | X.X/5.0  | MM:SS   | AGENT/HUB | ...                          |
+| 2. SysB     | X.X/5.0  | MM:SS   | AGENT/HUB | ...                           |
 | 3. SysC     | X.X/5.0  | MM:SS   | TEXT-OS   | ...                           |
 +-------------+----------+---------+-----------+-------------------------------+
 ```
 
-### 6.3 Vorlage Dimensionsvergleich
+### 6.3 Dimensional Comparison Template
 
 ```
                     Sys1    Sys2    Sys3    Sys4    BEST
@@ -160,116 +160,116 @@ D1 Onboarding        5       4       3       4    Sys1
 D2 Navigation        4       5       4       4    Sys2
 D3 Memory            5       3       5       5    Sys1/Sys3
 D4 Tasks             5       4       4       5    Sys1/Sys4
-D5 Kommunikation     4       4       4       4    Gleich
+D5 Communication     4       4       4       4    Tied
 D6 Tools             5       5       4       5    Sys1/Sys2/Sys4
-D7 Fehlertoleranz    4       4       4       4    Gleich
+D7 Error Tolerance   4       4       4       4    Tied
 ```
 
-### 6.4 Best-of Extraktion
+### 6.4 Best-of Extraction
 
-Fuer jedes System dokumentieren, welche Features als "Best-of" uebernommen werden koennten:
+For each system, document which features are prime candidates for adoption:
 
 ```
-Von System A uebernehmen:
-  - Feature X (Begruendung)
-  - Feature Y (Begruendung)
+Adopt from System A:
+  - Feature X (Rationale)
+  - Feature Y (Rationale)
 
-NICHT uebernehmen:
-  - Feature Z (zu komplex / veraltet / nicht relevant)
+DO NOT adopt:
+  - Feature Z (Too complex / Obsolete / Irrelevant)
 ```
 
 ---
 
 ## 7. Output
 
-### Synopse-Datei
+### Synopsis Document
 
-**Ablage:** `tests/VERGLEICH/` oder als eigenstaendige .md-Datei
+**Storage Location:** `tests/VERGLEICH/` or as a standalone `.md` document
 
-**Namenskonvention:**
-- `SYNOPSE_<Thema>_<Datum>.txt`
-- `SYSTEMVERGLEICH_<scope>_<Datum>.md`
-- `VERGLEICH_<n>_SYSTEME_<Datum>.md`
+**Naming Convention:**
+- `SYNOPSE_<Topic>_<Date>.txt`
+- `SYSTEMVERGLEICH_<Scope>_<Date>.md`
+- `VERGLEICH_<N>_SYSTEME_<Date>.md`
 
-**Laenge:** 10-20 KB (ausfuehrlich) oder 3-5 KB (Kurzfassung)
+**Length:** 10–20 KB (comprehensive) or 3–5 KB (summary)
 
-### Fazit-Template
+### Conclusion Template
 
 ```
-GESAMTSIEGER: <System> (<Note>/5.0)
-  Begruendung: ...
+OVERALL WINNER: <System> (<Score>/5.0)
+  Rationale: ...
 
-BESTER EINSTIEG: <System>
-  Begruendung: ...
+BEST ONBOARDING: <System>
+  Rationale: ...
 
-BESTE DOKUMENTATION: <System>
-  Begruendung: ...
+BEST DOCUMENTATION: <System>
+  Rationale: ...
 
-FUER NEUES SYSTEM (Best-of):
-  Kombiniere <SysA> Feature + <SysB> Feature + <SysC> Feature
-  Ergebnis: ...
+FOR A NEW SYSTEM (Best-of Blend):
+  Combine <SysA> Feature + <SysB> Feature + <SysC> Feature
+  Expected Result: ...
 ```
 
 ---
 
-## 8. Integration mit Synthese (WORKFLOW 1)
+## 8. Integration with Synthesis (WORKFLOW 1)
 
-Falls nach dem Vergleich ein neues System gebaut werden soll:
+If building a new system following a comparison:
 
-| Synthese-Phase | Relevanz | Was wird genutzt |
-|---------------|----------|-----------------|
-| Phase 1: Datensammlung | Dieses Workflow liefert die Daten | Feature-Maps, Tests, Synopse |
-| Phase 2: Architektur | Best-of Extraktion als Input | Welche Features uebernehmen? |
-| Phase 3: Dossier | Synopse als Entscheidungsgrundlage | Begruendung der Architektur |
-| Phase 4-5: Anpassung | Vergleich als Referenz | Was funktioniert wo am besten? |
-| Phase 6-7: Umsetzung | Feature-DB als Checkliste | Alle geplanten Features implementiert? |
-
----
-
-## 9. Checkliste
-
-### Vor dem Vergleich
-- [ ] Alle Systeme kartographiert (feature_mapping_workflow.md)
-- [ ] Feature-Matrix erstellt oder DB befuellt
-- [ ] Testergebnisse vorhanden (B/O/E)
-- [ ] Systeme klassifiziert (SKILL/AGENT/TEXT-OS)
-
-### Waehrend des Vergleichs
-- [ ] Feature-Matrix dokumentiert
-- [ ] Alle 7 Dimensionen bewertet (1-5)
-- [ ] Staerken/Schwaechen pro System identifiziert
-- [ ] Best-of Kandidaten markiert
-
-### Nach dem Vergleich
-- [ ] Synopse geschrieben und abgelegt
-- [ ] Empfehlungen formuliert
-- [ ] Fazit mit Ranking erstellt
-- [ ] Bei Bedarf: Best-of Extraktion fuer neues System
+| Synthesis Phase | Relevance | Information Utilized |
+|---|---|---|
+| Phase 1: Data Collection | Supplied by this workflow | Feature maps, test scores, synopsis |
+| Phase 2: Architecture | Best-of extraction input | Selected features for inclusion |
+| Phase 3: Dossier | Synopsis as decision basis | Architectural justification |
+| Phase 4–5: Customization | Comparison as benchmark reference | Optimal implementation patterns |
+| Phase 6–7: Implementation | Feature DB as checklist | Verification of implemented features |
 
 ---
 
-## 10. Verzeichnisstruktur (Gesamt)
+## 9. Checklist
+
+### Before Comparison
+- [ ] All systems mapped (`feature_mapping_workflow.md`)
+- [ ] Feature matrix created or DB populated
+- [ ] Test results available (B/O/E)
+- [ ] Systems classified (SKILL/AGENT/TEXT-OS)
+
+### During Comparison
+- [ ] Feature matrix documented
+- [ ] All 7 dimensions evaluated (1–5 scale)
+- [ ] Strengths and weaknesses per system identified
+- [ ] Best-of candidates highlighted
+
+### After Comparison
+- [ ] Synopsis written and archived
+- [ ] Recommendations formulated
+- [ ] Conclusion and ranking published
+- [ ] Optional: Best-of extraction prepared for next-generation system
+
+---
+
+## 10. Directory Structure (Overall)
 
 ```
 system_diff_tests/
-  testing_workflow.md          <- Wie testen?
-  feature_mapping_workflow.md  <- Wie kartographieren?
-  comparation_workflow.md      <- Wie vergleichen? (diese Datei)
+  testing_workflow.md          <- How to test
+  feature_mapping_workflow.md  <- How to map features
+  comparation_workflow.md      <- How to compare (this file)
 
-  tests/                       Alle Testdaten
-    BEOBACHTUNG/               B-Test Skripte
-    AUSGABE/                   O-Test Skripte
-    ERFAHRUNG/                 E-Test Aufgaben + Prompt
-    ERGEBNISSE/                Ergebnisse pro System
-    PROFILE/                   Testprofile (JSON)
-    VERGLEICH/                 Synopsen und Vergleiche
+  tests/                       All test data
+    BEOBACHTUNG/               B-Test scripts
+    AUSGABE/                   O-Test scripts
+    ERFAHRUNG/                 E-Test tasks + prompt
+    ERGEBNISSE/                Results per system
+    PROFILE/                   Test profiles (JSON)
+    VERGLEICH/                 Synopses and comparisons
     ...
 
-  mapping/                     Alle Mapping-Daten
-    feature_mapping.db         Feature-Datenbank
-    populate_db.py             DB befuellen
-    query_db.py                DB abfragen
-    schema.sql                 DB-Schema
-    <system>/                  Pro-System Scans + Features
+  mapping/                     All mapping data
+    feature_mapping.db         Feature database
+    populate_db.py             Populate DB
+    query_db.py                Query DB
+    schema.sql                 DB schema
+    <system>/                  Per-system scans + features
     ...
 ```
