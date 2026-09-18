@@ -1,0 +1,68 @@
+# MARKETING-LOG: ellmos-tests
+
+Dieses Dokument protokolliert alle Maßnahmen zur Discoverability, Nutzerführung, SEO-Optimierung und externen Sichtbarkeit für `ellmos-ai/ellmos-tests` (Pfad B).
+
+---
+
+## 1. Pfad B Turnus-Audit & Architektur-Refresh (Stand: 2026-09-18)
+
+- **Repo:** `ellmos-ai/ellmos-tests`
+- **Kanonischer Arbeitsort:** `C:\_Local_DEV\repos\ellmos-tests`
+- **Branch:** `master`
+- **Version:** `0.2.1`
+- **Prüfungstyp:** Pfad B (Marketing, Discoverability, Bilingual Architecture, Badges, Sequence Diagrams)
+
+### Durchgeführte Maßnahmen:
+
+1. **Bilinguale README-Parität (18 Punkte)**:
+   - Synchronisation von `README.md` (Englisch) und `README_de.md` (Deutsch) auf identische 18-Punkte-Struktur.
+   - Reziproke HTML-Anker (`<a id="..."></a>`) für nahtlose Navigation und Direktverlinkungen.
+   - Deutscher gesetzlicher Haftungshinweis gem. § 521 BGB (Gefälligkeitsrecht) verankert.
+
+2. **Ziel-Personas & High-Intent SEO Queries**:
+   - `[PERSONA-01] LLM-OS Architect & System Engineer`: Benötigt reproduzierbare Qualitätsmetriken für agentische Betriebssysteme (BACH, recludOS, Text-OS).
+   - `[PERSONA-02] AI Agent Framework Evaluator`: Sucht strukturierte Benchmarks jenseits einfacher Prompt-Evals (Onboarding, Navigation, Memory, Tools, Recovery).
+   - `[PERSONA-03] Autonomous Agent QA & CI/CD Engineer`: Integriert automatisierte B- und O-Tests in Continuous-Integration-Pipelines.
+   - `[PERSONA-04] Enterprise LLM Integrator & Compliance Auditor`: Fordert Zero-Egress, Offline-Lauffähigkeit und Unprivileged RunAsInvoker Sicherheit.
+
+3. **10-Dimensionale Vergleichsmatrix gegenüber 4 Alternativen**:
+   - Vergleich von `ellmos-tests` mit Promptfoo, DeepEval/Ragas, Inspect AI und Ad-hoc-Skripten.
+   - Mappings auf Systeminvarianten `INV-LOCAL-01` bis `INV-SLA-10`.
+
+4. **Duale Mermaid-Diagramme mit striktem Syntaxschutz**:
+   - Diagramm 1: `flowchart TD` Systemarchitektur-Topologie über 5 Schichten mit quotierten Knotenbeschriftungen.
+   - Diagramm 2: `sequenceDiagram` Evaluierungslebenszyklus mit `autonumber` und strikt semikolonfreier Syntax (`lint_mermaid.py` konform).
+
+5. **Third-Party SBOM & Governance-Audit (`THIRD_PARTY_LICENSES.md`)**:
+   - Vollständige SBOM: 0 externe Runtime-Dependencies (100% Python Standard Library PSF-2.0).
+   - Unprivileged `RunAsInvoker`-Zertifizierung und Zero-Copyleft-Isolationsgarantie.
+   - Formale Definition der Invarianten `INV-LOCAL-01` bis `INV-SLA-10`.
+
+6. **Sicherheitsrichtlinie & SLA-Härtung (`SECURITY.md`)**:
+   - Verbindliches 48-Stunden-SLA für Sicherheitstickets und 5-Tage-Triage-Garantie.
+   - Unterstützungstabelle für Version `0.2.x`.
+
+7. **PEP 621 Standardisierung in `pyproject.toml`**:
+   - Vollständiges Set von 11 standardisierten `project.urls`.
+   - Erweiterte Keywords, Classifiers (Python 3.10–3.13) und `license-files`.
+
+8. **LLM-Ready Context Index (`llms.txt`)**:
+   - Aktualisierung des Prüfdatums auf `2026-09-18`.
+   - Indexierung der 18-Punkte-Navigation und high-intent Suchphrasen.
+
+9. **Automatisierte Vertragstests (`tests/test_metadata.py`)**:
+   - Neuer Testkatalog zur Verifikation aller Metadaten, URLs, Ankerparitäten, Mermaid-Diagramme und Invarianten.
+
+---
+
+## 2. Externe Discoverability-Empfehlungen (Backlog für manuelle Aktionen)
+
+Folgende externe Registrierungen und Sichtbarkeitsmaßnahmen werden empfohlen:
+
+1. **GitHub Topics**:
+   - Vorgeschlagene Topics: `llm-os`, `agent-framework`, `evaluation`, `b-o-e-testing`, `ai-benchmarking`, `skill-testing`, `zero-egress`, `python`
+2. **Kuratierte Repositories & Listen**:
+   - Eintrag in `awesome-agentic-ai` / `awesome-llm-eval` vorschlagen (Kategorie: Agent OS Evaluation).
+   - Eintrag in AI-Benchmarking-Verzeichnissen als spezialisiertes Werkzeug für Text-OS und SKILL.md-Systeme.
+3. **Ecosystem Cross-Linking**:
+   - Sicherstellen, dass alle ellmos-ai-Repos und das Dach-Repo `open-bricks` direkt auf `ellmos-tests` zur Qualitätsverifikation verweisen.

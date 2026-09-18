@@ -1,29 +1,38 @@
 # Security Policy
 
+## Supported Versions
+
+| Version | Supported |
+| ------- | --------- |
+| 0.2.x   | :white_check_mark: |
+| < 0.2   | :x: |
+
+---
+
+## Security Model and Execution Guarantees
+
+`ellmos-tests` is designed with local-first, defensible isolation:
+
+1. **Unprivileged User Mode (`RunAsInvoker`)**: The framework operates strictly under standard user privileges. It does not require or request administrator or root elevation.
+2. **Zero-Egress Isolation**: Core test runners, observation engines, output validators, and SQLite feature databases operate completely offline. No telemetry, crash logs, or test data are transmitted to external endpoints.
+3. **Target Sandboxing**: When executing target system CLI entrypoints or scripts during O-tests, operations are executed in isolated child processes with dedicated working directory parameters and timeout boundaries.
+4. **Governance Invariants**: Adheres strictly to security and governance invariants `INV-LOCAL-01` through `INV-SLA-10` documented in [THIRD_PARTY_LICENSES.md](THIRD_PARTY_LICENSES.md).
+
+---
+
 ## Reporting a Vulnerability
 
-If you find a security vulnerability, please report it responsibly:
+If you discover a security vulnerability in `ellmos-tests`, please report it responsibly:
 
-1. **Do NOT open a public issue**
-2. **Use GitHub's [private vulnerability reporting](../../security/advisories/new)**
-3. Include: description, steps to reproduce, potential impact
+1. **Do NOT open a public issue.**
+2. **Use GitHub's [Private Vulnerability Reporting](../../security/advisories/new)** to submit your report confidentially.
+3. Include detailed information:
+   - Impact and attack vector description
+   - Minimal reproduction steps or proof-of-concept
+   - Affected versions and environments
 
-### How to Report
+### Service Level Agreement (SLA)
 
-1. Go to: Repository → Security → Advisories → New
-2. Fill out the form (title, description, severity, affected versions)
-3. Submit privately (not visible to public until disclosed)
-
-We will respond as soon as possible.
-
-## Scope
-
-- Test execution and result handling
-- File system access during tests
-- Database access (SQLite feature mapping DB)
-- Configuration and path resolution
-
-## Response
-
-As a solo project, response times may vary. Critical issues will be
-prioritized. Please allow reasonable time before public disclosure.
+- **Initial Response**: Within **48 hours** (INV-SLA-10).
+- **Status & Triage**: Within **5 business days** following initial response.
+- **Fix & Disclosure**: Coordinated security release after validation and patch development.

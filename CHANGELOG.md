@@ -8,6 +8,22 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+## [0.2.1] - 2026-09-18
+
+### Added (Path B Discoverability, Marketing & Bilingual Architecture)
+- **18-Point Bilingual Navigation Parity**: Restructured `README.md` and `README_de.md` into an identical 18-point architecture with reciprocal `<a id="..."></a>` HTML anchors across both English and German docs.
+- **Target Personas**: Added detailed profiles for `[PERSONA-01]` LLM-OS Architect, `[PERSONA-02]` AI Agent Evaluator, `[PERSONA-03]` Autonomous Agent QA Engineer, and `[PERSONA-04]` Enterprise LLM Integrator.
+- **10-Dimension Comparative Matrix**: Added comprehensive comparison against 4 industry alternatives (Promptfoo, DeepEval/Ragas, Inspect AI, Manual scripts) mapped to governance invariants `INV-LOCAL-01` through `INV-SLA-10`.
+- **Dual Mermaid Diagrams**:
+  - 5-layer System Architecture Topology (`flowchart TD`) with quoted node labels.
+  - End-to-End Evaluation Lifecycle (`sequenceDiagram`) with `autonumber` and zero semicolons.
+- **`THIRD_PARTY_LICENSES.md`**: Formal SBOM certifying zero external runtime dependencies (100% Python Standard Library PSF-2.0), unprivileged `RunAsInvoker` guarantee, zero-copyleft isolation, and explicit definitions for `INV-LOCAL-01` through `INV-SLA-10`.
+- **Hardened `SECURITY.md`**: Added supported versions table (`0.2.x`), 48h initial response SLA (`INV-SLA-10`), 5-day triage commitment, and GitHub Private Vulnerability Reporting instructions.
+- **Standardized `pyproject.toml`**: Configured PEP 621 metadata, 11 standard project URLs, `license-files`, expanded classifiers (Python 3.10–3.13), and `[tool.pytest.ini_options]`.
+- **Repo-Local `MARKETING-LOG.txt`**: Added discoverability audit, persona mappings, SEO query analysis, and external directory recommendations.
+- **Statutory Notice**: Embedded German statutory notice (§ 521 BGB Gefälligkeitsrecht) and MIT licensing disclaimer in `README_de.md` and `README.md`.
+- **Automated Contract Tests (`tests/test_metadata.py`)**: Added automated regression tests verifying PEP 621 URLs, license file bindings, bilingual anchor parity, Mermaid syntax, and security invariants.
+
 ### Added (module-findability & stack-composition testing, 2026-08-18)
 - `system_diff_tests/testing/o_tests/O007_module_findability.py`: new O-test -- checks whether a target system exposes a machine-readable module catalog with capability declarations plus a resolver script, and (bonus, functional) actually invokes a resolver that follows the known `resolve <id>` CLI contract.
 - `system_diff_tests/testing/o_tests/O008_stack_composition.py`: new O-test -- checks whether a target system catalogs stacks with real manifest references plus a composer/validator script, and (bonus, functional) actually resolves a manifest through a script following the known `resolve <manifest>` CLI contract.

@@ -42,5 +42,16 @@ tests/results/
 tests/interpretations/
 TODO.md
 
-# Multi-Agent-Koordination
-LOCK*.txt
+# Multi-Agent-Koordination & Multi-Host Sync Schutz
+LOCK*
+!LOCK.md
+*conflicted copy*
+* (Kopie)*
+* (Copy)*
+*-ASUS*
+*-ASUS-GEI*
+*-LAPTOP*
+*-WORKSTATION*
+*-WORKSTATION-LG*
+*-Mac Studio*
+*-MacBook*

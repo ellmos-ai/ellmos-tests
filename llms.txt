@@ -4,16 +4,39 @@ ellmos-tests is a Python test framework for SKILL.md-based LLM operating systems
 
 Repository: https://github.com/ellmos-ai/ellmos-tests
 Default branch: master
+Version: 0.2.1
 License: MIT
-Primary language: Python
+Primary language: Python (Standard Library first, RunAsInvoker)
 
 ## What It Does
 
-- Runs B-tests for static observation of files, structure, documentation, dependencies, and age.
-- Runs O-tests for functional checks such as task roundtrips, memory persistence, tool registry checks, backup/restore, config validation, and export/import.
-- Defines E-tests for manual experience evaluation across onboarding, navigation, memory, tasks, tools, communication, and error tolerance.
-- Provides reusable test batteries in `tests/batteries/*.txt`.
-- Provides feature-mapping and cross-system comparison workflows under `system_diff_tests/`.
+- Runs B-tests (B001–B008) for static observation of files, structure, documentation, dependencies, and age.
+- Runs O-tests (O001–O008) for functional checks including task roundtrips, memory persistence, tool registry checks, backup/restore, config validation, export/import, module findability (O007), and stack composition (O008).
+- Defines E-tests (E001–E010) for evaluative experience tasks across onboarding, navigation, memory, tasks, tools, communication, and error tolerance.
+- Provides reusable test batteries in `tests/batteries/*.txt` and customizable execution profiles.
+- Provides feature-mapping and cross-system comparison workflows with SQLite database (`system_diff_tests/`).
+- Includes machine-readable use-case catalog in `usecases.json`.
+
+## Quick Navigation Parity Index (18-Point Layout)
+
+1. Overview & Core Philosophy (#overview / #uebersicht)
+2. Target Personas & High-Intent Use Cases (#personas / #ziel-personas)
+3. Comparative Matrix vs. Alternatives (10 Dimensions) (#comparative-matrix / #vergleichsmatrix)
+4. System Architecture Topology (#architecture / #architektur)
+5. Evaluation Lifecycle & Execution Flow (#lifecycle / #lebenszyklus)
+6. B-Tests: Observation Battery (#b-tests / #b-tests-beobachtung)
+7. O-Tests: Output & Functional Battery (#o-tests / #o-tests-ausgabe)
+8. E-Tests: Experience & UX Battery (#e-tests / #e-tests-erfahrung)
+9. 7 Evaluation Dimensions & Scoring Scale (#dimensions / #bewertungsdimensionen)
+10. Test Execution Profiles (#profiles / #ausfuehrungsprofile)
+11. Feature Mapping DB & Synopsis Generator (#feature-db / #feature-mapping-db)
+12. Use Case Catalog (#usecases / #anwendungsfall-katalog)
+13. System Classification (#classification / #systemklassifikation)
+14. Quick Start & CLI Command Reference (#quickstart / #schnellstart)
+15. Project Structure & Module Layout (#structure / #projektstruktur)
+16. Ecosystem Integration (BACH, ellmos-ai, open-bricks) (#ecosystem / #oekosystem-integration)
+17. Security, Non-Elevation & 48h Response SLA (#security / #sicherheit-und-sla)
+18. German Statutory Notice (§ 521 BGB Gefälligkeitsrecht) & Disclaimer (#liability / #haftungsausschluss)
 
 ## Important Commands
 
@@ -21,15 +44,17 @@ Primary language: Python
 python tests/run_batteries.py --list
 python tests/run_batteries.py --battery release_smoke --system-path "/path/to/system"
 python system_diff_tests/run_all.py "/path/to/system"
+python system_diff_tests/testing/run_external.py "/path/to/system" --profile STANDARD
 python -m unittest discover -s tests -p "test_*.py"
+pytest
 ```
 
-## Audience
+## Audience & Target Personas
 
-- **LLM-OS developers** building or extending SKILL.md-based systems (BACH, recludOS, custom agent hubs) who need a structured way to measure quality and compare across versions.
-- **AI agent researchers** evaluating how well LLM operating systems handle onboarding, navigation, memory, task management, and error tolerance.
-- **Open-source contributors** to ellmos-ai projects who want automated regression checks and a standard test battery before submitting changes.
-- **Teams adopting ellmos infrastructure** who need a reproducible baseline for continuous integration and release smoke tests.
+- **[PERSONA-01] LLM-OS Architect & System Engineer**: Building or extending SKILL.md-based systems (BACH, recludOS, custom agent hubs) needing structured B/O/E quality metrics.
+- **[PERSONA-02] AI Agent Framework Evaluator**: Benchmarking agent operating systems across onboarding, memory persistence, tool routing, and cognitive recovery.
+- **[PERSONA-03] Autonomous Agent QA & CI/CD Engineer**: Running automated regression checks and test batteries before deploying agent updates.
+- **[PERSONA-04] Enterprise LLM Integrator & Compliance Auditor**: Requiring zero-egress local isolation, unprivileged RunAsInvoker security, and verifiable SLAs.
 
 ## Search Phrases
 
@@ -43,11 +68,14 @@ python -m unittest discover -s tests -p "test_*.py"
 - `AI agent quality evaluation`
 - `recludOS testing tool`
 - `LLM system comparison framework`
+- `zero-egress agent benchmarking`
+- `tri-modal LLM evaluation`
 
 ## Notes For Agents
 
 - Keep this repository lightweight and standard-library-first.
 - Do not commit generated output, local result JSON, `__pycache__`, or private BACH context.
 - German user-facing documentation should use real umlauts (`ä`, `ö`, `ü`, `Ä`, `Ö`, `Ü`, `ß`), not `ae`, `oe`, or `ue`.
+- All Mermaid diagrams must observe syntax guardrails: quote rectangle node labels and avoid semicolons in sequence diagrams.
 
-## Last-checked: 2026-08-18
+## Last-checked: 2026-09-18

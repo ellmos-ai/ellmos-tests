@@ -1,10 +1,10 @@
 ---
 name: ellmos-tests
-version: 0.2.0
+version: 0.2.1
 type: skill
 author: Lukas Geiger
 created: 2026-06-18
-updated: 2026-06-18
+updated: 2026-09-18
 anthropic_compatible: true
 standalone: true
 category: testing

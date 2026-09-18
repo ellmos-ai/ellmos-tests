@@ -5,7 +5,7 @@
   "deprecation_note": "Kanonisch ist ellmos-module.v2.json (der Modul-Katalog referenziert manifest_format v2). Dieses v1-Manifest bleibt als Discovery-Signatur fuer Leser bestehen, die noch nach 'ellmos-module.json' suchen (z. B. ellmos-agent-bridge).",
   "name": "ellmos-tests",
   "display_name": "ellmos Tests",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "kind": "testing",
   "license": "MIT",
   "origin": {
