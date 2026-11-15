@@ -21,6 +21,23 @@ class ModuleSurfaceTests(unittest.TestCase):
         self.assertEqual(manifest["name"], "ellmos-tests")
         self.assertIn("testing.llm_os", manifest["wiring"]["provides"])
 
+    def test_v2_manifest_consistency(self):
+        v1_path = REPO_ROOT / "ellmos-module.json"
+        v2_path = REPO_ROOT / "ellmos-module.v2.json"
+
+        self.assertTrue(v1_path.exists())
+        self.assertTrue(v2_path.exists())
+
+        v1 = json.loads(v1_path.read_text(encoding="utf-8"))
+        v2 = json.loads(v2_path.read_text(encoding="utf-8"))
+
+        self.assertEqual(v1["superseded_by"], "ellmos-module.v2.json")
+        self.assertTrue(v1.get("deprecated", False))
+        self.assertEqual(v2["schema"], "ellmos.module.v2")
+        self.assertEqual(v2["id"], v1["name"])
+        self.assertEqual(v2["kind"], v1["kind"])
+        self.assertIn(v1["update"]["repo"], v2["source_of_truth"]["repository"])
+
     def test_profile_compatibility_folder_is_populated(self):
         profiles_dir = REPO_ROOT / "system_diff_tests" / "testing" / "profiles"
         profile_names = {
