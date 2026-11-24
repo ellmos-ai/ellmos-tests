@@ -8,6 +8,13 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 
+### Changed (Path A Repository Hygiene & CI Hardening, 2026-11-24)
+- **Packaging & PEP 621/639**: Added `[tool.setuptools.packages.find]` (`include = ["system_diff_tests*"]`) in `pyproject.toml` and `MANIFEST.in` to eliminate flat-layout package collisions; added `[project.optional-dependencies]` (`dev`, `browser`), `Contributing` and `Code of Conduct` URLs, and removed the tracked `Marketing Log` URL.
+- **Pytest & Ruff Hardening**: Configured `--strict-markers`, `xfail_strict = true`, `asyncio_default_fixture_loop_scope = "function"`, and `norecursedirs` (`.pytest_temp*`, `testing`, outputs) without relative `--basetemp` in `pytest.ini` and `pyproject.toml`; added scoped `[tool.ruff.lint]` rules and resolved lint findings in `tests/`.
+- **Privacy Gate & Untracking**: Removed `MARKETING-LOG.txt` from Git tracking (`git rm --cached`, kept locally), hardened `.gitignore`, replaced the concrete sample home path in `tests/batteries/registration.txt` and `tests/test_public_readiness.py`, and replaced the template email in `CODE_OF_CONDUCT.md` with GitHub Issues / Private Vulnerability Reporting.
+- **CI & Governance**: Extended `.github/workflows/tests.yml` with packaging dry-run (`pip install --no-build-isolation --dry-run .`), `pip check`, `ruff check .`, and `pytest -ra`; added `.github/dependabot.yml` and `.github/ISSUE_TEMPLATE/config.yml`.
+- **P-022 & Documentation Parity**: Added `llm.txt`, expanded `llms.txt` with machine-readable installation/verification commands (`Last-checked: 2026-11-24`), updated `SKILL.md` (`updated: 2026-11-24`), added copyable LLM installation prompts to `README.md` / `README_de.md`, synchronized automated test counts (`38` tests), and expanded contract tests in `tests/test_metadata.py`.
+
 ## [0.2.1] - 2026-09-18
 
 ### Added (Path B Discoverability, Marketing & Bilingual Architecture)

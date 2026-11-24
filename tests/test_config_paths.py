@@ -13,7 +13,7 @@ if str(REPO_ROOT) not in sys.path:
 class ConfigPathTests(unittest.TestCase):
     def _reload_config(self, onedrive: Path):
         os.environ["ELLMOS_ONEDRIVE"] = str(onedrive)
-        import system_diff_tests.config as config
+        from system_diff_tests import config
 
         return importlib.reload(config)
 

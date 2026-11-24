@@ -613,7 +613,7 @@ Beispiele:
     # Gesamt-Zusammenfassung bei mehreren Batterien
     if len(all_results) > 1:
         print(f"\n{'#' * 60}")
-        print(f"  GESAMTERGEBNIS")
+        print("  GESAMTERGEBNIS")
         print(f"{'#' * 60}")
         print(f"  Batterien:     {len(all_results)}")
         print(f"  {green('Bestanden:')}    {total_pass}")

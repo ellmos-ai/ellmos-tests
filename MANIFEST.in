@@ -1,0 +1,27 @@
+include README.md
+include README_de.md
+include LICENSE
+include THIRD_PARTY_LICENSES.md
+include SKILL.md
+include llms.txt
+include llm.txt
+include AGENTS.md
+include CODE_OF_CONDUCT.md
+include CONTRIBUTING.md
+include SECURITY.md
+include CHANGELOG.md
+include ellmos-module.json
+include ellmos-module.v2.json
+include usecases.json
+include requirements.txt
+include requirements-optional.txt
+include pyproject.toml
+include pytest.ini
+recursive-include system_diff_tests *.md *.json *.sql *.txt
+exclude MARKETING-LOG.txt
+exclude TODO.md
+exclude LOCK*
+global-exclude __pycache__ *.py[cod] *.db *.sqlite *.sqlite3
+prune .pytest_temp*
+prune .pytest_cache
+prune .ruff_cache

@@ -1,0 +1,1 @@
+See llms.txt in the repository root for the canonical LLM entry point, installation steps, verification commands, and capabilities of ellmos-tests.
