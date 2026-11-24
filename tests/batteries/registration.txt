@@ -25,7 +25,7 @@ RG003 | pre-install | Keine sys-spezifischen Pakete ohne Fallback
 
 RG004 | pre-install | Keine hardcodierten Pfade im Code
   - Alle Pfade über pathlib.Path(__file__) relativ
-  - Kein C:\Users\User\... oder /home/user/... hartkodiert
+  - Kein C:\Users\<user>\... oder /home/user/... hartkodiert
   Erwartet: 0 absolute Pfade außer in data/config/
   Prüfmethode: grep -r "C:\\\\Users\|/home/" system/ -> 0 Treffer (außer whitelisted)
 

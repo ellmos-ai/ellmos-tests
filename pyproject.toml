@@ -37,19 +37,57 @@ classifiers = [
     "Topic :: Scientific/Engineering :: Artificial Intelligence",
 ]
 
+[project.optional-dependencies]
+browser = ["playwright>=1.44"]
+dev = ["pytest>=8.0", "ruff>=0.6"]
+
 [project.urls]
 Homepage = "https://github.com/ellmos-ai/ellmos-tests"
 Documentation = "https://github.com/ellmos-ai/ellmos-tests#readme"
 Repository = "https://github.com/ellmos-ai/ellmos-tests.git"
 Issues = "https://github.com/ellmos-ai/ellmos-tests/issues"
 Changelog = "https://github.com/ellmos-ai/ellmos-tests/blob/master/CHANGELOG.md"
+Contributing = "https://github.com/ellmos-ai/ellmos-tests/blob/master/CONTRIBUTING.md"
+"Code of Conduct" = "https://github.com/ellmos-ai/ellmos-tests/blob/master/CODE_OF_CONDUCT.md"
 Security = "https://github.com/ellmos-ai/ellmos-tests/blob/master/SECURITY.md"
 "Third-Party Licenses" = "https://github.com/ellmos-ai/ellmos-tests/blob/master/THIRD_PARTY_LICENSES.md"
 "Parent Organization" = "https://github.com/ellmos-ai"
 "Umbrella Ecosystem" = "https://github.com/open-bricks"
-"Marketing Log" = "https://github.com/ellmos-ai/ellmos-tests/blob/master/MARKETING-LOG.txt"
 "LLM Ready" = "https://github.com/ellmos-ai/ellmos-tests/blob/master/llms.txt"
+
+[tool.setuptools.packages.find]
+include = ["system_diff_tests*"]
+exclude = ["tests*", "testing*", "assets*", "tools*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+addopts = ["--strict-markers"]
+xfail_strict = true
+asyncio_default_fixture_loop_scope = "function"
+norecursedirs = [
+    ".git",
+    ".venv",
+    "venv",
+    ".pytest_temp*",
+    ".pytest_cache",
+    "testing",
+    "system_diff_tests/output",
+    "tests/results",
+    "tests/interpretations",
+]
 
 [tool.ruff]
 line-length = 100
 target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F", "I", "UP"]
+
+[tool.ruff.lint.per-file-ignores]
+"system_diff_tests/**" = ["E402", "E701", "E722", "E741", "F401", "F541", "F841", "I001", "UP"]
+"testing/**" = ["E402", "E722", "E741", "F401", "F541", "I001", "UP"]
+"tools/**" = ["I001", "UP"]
+"tests/run_batteries.py" = ["UP045"]
+"tests/run_db_tests.py" = ["E402", "I001"]
+"tests/smoke_test_sq072_pdf_migration.py" = ["E402", "F401", "F541", "I001"]

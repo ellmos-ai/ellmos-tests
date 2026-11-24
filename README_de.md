@@ -10,8 +10,8 @@
 [![Version](https://img.shields.io/badge/Version-0.2.1-blue)](pyproject.toml)
 [![Lizenz: MIT](https://img.shields.io/badge/Lizenz-MIT-green)](LICENSE)
 [![Test-Definitionen](https://img.shields.io/badge/Test--Definitionen-26_B%2FO%2FE-orange)](system_diff_tests/)
-[![Automatisierte Suite](https://img.shields.io/badge/Automatisierte_Suite-23%2B_unittest-brightgreen)](tests/)
-[![LLM-Ready](https://img.shields.io/badge/LLM--Ready-llms.txt-blueviolet)](llms.txt)
+[![Automatisierte Suite](https://img.shields.io/badge/Automatisierte_Suite-38_Tests-brightgreen)](tests/)
+[![LLM-Ready](https://img.shields.io/badge/LLM--Ready-llms.txt_%7C_SKILL.md-blueviolet)](llms.txt)
 [![Sicherheit: RunAsInvoker](https://img.shields.io/badge/Sicherheit-RunAsInvoker-blue)](SECURITY.md)
 [![Datenschutz: Zero Egress](https://img.shields.io/badge/Datenschutz-Zero_Egress-blue)](THIRD_PARTY_LICENSES.md)
 [![SLA: 48h Response](https://img.shields.io/badge/SLA-48h_Response-blue)](SECURITY.md)
@@ -88,7 +88,7 @@ Maschinenlesbare Architekturanweisungen, Fähigkeiten und Navigationspfade sind 
 
 - **`[PERSONA-03]` Autonome Agenten-QA & CI/CD-Ingenieur**
   *Ziel*: Integration deterministischer Smoke-Tests und Regressionsbatterien in automatisierte GitHub Actions-Pipelines ohne externe API-Kosten oder Ratenbegrenzung.
-  *Werkzeuge*: Battery-Runner (`tests/run_batteries.py`), `release_smoke`-Batterie, 23+ automatisierte Tests.
+  *Werkzeuge*: Battery-Runner (`tests/run_batteries.py`), `release_smoke`-Batterie, 38 automatisierte Regressions- und Vertragstests.
 
 - **`[PERSONA-04]` Enterprise-LLM-Integrator & Compliance-Auditor**
   *Ziel*: Prüfung von Drittanbieter-Modulen auf Zero-Network-Egress, unprivilegierte lokale Ausführung (`RunAsInvoker`) und saubere Lizenzgrenzen.
@@ -349,6 +349,15 @@ cd ellmos-tests
 # Keine schweren externen Pakete erforderlich! Kern läuft auf Python 3.10+ Standard Library
 ```
 
+### Mit deinem LLM installieren
+
+```text
+Installiere und verifiziere https://github.com/ellmos-ai/ellmos-tests (Release-Tag/Commit-Pin bevorzugen, keine ungeprüften curl|sh-Pipes):
+1. Lies zuerst llms.txt und SKILL.md im Repo-Root.
+2. Erstelle eine isolierte Umgebung (.venv) und führe den Installationsbefehl aus llms.txt aus (python -m pip install -e .).
+3. Prüfe die Installation mit python -m unittest discover -s tests -p "test_*.py" sowie python tests/run_batteries.py --list und berichte das Ergebnis.
+```
+
 ### Ausführen von Tests
 
 ```bash
@@ -368,9 +377,9 @@ python system_diff_tests/run_all.py --system recludOS
 python tests/run_batteries.py --list
 python tests/run_batteries.py --battery release_smoke --system-path "/pfad/zum/zielsystem"
 
-# 6. Interne Regressionssuite des Repositories ausführen (23+ Unittests)
+# 6. Interne Regressionssuite des Repositories ausführen (38 automatisierte Tests)
 python -m unittest discover -s tests -p "test_*.py"
-pytest
+pytest -ra
 ```
 
 ---
@@ -384,13 +393,16 @@ ellmos-tests/
 ├── AGENTS.md                        # Agenten-Einstiegshinweise
 ├── ellmos-module.v2.json            # Kanonisches Modulmanifest (Schema v2)
 ├── ellmos-module.json               # Veraltetes v1-Manifest (Kompatibilitätsleser)
-├── pyproject.toml                   # PEP 621 Paket-Metadaten & Pytest-Konfiguration
+├── pyproject.toml                   # PEP 621/639 Paket-Metadaten, Ruff- & Pytest-Konfiguration
 ├── pytest.ini                       # Pytest Testpfade & Optionen
+├── MANIFEST.in                      # Quellpaket-Packaging-Regeln
 ├── llms.txt                         # LLM-Kontext & Architekturindex
+├── llm.txt                          # Kompatibilitätsverweis auf llms.txt
 ├── LICENSE                          # MIT-Lizenz
 ├── THIRD_PARTY_LICENSES.md          # SBOM, RunAsInvoker-Garantie & 10 Invarianten
+├── CODE_OF_CONDUCT.md               # Zweisprachiger Verhaltenskodex
+├── CONTRIBUTING.md                  # Zweisprachige Beitragsrichtlinie & DCO
 ├── SECURITY.md                      # Sicherheitsrichtlinie & 48h-SLA
-├── MARKETING-LOG.txt                # Repository-lokales Audit- & Discoverability-Log
 ├── usecases.json                    # 50 maschinenlesbare Anwendungsfälle
 ├── system_diff_tests/
 │   ├── config.py                    # Zentrale Pfadkonfiguration und Systemauflösung

@@ -10,8 +10,8 @@
 [![Version](https://img.shields.io/badge/Version-0.2.1-blue)](pyproject.toml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green)](LICENSE)
 [![Test definitions](https://img.shields.io/badge/Test_definitions-26_B%2FO%2FE-orange)](system_diff_tests/)
-[![Automated suite](https://img.shields.io/badge/Automated_suite-23%2B_unittest-brightgreen)](tests/)
-[![LLM-Ready](https://img.shields.io/badge/LLM--Ready-llms.txt-blueviolet)](llms.txt)
+[![Automated suite](https://img.shields.io/badge/Automated_suite-38_tests-brightgreen)](tests/)
+[![LLM-Ready](https://img.shields.io/badge/LLM--Ready-llms.txt_%7C_SKILL.md-blueviolet)](llms.txt)
 [![Security: RunAsInvoker](https://img.shields.io/badge/Security-RunAsInvoker-blue)](SECURITY.md)
 [![Privacy: Zero Egress](https://img.shields.io/badge/Privacy-Zero_Egress-blue)](THIRD_PARTY_LICENSES.md)
 [![SLA: 48h Response](https://img.shields.io/badge/SLA-48h_Response-blue)](SECURITY.md)
@@ -88,7 +88,7 @@ Machine-readable architecture instructions, capabilities, and navigation paths a
 
 - **`[PERSONA-03]` Autonomous Agent QA & CI/CD Engineer**
   *Intent*: Integrating deterministic smoke tests and regression batteries into automated GitHub Actions pipelines without external API costs or rate-limiting.
-  *Key Tools*: Battery Runner (`tests/run_batteries.py`), `release_smoke` battery, 23+ automated regression suite.
+  *Key Tools*: Battery Runner (`tests/run_batteries.py`), `release_smoke` battery, 38 automated regression & contract tests.
 
 - **`[PERSONA-04]` Enterprise LLM Integrator & Compliance Auditor**
   *Intent*: Auditing third-party agent modules for zero network egress, unprivileged local execution (`RunAsInvoker`), and clear license boundaries.
@@ -349,6 +349,15 @@ cd ellmos-tests
 # No heavy dependencies required! Core testkit runs on standard library Python 3.10+
 ```
 
+### Install with your LLM
+
+```text
+Install and verify https://github.com/ellmos-ai/ellmos-tests (prefer a release tag or commit pin; never run unverified curl|sh pipes):
+1. Read llms.txt and SKILL.md in the repository root first.
+2. Create an isolated virtual environment (.venv) and run the installation command from llms.txt (python -m pip install -e .).
+3. Verify the installation with python -m unittest discover -s tests -p "test_*.py" and python tests/run_batteries.py --list, then report the result.
+```
+
 ### Running Tests
 
 ```bash
@@ -368,9 +377,9 @@ python system_diff_tests/run_all.py --system recludOS
 python tests/run_batteries.py --list
 python tests/run_batteries.py --battery release_smoke --system-path "/path/to/target/system"
 
-# 6. Run repository regression suite (23+ automated unittest tests)
+# 6. Run repository regression suite (38 automated tests)
 python -m unittest discover -s tests -p "test_*.py"
-pytest
+pytest -ra
 ```
 
 ---
@@ -384,13 +393,16 @@ ellmos-tests/
 ├── AGENTS.md                        # Agent entry instructions
 ├── ellmos-module.v2.json            # Canonical module manifest (schema v2)
 ├── ellmos-module.json               # Deprecated v1 manifest (compatibility reader)
-├── pyproject.toml                   # PEP 621 package metadata & pytest configuration
+├── pyproject.toml                   # PEP 621/639 package metadata, ruff & pytest options
 ├── pytest.ini                       # Pytest testpath & warning options
+├── MANIFEST.in                      # Source distribution packaging rules
 ├── llms.txt                         # LLM context & architecture index
+├── llm.txt                          # Compatibility pointer to llms.txt
 ├── LICENSE                          # MIT License
 ├── THIRD_PARTY_LICENSES.md          # SBOM, RunAsInvoker guarantee & 10 invariants
+├── CODE_OF_CONDUCT.md               # Bilingual community code of conduct
+├── CONTRIBUTING.md                  # Bilingual contribution guidelines & DCO
 ├── SECURITY.md                      # Security policy & 48h response SLA
-├── MARKETING-LOG.txt                # Repo-local discoverability & audit log
 ├── usecases.json                    # 50 machine-readable use cases catalog
 ├── system_diff_tests/
 │   ├── config.py                    # Central configuration and system path resolver

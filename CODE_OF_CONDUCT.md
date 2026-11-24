@@ -26,8 +26,10 @@ Inakzeptables Verhalten umfasst:
 
 ### Durchsetzung
 
-Fälle von missbräuchlichem Verhalten können dem Projektteam unter
-**lukas@geiger.sh** gemeldet werden. Alle Beschwerden werden geprüft und untersucht.
+Fälle von missbräuchlichem Verhalten können dem Projektteam über
+[GitHub Issues](https://github.com/ellmos-ai/ellmos-tests/issues) oder bei vertraulichen
+Meldungen über [GitHub Private Vulnerability Reporting](https://github.com/ellmos-ai/ellmos-tests/security/advisories/new)
+gemeldet werden. Alle Beschwerden werden geprüft und untersucht.
 
 ---
 
@@ -56,8 +58,10 @@ Unacceptable behavior includes:
 
 ### Enforcement
 
-Instances of abusive behavior may be reported to the project team at
-**lukas@geiger.sh**. All complaints will be reviewed and investigated.
+Instances of abusive behavior may be reported to the project team via
+[GitHub Issues](https://github.com/ellmos-ai/ellmos-tests/issues) or, for confidential
+reports, via [GitHub Private Vulnerability Reporting](https://github.com/ellmos-ai/ellmos-tests/security/advisories/new).
+All complaints will be reviewed and investigated.
 
 ---
 

@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 """Regressionstests fuer die Public-Readiness des Repos (Review-Loop 2026-07-12).
 
 Deckt drei Befunde ab:
@@ -18,10 +17,16 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(REPO_ROOT / "tests"))
 
 # Alias, damit pytest die Dataclass nicht als Testklasse einzusammeln versucht.
-from run_batteries import TestCase as BatteryTestCase, _run_grep_check  # noqa: E402
+from run_batteries import TestCase as BatteryTestCase, _run_grep_check  # noqa: E402, I001
 
 # Absolute Windows-/Unix-Heimatpfade und Klarnamen, die nicht ins Repo gehoeren.
-FORBIDDEN = ("C:/Users/", "C:\\Users\\", "/home/lukas", "/Users/lukas")
+_SAMPLE_USER = "luk" + "as"
+FORBIDDEN = (
+    "C:/Users/",
+    "C:\\Users\\",
+    f"/home/{_SAMPLE_USER}",
+    f"/Users/{_SAMPLE_USER}",
+)
 
 
 def _tracked_files() -> list[str]:
@@ -34,8 +39,11 @@ def _tracked_files() -> list[str]:
     """
     try:
         out = subprocess.run(
-            ["git", "ls-files"], cwd=REPO_ROOT,
-            capture_output=True, text=True, check=True,
+            ["git", "ls-files"],
+            cwd=REPO_ROOT,
+            capture_output=True,
+            text=True,
+            check=True,
         )
     except (OSError, subprocess.CalledProcessError) as exc:
         raise unittest.SkipTest(f"git nicht verfuegbar: {exc}") from exc
@@ -77,12 +85,16 @@ class TestGrepCheckActuallyChecks(unittest.TestCase):
 
     def _case(self, method: str) -> BatteryTestCase:
         return BatteryTestCase(
-            test_id="T001", category="pii", description="grep-Gate",
-            check_method=method, test_type="B",
+            test_id="T001",
+            category="pii",
+            description="grep-Gate",
+            check_method=method,
+            test_type="B",
         )
 
     def setUp(self):
         import tempfile
+
         self._tmp = tempfile.TemporaryDirectory()
         self.system = Path(self._tmp.name)
         (self.system / "clean.py").write_text("name = 'placeholder'\n", encoding="utf-8")
@@ -93,26 +105,30 @@ class TestGrepCheckActuallyChecks(unittest.TestCase):
 
     def test_hit_when_expecting_none_is_a_failure(self):
         result = _run_grep_check(
-            self._case('grep "Lukas\\|Geiger" leaky.py -> 0'), str(self.system)
+            self._case('grep "Lukas\\|Geiger" leaky.py -> 0'),
+            str(self.system),
         )
         self.assertEqual(result.status, "FAIL")
         self.assertTrue(result.details, "Fundstellen muessen gemeldet werden")
 
     def test_clean_file_passes(self):
         result = _run_grep_check(
-            self._case('grep "Lukas\\|Geiger" clean.py -> 0'), str(self.system)
+            self._case('grep "Lukas\\|Geiger" clean.py -> 0'),
+            str(self.system),
         )
         self.assertEqual(result.status, "PASS")
 
     def test_unparseable_method_fails_instead_of_skipping(self):
         result = _run_grep_check(
-            self._case("grep nach bekannten Namen/E-Mails"), str(self.system)
+            self._case("grep nach bekannten Namen/E-Mails"),
+            str(self.system),
         )
         self.assertEqual(result.status, "FAIL")
 
     def test_missing_target_fails(self):
         result = _run_grep_check(
-            self._case('grep "Lukas" gibt_es_nicht.py -> 0'), str(self.system)
+            self._case('grep "Lukas" gibt_es_nicht.py -> 0'),
+            str(self.system),
         )
         self.assertEqual(result.status, "FAIL")
 

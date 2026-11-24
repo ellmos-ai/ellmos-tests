@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Security Vulnerability Report (Private)
+    url: https://github.com/ellmos-ai/ellmos-tests/security/advisories/new
+    about: Please report security vulnerabilities privately rather than opening a public issue.

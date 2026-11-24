@@ -4,7 +4,7 @@ version: 0.2.1
 type: skill
 author: Lukas Geiger
 created: 2026-06-18
-updated: 2026-09-18
+updated: 2026-11-24
 anthropic_compatible: true
 standalone: true
 category: testing

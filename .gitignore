@@ -1,6 +1,9 @@
 # Python
 __pycache__/
 .pytest_cache/
+.pytest_temp/
+.pytest_tmp*/
+.ruff_cache/
 *.py[cod]
 *$py.class
 *.so
@@ -18,6 +21,8 @@ ENV/
 *.db
 *.sqlite
 *.sqlite3
+*.db-wal
+*.db-shm
 
 # Environment
 .env
@@ -35,12 +40,25 @@ Thumbs.db
 .DS_Store
 desktop.ini
 
-# Project-specific
+# Project-specific & internal agent/control files
 BACH_KONTEXT/
 system_diff_tests/output/
 tests/results/
 tests/interpretations/
+MARKETING-LOG.txt
+*MARKETING-LOG.txt
 TODO.md
+AUFGABEN.txt
+AUFGABEN.md
+BEFUNDE.md
+PORTIERUNGSPLAN.md
+UMBAUPLAN.md
+TASKPLAN_*.md
+TO-DECIDE-USER*
+.claude/
+.codex/
+.gemini/
+.agent/
 
 # Multi-Agent-Koordination & Multi-Host Sync Schutz
 LOCK*

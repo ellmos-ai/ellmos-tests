@@ -7,6 +7,7 @@ Default branch: master
 Version: 0.2.1
 License: MIT
 Primary language: Python (Standard Library first, RunAsInvoker)
+Related LLM files: `SKILL.md` (agent usage & boundaries), `llm.txt` (compatibility pointer)
 
 ## What It Does
 
@@ -16,6 +17,27 @@ Primary language: Python (Standard Library first, RunAsInvoker)
 - Provides reusable test batteries in `tests/batteries/*.txt` and customizable execution profiles.
 - Provides feature-mapping and cross-system comparison workflows with SQLite database (`system_diff_tests/`).
 - Includes machine-readable use-case catalog in `usecases.json`.
+
+## Machine-Readable Installation & Verification (P-022)
+
+- **Prerequisites**: Python 3.10+ (100% Python Standard Library core; optional `pytest>=8.0` and `ruff>=0.6` for repository dev/CI checks, optional `playwright>=1.44` for browser helpers).
+- **Install command**:
+  ```bash
+  git clone https://github.com/ellmos-ai/ellmos-tests.git
+  cd ellmos-tests
+  python -m venv .venv
+  # Activate .venv, then:
+  python -m pip install -e .
+  ```
+- **Verification command**:
+  ```bash
+  python -m unittest discover -s tests -p "test_*.py"
+  python tests/run_batteries.py --list
+  ```
+- **Minimal example**:
+  ```bash
+  python system_diff_tests/run_all.py "/path/to/target/system" --only b
+  ```
 
 ## Quick Navigation Parity Index (18-Point Layout)
 
@@ -46,14 +68,14 @@ python tests/run_batteries.py --battery release_smoke --system-path "/path/to/sy
 python system_diff_tests/run_all.py "/path/to/system"
 python system_diff_tests/testing/run_external.py "/path/to/system" --profile STANDARD
 python -m unittest discover -s tests -p "test_*.py"
-pytest
+pytest -ra
 ```
 
 ## Audience & Target Personas
 
 - **[PERSONA-01] LLM-OS Architect & System Engineer**: Building or extending SKILL.md-based systems (BACH, recludOS, custom agent hubs) needing structured B/O/E quality metrics.
 - **[PERSONA-02] AI Agent Framework Evaluator**: Benchmarking agent operating systems across onboarding, memory persistence, tool routing, and cognitive recovery.
-- **[PERSONA-03] Autonomous Agent QA & CI/CD Engineer**: Running automated regression checks and test batteries before deploying agent updates.
+- **[PERSONA-03] Autonomous Agent QA & CI/CD Engineer**: Running automated regression checks and test batteries before deploying agent updates (38 automated contract/unit tests).
 - **[PERSONA-04] Enterprise LLM Integrator & Compliance Auditor**: Requiring zero-egress local isolation, unprivileged RunAsInvoker security, and verifiable SLAs.
 
 ## Search Phrases
@@ -74,8 +96,8 @@ pytest
 ## Notes For Agents
 
 - Keep this repository lightweight and standard-library-first.
-- Do not commit generated output, local result JSON, `__pycache__`, or private BACH context.
+- Do not commit generated output, local result JSON, `__pycache__`, `MARKETING-LOG.txt`, or private BACH context.
 - German user-facing documentation should use real umlauts (`ä`, `ö`, `ü`, `Ä`, `Ö`, `Ü`, `ß`), not `ae`, `oe`, or `ue`.
 - All Mermaid diagrams must observe syntax guardrails: quote rectangle node labels and avoid semicolons in sequence diagrams.
 
-## Last-checked: 2026-09-18
+## Last-checked: 2026-11-24
