@@ -33,7 +33,7 @@ jobs:
       - name: Install requirements and dev tools
         run: |
           python -m pip install -r requirements.txt
-          python -m pip install pytest ruff
+          python -m pip install pytest ruff "setuptools>=77.0.3" "packaging>=24.2"
 
       - name: Verify packaging metadata (dry-run)
         run: python -m pip install --no-build-isolation --dry-run .
